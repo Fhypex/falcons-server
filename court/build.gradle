@@ -1,5 +1,5 @@
 
-description = 'Court'
+description = 'court'
 jar.archiveBaseName.set('court')
 
 dependencies {

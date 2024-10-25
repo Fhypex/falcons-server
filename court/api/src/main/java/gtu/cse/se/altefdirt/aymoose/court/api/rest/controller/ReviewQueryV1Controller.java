@@ -35,12 +35,12 @@ class ReviewQueryV1Controller {
     }
     
     @GetMapping(value = "/courts")
-    List<CourtResponseDTO> getAllCourts() {
+    List<CourtResponseDTO> getAllcourts() {
         return courtRepository.findAll().stream().map(court -> CourtResponseDTO.from(CourtView.fromDomain(court))).collect(Collectors.toUnmodifiableList());
     }
 
     @GetMapping(value = "/courts/{id}")
-    CourtResponseDTO getCourtById(@PathVariable(Parameter.ID) String id) {
+    CourtResponseDTO getcourtById(@PathVariable(Parameter.ID) String id) {
         return CourtResponseDTO.from(CourtView.fromDomain(courtRepository.findById(AggregateId.from(id))));
     }
 
