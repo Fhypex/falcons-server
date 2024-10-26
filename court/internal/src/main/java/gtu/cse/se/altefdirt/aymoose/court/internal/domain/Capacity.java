@@ -8,5 +8,5 @@ public record Capacity(
     @NotNull
     @Min(1)
     @Max(500)
-    Integer capacity)
+    Integer value)
 {}

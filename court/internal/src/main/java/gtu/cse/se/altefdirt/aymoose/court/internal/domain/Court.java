@@ -19,7 +19,9 @@ public class Court extends BaseAggregateRoot {
                  Measurements measurements, 
                  Capacity capacity,
                  WorkHours workHours,
-                 Location location) {
+                 Location location,
+                 List<Amenity> amenities,
+                 boolean isActive) {
         super(id);
         this.facilityId = facilityId;
         this.details = courtDetails;
@@ -27,6 +29,8 @@ public class Court extends BaseAggregateRoot {
         this.capacity = capacity;
         this.workHours = workHours;
         this.location = location;
+        this.amenities = amenities;
+        this.isActive = isActive;
     }
 
     private AggregateId facilityId;
@@ -41,45 +45,71 @@ public class Court extends BaseAggregateRoot {
 
     private Location location;
 
-    private List<String> images;
+    private List<Amenity> amenities;
+
+    private boolean isActive;
+
+    public void disable() {
+        this.isActive = false;
+    }
+
+    public void enable() {
+        this.isActive = true;
+    }
+
+    public void updateDetails(String name, String description) {
+        this.details = new CourtDetails(name, description);
+    }
+
+    public void updateMeasurements(int height, int width) {
+        this.measurements = new Measurements(height, width);
+    }
+
+    public void updateCapacity(int value) {
+        this.capacity = new Capacity(value);
+    }
+
+    public void updateWorkHours(Instant openTime, Instant closeTime) {
+        this.workHours = new WorkHours(openTime, closeTime);
+    }
+
+    public void updateLocation(double latitude, double longitude) {
+        this.location = new Location(latitude, longitude);
+    }
+
+    public void updateAmenities(List<String> amenityIds) {
+        this.amenities = amenityIds.stream().map(AggregateId::from).map(Amenity::new).toList();
+    }
 
     public AggregateId facilityId() {
         return facilityId;
     }
 
-    public String name() {
-        return details.name();
+    public CourtDetails details() {
+        return details;
     }
 
-    public String description() {
-        return details.description();
+    public Measurements measurements() {
+        return measurements;
     }
 
-    public int height() {
-        return measurements.height();
+    public Capacity capacity() {
+        return capacity;
     }
 
-    public int width() {
-        return measurements.width();
+    public WorkHours workHours() {
+        return workHours;
     }
 
-    public int capacity() {
-        return capacity.capacity();
+    public Location location() {
+        return location;
     }
 
-    public Instant openTime() {
-        return workHours.openTime();
+    public List<Amenity> amenities() {
+        return amenities;
     }
 
-    public Instant closeTime() {
-        return workHours.closeTime();
-    }
-
-    public Double latitude() {
-        return location.latitude();
-    }
-
-    public Double longitude() {
-        return location.longitude();
+    public boolean isActive() {
+        return isActive;
     }
 }

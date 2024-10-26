@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.transaction.Transactional;
+
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Component
