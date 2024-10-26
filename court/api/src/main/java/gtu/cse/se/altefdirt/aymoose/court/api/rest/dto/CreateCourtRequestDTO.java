@@ -1,38 +1,72 @@
 package gtu.cse.se.altefdirt.aymoose.court.api.rest.dto;
 
+import java.time.Instant;
+import java.util.List;
 import org.apache.commons.lang3.Validate;
-import org.springframework.validation.annotation.Validated;
-
 
 public record CreateCourtRequestDTO(
-    String reservationId,
-    String userId,
-    String title, 
-    String content,
-    Short rating
-) {
-
-    public CreateCourtRequestDTO(
-        String reservationId,
-        String userId,
-        String title,
-        String content,
-        Short rating) 
-        {   
-        Validate.notNull(reservationId, "Reservation ID cannot be null");
-        Validate.notNull(userId, "User ID cannot be null");
-        Validate.notNull(title, "Review title cannot be null");
-        Validate.notNull(content, "Review content cannot be null");
-        Validate.notNull(rating, "Rating cannot be null");
-        Validate.isTrue(rating >= 1 && rating <= 5, "Rating must be between 1 and 5");
-        Validate.isTrue(reservationId.length() == 36, "Invalid reservation ID");
-        Validate.isTrue(userId.length() == 36, "Invalid user ID");
-        Validate.isTrue(title.length() >= 3 && title.length() <= 80, "Review title must be between 3 and 80 characters");
-        Validate.isTrue(content.length() >= 3 && content.length() <= 200, "Review content must be between 3 and 200 characters");
-        this.reservationId = reservationId;
-        this.userId = userId;
-        this.title = title;
-        this.content = content;
-        this.rating = rating;
+        String facilityId,
+        String name,
+        String description,
+        Integer height,
+        Integer width,
+        Integer capacity,
+        Instant openTime,
+        Instant closeTime,
+        Double latitude,
+        Double longitude,
+        List<String> amenityIds,
+        List<String> images) 
+    {   
+        
+    public CreateCourtRequestDTO (
+        String facilityId,
+        String name,
+        String description,
+        Integer height,
+        Integer width,
+        Integer capacity,
+        Instant openTime,
+        Instant closeTime,
+        Double latitude,
+        Double longitude,
+        List<String> amenityIds,
+        List<String> images) 
+    {
+        Validate.notNull(facilityId, "Facility ID cannot be null");
+        Validate.notNull(name, "Court name cannot be null");
+        Validate.notNull(description, "Court description cannot be null");
+        Validate.notNull(height, "Court height cannot be null");
+        Validate.notNull(width, "Court width cannot be null");
+        Validate.notNull(capacity, "Court capacity cannot be null");
+        Validate.notNull(openTime, "Court open time cannot be null");
+        Validate.notNull(closeTime, "Court close time cannot be null");
+        Validate.notNull(latitude, "Court latitude cannot be null");
+        Validate.notNull(longitude, "Court longitude cannot be null");
+        Validate.notNull(amenityIds, "Amenity IDs cannot be null");
+        Validate.notNull(images, "Images cannot be null");
+        Validate.isTrue(facilityId.length() == 36, "Invalid facility ID");
+        Validate.isTrue(name.length() >= 3 && name.length() <= 80, "Court name must be between 3 and 80 characters");
+        Validate.isTrue(description.length() >= 3 && description.length() <= 200, "Court description must be between 3 and 200 characters");
+        Validate.isTrue(height >= 1 && height <= 100, "Court height must be between 1 and 100");
+        Validate.isTrue(width >= 1 && width <= 100, "Court width must be between 1 and 100");
+        Validate.isTrue(capacity >= 1 && capacity <= 100, "Court capacity must be between 1 and 100");
+        Validate.isTrue(openTime.isBefore(closeTime), "Court open time must be before close time");
+        Validate.isTrue(latitude >= -90 && latitude <= 90, "Court latitude must be between -90 and 90");
+        Validate.isTrue(longitude >= -180 && longitude <= 180, "Court longitude must be between -180 and 180");
+        Validate.isTrue(amenityIds.size() >= 1 && amenityIds.size() <= 10, "Amenity IDs must be between 1 and 10");
+        Validate.isTrue(images.size() >= 1 && images.size() <= 10, "Images must be between 1 and 10");
+        this.facilityId = facilityId;
+        this.name = name;
+        this.description = description;
+        this.height = height;
+        this.width = width;
+        this.capacity = capacity;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.amenityIds = amenityIds;
+        this.images = images;
     }
 }

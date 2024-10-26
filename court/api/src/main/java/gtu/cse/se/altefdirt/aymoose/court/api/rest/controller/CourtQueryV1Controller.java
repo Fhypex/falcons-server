@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.CourtView;
+import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.court.api.rest.dto.CourtResponseDTO;
@@ -21,9 +23,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @ApiVersionV1
 @RequiredArgsConstructor
-class ReviewQueryV1Controller {
+class CourtQueryV1Controller {
 
     private final CourtRepository courtRepository;
+    private final CourtService courtService;
 
     private static final class Parameter {
         private static final String ID = "id";
@@ -36,12 +39,16 @@ class ReviewQueryV1Controller {
     
     @GetMapping(value = "/courts")
     List<CourtResponseDTO> getAllCourts() {
-        return courtRepository.findAll().stream().map(court -> CourtResponseDTO.from(CourtView.fromDomain(court))).collect(Collectors.toUnmodifiableList());
+        return courtRepository.findAll().stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).collect(Collectors.toUnmodifiableList());
     }
 
-    @GetMapping(value = "/courts/{id}")
+    @GetMapping(value = "/court/{id}")
     CourtResponseDTO getCourtById(@PathVariable(Parameter.ID) String id) {
-        return CourtResponseDTO.from(CourtView.fromDomain(courtRepository.findById(AggregateId.from(id))));
+        Optional<Court> fetch = courtRepository.findById(AggregateId.from(id));
+        if (fetch.isEmpty()) {
+            throw new IllegalArgumentException("Court does not exist");
+        }
+        return CourtResponseDTO.fromView(courtService.denormalize(fetch.get()));
     }
 
 }

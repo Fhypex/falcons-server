@@ -10,7 +10,7 @@ import gtu.cse.se.altefdirt.aymoose.review.internal.application.model.ReviewView
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.repository.CountByReservationIdAndUserId;
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.service.ReviewService;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.Review;
-import gtu.cse.se.altefdirt.aymoose.core.application.RunEnvironment;
+import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.review.api.rest.dto.CreateReviewRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class ReviewCommandV1Controller {
 
-    private final RunEnvironment runEnvironment;
+    private final CommandRunner runEnvironment;
     private final CountByReservationIdAndUserId countByReservationIdAndUserId;
 
     @PostMapping("/reviews")
@@ -33,7 +33,6 @@ class ReviewCommandV1Controller {
     @PostMapping("/workspace")
     public void createReview(@RequestBody String reservationId, String userId) {
         int count = countByReservationIdAndUserId.query(reservationId, userId);
-        System.out.println("Count: " + count);    
     }
 
 

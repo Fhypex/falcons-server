@@ -1,17 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.jpa;
 
 import java.time.Instant;
-import java.util.List;
-import java.util.Map;
 
-import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
-import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Measurements;
-import gtu.cse.se.altefdirt.aymoose.court.internal.domain.TimeInterval;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.UpdatedAt;
-import io.micrometer.core.instrument.Measurement;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -31,29 +22,31 @@ public class CourtEntity {
     @Id
     private String id;
     private String facilityId;
+    private String name;
+    private String description;
     private int height;
     private int width;
     private int capacity;
-    private String title;
-    private String content;
-    private List<Map<String, String>> timeIntervals;
+    private Instant openTime;
+    private Instant closeTime;
+    private Double latitude;
+    private Double longitude;
+    private boolean isActive;
 
     public static CourtEntity from(Court court) {
         return CourtEntity.builder()
             .id(court.id().value())
             .facilityId(court.getFacilityId().value())
+            .name(court.details().name())
+            .description(court.details().description())
             .height(court.getMeasurements().height())
             .width(court.getMeasurements().width())
-            .capacity(court.getCapacity().capacity())
+            .capacity(court.getCapacity().value())
+            .openTime(court.getWorkHours().openTime())
+            .closeTime(court.getWorkHours().closeTime())
+            .latitude(court.getLocation().latitude())
+            .longitude(court.getLocation().longitude())
+            .isActive(court.isActive())
             .build();
-    }
-
-    public Court toDomain() {
-        return new Court(
-            AggregateId.from(this.id),
-            AggregateId.from(this.facilityId),
-            new Measurements(this.height, this.width),
-            new Capacity(this.capacity)
-        );
     }
 }

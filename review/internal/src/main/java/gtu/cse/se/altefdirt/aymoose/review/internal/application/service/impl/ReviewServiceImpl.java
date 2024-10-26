@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewServiceImpl implements ReviewService {
+class ReviewServiceImpl implements ReviewService {
     
     private final UserOperationsPort userOperationsPort;
 
