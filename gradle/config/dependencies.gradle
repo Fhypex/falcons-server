@@ -40,6 +40,12 @@ dependencies {
     /* implementation "com.auth0:java-jwt:${jwtVersion}" */
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 
+    // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
+    implementation 'org.keycloak:keycloak-admin-client:26.0.2'
+
+
+    // Docker compose
+    implementation 'org.springframework.boot:spring-boot-docker-compose:3.3.4'
 
     // Spring Boot DevTools
     //developmentOnly("org.springframework.boot:spring-boot-devtools")

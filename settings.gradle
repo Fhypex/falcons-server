@@ -4,6 +4,10 @@ include ':shared'
 
 include ':core'
 
+include ':account'
+include ':account:internal'
+include ':account:api'
+
 include ':review'
 include ':review:internal'
 include ':review:api'
