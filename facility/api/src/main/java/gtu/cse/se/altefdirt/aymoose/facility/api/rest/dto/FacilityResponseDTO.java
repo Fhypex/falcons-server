@@ -14,6 +14,9 @@ public record FacilityResponseDTO(
     Integer courtCount,
     Double latitude,
     Double longitude,
+    String city,
+    String district,
+    String location, 
     List<String> images
 ) {
     public static FacilityResponseDTO fromView(FacilityView facilityView) {
@@ -24,8 +27,9 @@ public record FacilityResponseDTO(
             .phoneNumber(facilityView.phoneNumber())
             .contactDetails(facilityView.contactDetails())
             .courtCount(facilityView.courtCount())
-            .latitude(facilityView.location().latitude())
-            .longitude(facilityView.location().longitude())
+            .city(facilityView.city())
+            .district(facilityView.district())
+            .location(facilityView.location()) 
             .images(facilityView.images())
             .build();
     }

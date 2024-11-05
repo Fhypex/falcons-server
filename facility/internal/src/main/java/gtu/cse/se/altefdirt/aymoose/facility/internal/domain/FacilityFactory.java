@@ -1,11 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 
 @Component
 public class FacilityFactory {
@@ -14,10 +11,12 @@ public class FacilityFactory {
                            String facilityName,
                            String phoneNumber,
                            String facilityDescription,
-                           Location location,
+                           String location,
+                           String city,
+                           String district,
                            String contactDetails,
                            FacilityCapacity courtCount) {
-        return new Facility(AggregateId.generate(), userId, facilityName, phoneNumber, facilityDescription, location, contactDetails, courtCount, true);
+        return new Facility(AggregateId.generate(), userId, facilityName, phoneNumber, facilityDescription, location, city, district, contactDetails, courtCount, true);
     }
 
     public Facility load(AggregateId id,
@@ -25,10 +24,12 @@ public class FacilityFactory {
                          String facilityName,
                          String phoneNumber,
                          String facilityDescription,
-                         Location location,
+                         String location,
+                         String city,
+                         String district,
                          String contactDetails,
                          FacilityCapacity courtCount,
                          boolean isActive) {
-        return new Facility(id, userId, facilityName, phoneNumber, facilityDescription, location, contactDetails, courtCount, isActive);
+        return new Facility(id, userId, facilityName, phoneNumber, facilityDescription, location, city, district, contactDetails, courtCount, isActive);
     }
 }
