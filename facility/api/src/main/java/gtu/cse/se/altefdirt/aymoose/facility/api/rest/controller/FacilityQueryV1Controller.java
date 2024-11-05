@@ -1,3 +1,5 @@
+
+/* 
 package gtu.cse.se.altefdirt.aymoose.facility.api.rest.controller;
 
 import java.util.List;
@@ -50,4 +52,4 @@ class FacilityQueryV1Controller {
         return FacilityResponseDTO.fromView(facilityService.denormalize(fetch.get()));
     }
 }
-
+*/

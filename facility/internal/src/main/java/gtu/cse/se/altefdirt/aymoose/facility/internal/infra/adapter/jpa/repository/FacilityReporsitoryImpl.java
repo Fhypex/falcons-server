@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityCapacity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityFactory;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.FacilityEntity;
@@ -23,15 +24,19 @@ class FacilityRepositoryImpl implements FacilityRepository {
     private final FacilityFactory facilityFactory;
 
     private Facility build(FacilityEntity facilityEntity) {
-        return facilityFactory.load(AggregateId.from(facilityEntity.getId()), 
-                                    AggregateId.from(facilityEntity.getUserId()), 
-                                    facilityEntity.getFacilityName(),
-                                    facilityEntity.getPhoneNumber(),
-                                    facilityEntity.getFacilityDescription(),
-                                    facilityEntity.getLocation(),
-                                    facilityEntity.getContactDetails(),
-                                    new FacilityCapacity(facilityEntity.getCourtCount()),
-                                    facilityEntity.isActive());
+        return facilityFactory.load(
+            AggregateId.from(facilityEntity.getId()), 
+            AggregateId.from(facilityEntity.getUserId()), 
+            facilityEntity.getFacilityName(),
+            facilityEntity.getPhoneNumber(),
+            facilityEntity.getFacilityDescription(),
+            facilityEntity.getLocation(), 
+            facilityEntity.getCity(),
+            facilityEntity.getDistrict(),
+            facilityEntity.getContactDetails(),
+            new FacilityCapacity(facilityEntity.getCourtCount()),
+            facilityEntity.isActive()
+        );
     }
 
     @Override
@@ -52,4 +57,3 @@ class FacilityRepositoryImpl implements FacilityRepository {
                                      .collect(Collectors.toList());
     }
 }
-

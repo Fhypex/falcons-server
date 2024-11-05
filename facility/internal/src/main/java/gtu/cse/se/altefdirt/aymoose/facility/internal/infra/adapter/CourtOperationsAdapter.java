@@ -1,3 +1,5 @@
+/* 
+
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter;
 
 import org.springframework.stereotype.Component;
@@ -14,4 +16,6 @@ class CourtOperationsAdapter implements CourtOperationsPort {
         return new CourtData("mocked-court-details");
     }
 }
+
+*/
 

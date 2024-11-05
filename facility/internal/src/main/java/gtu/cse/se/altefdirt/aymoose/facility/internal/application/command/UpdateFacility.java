@@ -19,8 +19,10 @@ public record UpdateFacility(
 
         String contactDetails,
 
-        Double latitude,
+        String location,  
 
-        Double longitude
+        String city,      
+
+        String district   
 ) implements Command {
 }

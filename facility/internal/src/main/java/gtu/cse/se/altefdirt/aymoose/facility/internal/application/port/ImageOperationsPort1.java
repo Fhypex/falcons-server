@@ -5,7 +5,7 @@ import java.util.List;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
-public interface ImageOperationsPort {
+public interface ImageOperationsPort1 {
     
     List<ImageData> findAll(AggregateId facilityId);
 
