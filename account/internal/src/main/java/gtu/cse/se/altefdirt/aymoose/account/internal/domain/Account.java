@@ -8,35 +8,35 @@ import java.util.List;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 
 @Getter
-public class Account extends BaseAggregateRoot {
+public class Account {
    
-    public Account(AggregateId id, 
-                 String accountname,
+    public Account(UserId id, 
                  FullName fullName,
-                 String profilePicture, 
-                 Instant createdAt,  
+                 AggregateId imageId, 
+                 CreatedAt createdAt,  
                  Boolean isActive) {
-        super(id);
-        this.username = username;
+        this.id = id;
         this.fullName = fullName;
-        this.profilePicture = profilePicture;
+        this.imageId = imageId;
         this.createdAt = createdAt;
         this.isActive = isActive;
     }
 
-    private String username;
+    private UserId id;
     private FullName fullName;
-    private String profilePicture;
-    private Instant createdAt;
+    private AggregateId imageId;
+    private CreatedAt createdAt;
     private Boolean isActive;
 
-
-    public String username() {
-        return username;
+    public UserId id() {
+        return id;
     }
+
+
 
     public Boolean isActive() {
         return isActive;
@@ -50,19 +50,15 @@ public class Account extends BaseAggregateRoot {
         this.isActive = true;
     }
 
-    public void updateProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
     public FullName fullName() {
         return fullName;
     }
 
-    public String profilePicture() {
-        return profilePicture;
+    public AggregateId imageId() {
+        return imageId;
     }
 
-    public Instant createdAt() {
+    public CreatedAt createdAt() {
         return createdAt;
     }
 }

@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AuthDetails;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.AuthServerOperationsPort;
+import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 class AuthServerOperationsAdapter implements AuthServerOperationsPort {
 
     private Keycloak keycloak;
@@ -59,9 +64,8 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
     }
 
     @Override
-    public Optional<Boolean> register(String userId, String username, String email, String password) {
+    public Optional<UserId> register(String username, String password, String email) {
         try {
-            System.out.println("userid: " + userId);
             System.out.println("username: " + username);
             System.out.println("email: " + email);
             System.out.println("password: " + password);
@@ -70,7 +74,7 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             
             // Create a new UserRepresentation object
             UserRepresentation user = new UserRepresentation();
-            user.setId(userId);
+            // user.setId(userId);
             user.setUsername(username);
             user.setEmail(email);
             user.setEnabled(true);
@@ -88,15 +92,41 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
 
                 return Optional.empty();
             }
+            System.out.println("response: " + response.getLocation().getPath());
+            String userId = response.getLocation().getPath().split("(.)*users/")[1];
+            System.out.println("userId: " + userId);
 
-            System.out.println("User created successfully" + user.getId() + " " + user.getUsername() + " " + user.getEmail() + " " + user.getCredentials()); 
             
             // Return successful result
-            return Optional.of(true);
+            return Optional.of(UserId.from(userId));
         } catch (Exception e) {
             // Log the exception (optional)
             System.err.println("Error registering user: " + e.getMessage());
             // Return empty result in case of failure
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<AuthDetails> getDetails(UserId userId) {
+        try
+        {
+            RealmResource realmResource = keycloak.realm(realm);
+            UserResource user = realmResource.users().get(userId.value());
+            if (user == null) {
+                return Optional.empty(); // User not found
+            }
+            UserRepresentation userRepresentation = user.toRepresentation();
+            return Optional.of(new AuthDetails(
+                                    userRepresentation.getUsername(),
+                                    userRepresentation.getEmail(),
+                                    (userRepresentation.getRealmRoles() != null) ? userRepresentation.getRealmRoles() : Collections.emptyList()
+                                        ));
+
+        }
+        catch (Exception e) {
+            // Log the exception (optional)
+            log.error("Error occurred during getting details of user", e);
             return Optional.empty();
         }
     }

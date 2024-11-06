@@ -9,8 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CreateAccount(
         @NotBlank String username,
         @NotBlank String password,
-        @NotBlank String email,
-        @NotBlank String fullName,
-        @NotBlank String profilePicture
+        @NotBlank String mailAddress,
+        @NotBlank String fullName
 ) implements Command {
 }

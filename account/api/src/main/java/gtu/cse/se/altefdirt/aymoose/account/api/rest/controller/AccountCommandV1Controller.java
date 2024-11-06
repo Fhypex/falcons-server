@@ -29,9 +29,8 @@ class AccountCommandV1Controller {
         AccountView view = runner.run(new CreateAccount(
             request.username(),
             request.password(),
-            request.email(),
-            request.fullName(),
-            request.profilePicture()
+            request.mailAddress(),
+            request.fullName()
         ));
 
         return Response.success(view, "Account created successfully");

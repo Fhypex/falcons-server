@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
+import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
@@ -26,9 +27,8 @@ public class AccountEntity {
     
     @Id
     private String id;
-    private String username;
     private String fullName;
-    private String profilePicture;
+    private String imageId;
     private Instant createdAt;
     private boolean isActive;
 
@@ -37,21 +37,19 @@ public class AccountEntity {
     public static AccountEntity fromDomain(Account account) {
         return AccountEntity.builder()
                 .id(account.id().value())
-                .username(account.username())
                 .fullName(account.fullName().value())
-                .profilePicture(account.profilePicture())
-                .createdAt(account.createdAt())
+                .imageId(account.imageId().value())
+                .createdAt(account.createdAt().value())
                 .isActive(account.isActive())
                 .build();
     }
 
     public Account toDomain(AccountFactory factory) {
         return factory.load(
-                AggregateId.from(id),
-                username,
+                UserId.from(id),
                 FullName.of(fullName),
-                profilePicture,
-                createdAt,
+                AggregateId.from(imageId),
+                new CreatedAt(createdAt),
                 isActive
         );
     }

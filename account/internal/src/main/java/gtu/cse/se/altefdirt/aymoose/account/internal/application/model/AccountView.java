@@ -18,14 +18,14 @@ public record AccountView (
     List<String> roles
 )
 {
-    public AccountView (Account account, List<String> roles) {
+    public AccountView (Account account, AuthDetails authDetails, ImageData imageData) {
         this(account.id().value(), 
-             account.username(), 
-             "email",
+            authDetails.username(), 
+            authDetails.mailAddress(),
              account.fullName().value(),
-             account.profilePicture(), 
-             account.createdAt(),
+             imageData.image(), 
+             account.createdAt().value(),
              account.isActive(),
-             roles);
+             authDetails.roles());
     }
 }

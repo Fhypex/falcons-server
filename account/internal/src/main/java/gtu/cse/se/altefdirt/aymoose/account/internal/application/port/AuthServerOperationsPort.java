@@ -3,6 +3,9 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.application.port;
 import java.util.List;
 import java.util.Optional;
 
+import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AuthDetails;
+import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
+
 public interface AuthServerOperationsPort {
     
     List<String> getRoles(String accountId);
@@ -13,5 +16,7 @@ public interface AuthServerOperationsPort {
 
     Optional<Boolean> addRole(String accountId, String role);
 
-    Optional<Boolean> register(String accountId, String username, String mailAddress, String password);
+    Optional<UserId> register(String username, String password, String mailAddress);
+
+    Optional<AuthDetails> getDetails(UserId userId);
 }

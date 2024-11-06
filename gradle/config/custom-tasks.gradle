@@ -3,3 +3,26 @@ task plantUml(type:Exec) {
 
 /*   commandLine 'plantuml', "$rootProject.projectDir/docs/uml/wallet_service.puml"
  */}
+
+
+task generateProperties(type: WriteProperties) {
+    // Dynamically find all .properties files in the project directory
+    def propertyFiles = fileTree(dir: '.', include: '**/*.properties')
+
+    // Create a Properties object to hold the combined properties
+    Properties combinedProperties = new Properties()
+
+    // Iterate over each property file and load them into the combinedProperties object
+    propertyFiles.each { propertyFile ->
+        println "Loading properties from: ${propertyFile}"
+        propertyFile.withInputStream {
+            combinedProperties.load(it)
+        }
+    }
+
+    // Set the destination file directly on the task
+    destinationFile = file("$buildDir/combined.properties")
+
+    // Set the combined properties to the WriteProperties task
+    properties = combinedProperties
+}
