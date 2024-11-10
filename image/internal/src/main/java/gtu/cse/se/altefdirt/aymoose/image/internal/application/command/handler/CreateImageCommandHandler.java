@@ -28,7 +28,7 @@ public class CreateImageCommandHandler implements CommandHandler<CreateImage, Im
     public ImageView handle(CreateImage command) {
 
         Image Image = factory.create(AggregateId.from(command.relationId()), command.file() , command.extension());
-        System.out.println("asd");
+
         service.storeImage(Image);                                                              
         Image savedImage = ImageRepository.save(Image);
         return service.denormalize(savedImage);

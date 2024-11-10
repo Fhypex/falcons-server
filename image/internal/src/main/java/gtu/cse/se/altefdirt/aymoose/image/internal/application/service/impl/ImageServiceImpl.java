@@ -11,6 +11,7 @@ import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,18 @@ import org.springframework.web.multipart.MultipartFile;
 import gtu.cse.se.altefdirt.aymoose.image.internal.application.model.ImageView;
 import gtu.cse.se.altefdirt.aymoose.image.internal.application.service.ImageService;
 import gtu.cse.se.altefdirt.aymoose.image.internal.domain.Image;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 class ImageServiceImpl implements ImageService {
-    private final Path fileStorageLocation = Paths.get("D:\\Codes\\Java\\Images").toAbsolutePath().normalize();
+    
+    private String imagesPath = "/image/internal/src/main/resources/images/";
+
+    private final Path fileStorageLocation = Paths.get(imagesPath).toAbsolutePath().normalize();
+
+    
     @Override
     public ImageView denormalize(Image image) 
     {       
@@ -66,7 +73,7 @@ class ImageServiceImpl implements ImageService {
             throw new RuntimeException("Error reading the image file.", e);
         }
        
-        String uploadDir = "D:\\Codes\\Java\\Images"; 
+        String uploadDir = "/image/internal/src/main/resources/images/"; 
         String twoSlash = "\\" ;
         String newFileName = image.id().value(); 
         String dot = ".";
