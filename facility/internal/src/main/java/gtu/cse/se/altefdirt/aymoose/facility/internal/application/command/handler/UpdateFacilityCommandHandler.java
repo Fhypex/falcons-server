@@ -10,7 +10,6 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
@@ -33,7 +32,7 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
 
         facility.updateFacilityDetails(command.facilityName(), command.facilityDescription());
         facility.updateContactDetails(command.contactDetails(), command.phoneNumber());
-        facility.updateLocation(command.latitude(), command.longitude());
+        facility.updateLocation(command.location(), command.city(), command.district());
         facility.updateCourtCount(command.courtCount());
 
         Facility savedFacility = repository.save(facility);
@@ -41,3 +40,4 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
         return service.denormalize(savedFacility);
     }
 }
+

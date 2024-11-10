@@ -27,8 +27,9 @@ class FacilityCommandV1Controller {
                 request.facilityName(),
                 request.phoneNumber(),
                 request.facilityDescription(),
-                request.latitude(),
-                request.longitude(),
+                request.city(),
+                request.district(),
+                request.location(), 
                 request.contactDetails(),
                 request.courtCount()
         ));

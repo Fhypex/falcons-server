@@ -8,4 +8,6 @@ dependencies {
     implementation project(':court:api')
     implementation project(':image:internal')
     implementation project(':image:api')
+    implementation project(':facility:internal')
+    implementation project(':facility:api')
 }

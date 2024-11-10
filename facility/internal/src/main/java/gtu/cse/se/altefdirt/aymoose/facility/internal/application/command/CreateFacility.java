@@ -13,8 +13,11 @@ public record CreateFacility(
         String phoneNumber,
         String facilityDescription,
         @NotBlank(message = "Location cannot be null or empty")
-        Double latitude,
-        Double longitude,
+        String location, 
+        @NotBlank(message = "City cannot be null or empty")
+        String city,    
+        @NotBlank(message = "District cannot be null or empty")
+        String district, 
         @NotBlank(message = "Contact details cannot be null or empty")
         String contactDetails,
         @NotNull(message = "Court count cannot be null")

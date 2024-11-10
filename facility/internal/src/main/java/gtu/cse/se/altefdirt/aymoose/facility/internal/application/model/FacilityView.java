@@ -12,8 +12,9 @@ public record FacilityView (
     String facilityName,
     String phoneNumber,
     String facilityDescription,
-    Double latitude,
-    Double longitude,
+    String location,
+    String city,
+    String district,
     String contactDetails,
     Integer courtCount,
     boolean isActive,
@@ -25,12 +26,12 @@ public record FacilityView (
              facility.facilityName(), 
              facility.phoneNumber(), 
              facility.facilityDescription(), 
-             facility.location().latitude(), 
-             facility.location().longitude(), 
+             facility.location(), 
+             facility.city(),      
+             facility.district(),  
              facility.contactDetails(), 
              facility.courtCount().value(), 
              facility.isActive(),
              images); 
     }
 }
-

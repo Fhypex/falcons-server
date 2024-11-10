@@ -3,7 +3,6 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 import lombok.Getter;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 
 @Getter
 public class Facility extends BaseAggregateRoot {
@@ -12,7 +11,9 @@ public class Facility extends BaseAggregateRoot {
     private String facilityName;
     private String phoneNumber;
     private String facilityDescription;
-    private Location location;
+    private String location;
+    private String city;
+    private String district;
     private String contactDetails;
     private FacilityCapacity courtCount;
     private boolean isActive;
@@ -22,7 +23,9 @@ public class Facility extends BaseAggregateRoot {
                     String facilityName, 
                     String phoneNumber,
                     String facilityDescription, 
-                    Location location, 
+                    String location,
+                    String city,
+                    String district,
                     String contactDetails,
                     FacilityCapacity courtCount,
                     boolean isActive) {
@@ -32,6 +35,8 @@ public class Facility extends BaseAggregateRoot {
         this.phoneNumber = phoneNumber;
         this.facilityDescription = facilityDescription;
         this.location = location;
+        this.city = city;
+        this.district = district;
         this.contactDetails = contactDetails;
         this.courtCount = courtCount;
         this.isActive = isActive;
@@ -55,8 +60,10 @@ public class Facility extends BaseAggregateRoot {
         this.phoneNumber = phoneNumber;
     }
 
-    public void updateLocation(double latitude, double longitude) {
-        this.location = new Location(latitude, longitude);
+    public void updateLocation(String location, String city, String district) {
+        this.location = location;
+        this.city = city;
+        this.district = district;
     }
 
     public void updateCourtCount(int count) {
@@ -79,8 +86,16 @@ public class Facility extends BaseAggregateRoot {
         return facilityDescription;
     }
 
-    public Location location() {
+    public String location() {
         return location;
+    }
+
+    public String city() {
+        return city;
+    }
+
+    public String district() {
+        return district;
     }
 
     public String contactDetails() {
