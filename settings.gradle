@@ -12,7 +12,14 @@ include ':review'
 include ':review:internal'
 include ':review:api'
 
+include ':facility'
+include ':facility:internal'
+include ':facility:api'
+
 include ':court'
 include ':court:internal'
 include ':court:api'
 
+include ':image'
+include ':image:internal'
+include ':image:api'

@@ -25,18 +25,20 @@ public class AymooseApplication {
 
 		SpringApplication app = new SpringApplication(AymooseApplication.class);
 
-		// This provides fully qualified class names as bean names, including packages so that we can have 2 beans with the same name in different packages
-		// ex: gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.UserOperationsAdapter 
-		// ex: gtu.cse.se.altefdirt.aymoose.court.internal.application.port.UserOperationsPort
+		// This provides fully qualified class names as bean names, including packages
+		// so that we can have 2 beans with the same name in different packages
+		// ex:
+		// gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.UserOperationsAdapter
+		// ex:
+		// gtu.cse.se.altefdirt.aymoose.court.internal.application.port.UserOperationsPort
 		app.setBeanNameGenerator(new AnnotationBeanNameGenerator() {
-            @Override
-            protected String buildDefaultBeanName(BeanDefinition definition) {
-                String beanClassName = definition.getBeanClassName();
-                Assert.state(beanClassName != null, "No bean class name set");
-                return beanClassName;
-            }
-        });
+			@Override
+			protected String buildDefaultBeanName(BeanDefinition definition) {
+				String beanClassName = definition.getBeanClassName();
+				Assert.state(beanClassName != null, "No bean class name set");
+				return beanClassName;
+			}
+		});
 		app.run(args);
 	}
 }
-

@@ -1,11 +1,15 @@
 dependencies {
 
     implementation project(':shared')
-    implementation project(':core')
+    implementation project(':core')    
     implementation project(':account:internal')
     implementation project(':account:api')
     implementation project(':review:internal')
     implementation project(':review:api')
     implementation project(':court:internal')
     implementation project(':court:api')
+    implementation project(':image:internal')
+    implementation project(':image:api')
+    implementation project(':facility:internal')
+    implementation project(':facility:api')
 }

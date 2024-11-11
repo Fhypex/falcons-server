@@ -4,23 +4,21 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateFacility(
-        @NotBlank(message = "Facility Id cannot be null or empty")
-        String id,
+                @NotBlank(message = "Facility Id cannot be null or empty") String id,
 
-        @NotBlank(message = "Facility name cannot be null or empty")
-        String facilityName,
+                @NotBlank(message = "Facility name cannot be null or empty") String facilityName,
 
-        @NotBlank(message = "Facility description cannot be null or empty")
-        String facilityDescription,
+                @NotBlank(message = "Facility description cannot be null or empty") String facilityDescription,
 
-        String phoneNumber,
+                String phoneNumber,
 
-        Integer courtCount,
+                Integer courtCount,
 
-        String contactDetails,
+                String contactDetails,
 
-        Double latitude,
+                String location,
 
-        Double longitude
-) implements Command {
+                String city,
+
+                String district) implements Command {
 }
