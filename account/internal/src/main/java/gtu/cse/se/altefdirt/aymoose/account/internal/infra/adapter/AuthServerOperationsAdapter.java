@@ -77,6 +77,8 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             user.setUsername(username);
             user.setEmail(email);
             user.setEnabled(true);
+            user.setFirstName("demo-name");
+            user.setLastName("demo-last-name");
             user.setCredentials(Collections.singletonList(createPasswordCredential(password)));
 
             // Add the user to the realm
