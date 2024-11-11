@@ -5,24 +5,43 @@ task plantUml(type:Exec) {
  */}
 
 
-task generateProperties(type: WriteProperties) {
-    // Dynamically find all .properties files in the project directory
-    def propertyFiles = fileTree(dir: '.', include: '**/*.properties')
+//task generateProperties(type: WriteProperties) {
+//    // Dynamically find all .properties files in the project directory, excluding the 'build' directory
+//    def propertyFiles = fileTree(dir: '.', include: '**/*.properties').matching {
+//        exclude '**/build/**' exclude '**/bin/**' exclude '**/gradle/**' exclude '**/.gradle/**'
+//    }//
 
-    // Create a Properties object to hold the combined properties
-    Properties combinedProperties = new Properties()
+//    // Create a Properties object to hold the combined properties
+//    Properties combinedProperties = new Properties()//
 
-    // Iterate over each property file and load them into the combinedProperties object
-    propertyFiles.each { propertyFile ->
-        println "Loading properties from: ${propertyFile}"
-        propertyFile.withInputStream {
-            combinedProperties.load(it)
-        }
-    }
+//    // Iterate over each property file and load them into the combinedProperties object
+//    propertyFiles.each { propertyFile ->
+//        println "Loading properties from: ${propertyFile}"
+//        
+//        // Read the properties file with InputStream, but handle any special characters correctly
+//        propertyFile.withInputStream { inputStream ->
+//            // Read each line and manually escape or handle problematic characters if needed
+//            inputStream.eachLine { line ->
+//                // Remove trailing spaces, handle characters like ':' and '/'
+//                def cleanedLine = line.trim()//
 
-    // Set the destination file directly on the task
-    destinationFile = file("$buildDir/combined.properties")
+//                // If we have URL-like strings (like 'auth.server = https://blabla.com/bla'), ensure they are not escaped
+//                if (cleanedLine.contains('=')) {
+//                    def (key, value) = cleanedLine.split('=', 2)
+//                    // If there's a URL or any other characters that need special handling, process the value
+//                    value = value
+//                    println "Adding property: ${key} = ${value}"//
 
-    // Set the combined properties to the WriteProperties task
-    properties = combinedProperties
-}
+//                    // For URL-like properties, make sure we don't escape colons or slashes
+//                    combinedProperties.setProperty(key.trim(), value)
+//                }
+//            }
+//        }
+//    }//
+
+//    // Set the destination file directly on the task
+//    destinationFile = file("$buildDir/combined.properties")//
+
+//    // Set the combined properties to the WriteProperties task
+//    properties = combinedProperties
+//}

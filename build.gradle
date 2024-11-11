@@ -19,12 +19,12 @@ allprojects {
 
 apply from: "$rootProject.projectDir/gradle/config/entry-point.gradle"
 
-// Make sure generateProperties runs before the build task
+/* // Make sure generateProperties runs before the build task
 build.dependsOn generateProperties
 
 // Make sure generateProperties runs before the bootRun task
 bootRun.dependsOn generateProperties
-
+ */
 sonar {
   properties {
     property "sonar.projectKey", "aymoose-server"

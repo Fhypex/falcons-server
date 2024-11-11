@@ -14,8 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 @Component
 class ImageOperationsAdapter implements ImageOperationsPort {
 
-    @Autowired
-    @Value("${image.name}")
+    @Value("https://imgcdn.stablediffusionweb.com/2024/9/16/778175e0-33f9-4224-9e6b-5c0984042816.jpg")
     String imageName;
 
     @Override

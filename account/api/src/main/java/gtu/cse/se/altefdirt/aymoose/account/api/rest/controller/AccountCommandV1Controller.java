@@ -27,11 +27,11 @@ class AccountCommandV1Controller {
     @PostMapping("/accounts")
     public Response<AccountView> create(@RequestBody CreateAccountRequestDTO request) {
         AccountView view = runner.run(new CreateAccount(
-            request.username(),
-            request.password(),
-            request.mailAddress(),
-            request.fullName()
-        ));
+                request.mailAddress(),
+                request.password(),
+                request.mailAddress(),
+                request.firstName(),
+                request.lastName()));
 
         return Response.success(view, "Account created successfully");
     }

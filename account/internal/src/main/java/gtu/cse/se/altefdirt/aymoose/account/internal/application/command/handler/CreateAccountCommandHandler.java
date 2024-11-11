@@ -22,7 +22,6 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import lombok.RequiredArgsConstructor;
 
-
 @RegisterHandler
 @RequiredArgsConstructor
 public class CreateAccountCommandHandler implements CommandHandler<CreateAccount, AccountView> {
@@ -34,8 +33,9 @@ public class CreateAccountCommandHandler implements CommandHandler<CreateAccount
 
     @Override
     public AccountView handle(CreateAccount command) {
-        
-        Optional<UserId> id = authServerOperationsPort.register(command.username(), command.password(), command.mailAddress());
+
+        Optional<UserId> id = authServerOperationsPort.register(command.username(), command.password(),
+                command.mailAddress());
 
         if (id.isEmpty()) {
             throw new RuntimeException("User registration failed");
@@ -43,7 +43,8 @@ public class CreateAccountCommandHandler implements CommandHandler<CreateAccount
 
         // Mocked image id
         AggregateId imageId = AggregateId.generate();
-        Account account = factory.load(id.get(), new FullName(command.fullName()), imageId, CreatedAt.now(), true);
+        Account account = factory.load(id.get(), FullName.of(command.firstName(), command.lastName()), imageId,
+                CreatedAt.now(), true);
 
         System.out.println("Account created: " + account);
 

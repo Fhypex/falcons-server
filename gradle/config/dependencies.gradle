@@ -45,7 +45,7 @@ dependencies {
 
 
     // Docker compose
-    implementation 'org.springframework.boot:spring-boot-docker-compose:3.3.4'
+    //implementation 'org.springframework.boot:spring-boot-docker-compose:3.3.4'
 
     // Spring Boot DevTools
     //developmentOnly("org.springframework.boot:spring-boot-devtools")

@@ -29,11 +29,10 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
     private Keycloak keycloak;
     private String realm;
     private String adminClient;
-    
 
     public AuthServerOperationsAdapter(@Autowired Keycloak keycloak,
-                              @Value("${keycloak.realm}") String realm, 
-                              @Value("${keycloak.admin-client-uuid}") String adminClient) {
+            @Value("${keycloak.realm}") String realm,
+            @Value("${keycloak.admin.client.uuid}") String adminClient) {
         this.keycloak = keycloak;
         this.realm = realm;
         this.adminClient = adminClient;
@@ -71,7 +70,7 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             System.out.println("password: " + password);
             // Get the realm resource from Keycloak
             RealmResource realmResource = keycloak.realm(realm);
-            
+
             // Create a new UserRepresentation object
             UserRepresentation user = new UserRepresentation();
             // user.setId(userId);
@@ -79,7 +78,7 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             user.setEmail(email);
             user.setEnabled(true);
             user.setCredentials(Collections.singletonList(createPasswordCredential(password)));
-            
+
             // Add the user to the realm
             Response response = realmResource.users().create(user);
 
@@ -89,14 +88,12 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
                 System.err.println("Error registering user: " + response.getStatusInfo().getReasonPhrase());
                 // Return empty result in case of failure
 
-
                 return Optional.empty();
             }
             System.out.println("response: " + response.getLocation().getPath());
             String userId = response.getLocation().getPath().split("(.)*users/")[1];
             System.out.println("userId: " + userId);
 
-            
             // Return successful result
             return Optional.of(UserId.from(userId));
         } catch (Exception e) {
@@ -109,8 +106,7 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
 
     @Override
     public Optional<AuthDetails> getDetails(UserId userId) {
-        try
-        {
+        try {
             RealmResource realmResource = keycloak.realm(realm);
             UserResource user = realmResource.users().get(userId.value());
             if (user == null) {
@@ -118,13 +114,12 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             }
             UserRepresentation userRepresentation = user.toRepresentation();
             return Optional.of(new AuthDetails(
-                                    userRepresentation.getUsername(),
-                                    userRepresentation.getEmail(),
-                                    (userRepresentation.getRealmRoles() != null) ? userRepresentation.getRealmRoles() : Collections.emptyList()
-                                        ));
+                    userRepresentation.getUsername(),
+                    userRepresentation.getEmail(),
+                    (userRepresentation.getRealmRoles() != null) ? userRepresentation.getRealmRoles()
+                            : Collections.emptyList()));
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Log the exception (optional)
             log.error("Error occurred during getting details of user", e);
             return Optional.empty();
@@ -140,4 +135,3 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
         return passwordCredential;
     }
 }
-
