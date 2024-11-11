@@ -16,3 +16,6 @@ include ':court'
 include ':court:internal'
 include ':court:api'
 
+include ':image'
+include ':image:internal'
+include ':image:api'
