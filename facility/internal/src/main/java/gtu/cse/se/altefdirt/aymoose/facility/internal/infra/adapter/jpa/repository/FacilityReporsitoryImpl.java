@@ -25,18 +25,17 @@ class FacilityRepositoryImpl implements FacilityRepository {
 
     private Facility build(FacilityEntity facilityEntity) {
         return facilityFactory.load(
-            AggregateId.from(facilityEntity.getId()), 
-            AggregateId.from(facilityEntity.getUserId()), 
-            facilityEntity.getFacilityName(),
-            facilityEntity.getPhoneNumber(),
-            facilityEntity.getFacilityDescription(),
-            facilityEntity.getLocation(), 
-            facilityEntity.getCity(),
-            facilityEntity.getDistrict(),
-            facilityEntity.getContactDetails(),
-            new FacilityCapacity(facilityEntity.getCourtCount()),
-            facilityEntity.isActive()
-        );
+                AggregateId.from(facilityEntity.getId()),
+                AggregateId.from(facilityEntity.getUserId()),
+                facilityEntity.getFacilityName(),
+                facilityEntity.getPhoneNumber(),
+                facilityEntity.getFacilityDescription(),
+                facilityEntity.getLocation(),
+                facilityEntity.getCity(),
+                facilityEntity.getDistrict(),
+                facilityEntity.getContactDetails(),
+                new FacilityCapacity(facilityEntity.getCourtCount()),
+                facilityEntity.isActive());
     }
 
     @Override
@@ -53,7 +52,7 @@ class FacilityRepositoryImpl implements FacilityRepository {
     @Override
     public List<Facility> findAll() {
         return jpaFacilityRepository.findAll().stream()
-                                     .map(this::build)
-                                     .collect(Collectors.toList());
+                .map(this::build)
+                .collect(Collectors.toList());
     }
 }

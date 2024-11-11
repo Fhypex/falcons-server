@@ -15,7 +15,7 @@ public class Favorites extends BaseAggregateRoot {
     private final AggregateId facilityId;
 
     public Favorites(AggregateId id, AggregateId userId, AggregateId facilityId) {
-        //String token=HttpServletRequest.getHeader("Autharization").substring(7);
+        // String token=HttpServletRequest.getHeader("Autharization").substring(7);
         super(id);
         this.userId = userId;
         this.facilityId = facilityId;

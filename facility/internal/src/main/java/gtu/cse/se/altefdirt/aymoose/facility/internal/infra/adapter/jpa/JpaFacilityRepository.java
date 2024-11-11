@@ -15,12 +15,15 @@ public interface JpaFacilityRepository extends JpaRepository<FacilityEntity, Str
 
     Optional<FacilityEntity> findById(String id);
 
-    /* 
-    @Query("SELECT f FROM FacilityEntity f WHERE " +
-    "(:city IS NULL OR f.city = :city) AND " +
-    "(:district IS NULL OR f.district = :district) AND " +
-    "(:name IS NULL OR f.name LIKE %:name%)")
-List<FacilityEntity> findByFilters(@Param("city") String city,
-                                @Param("district") String district,
-                                @Param("name") String name); */
+    /*
+     * @Query("SELECT f FROM FacilityEntity f WHERE " +
+     * "(:city IS NULL OR f.city = :city) AND " +
+     * "(:district IS NULL OR f.district = :district) AND " +
+     * "(:name IS NULL OR f.name LIKE %:name%)")
+     * List<FacilityEntity> findByFilters(@Param("city") String city,
+     * 
+     * @Param("district") String district,
+     * 
+     * @Param("name") String name);
+     */
 }

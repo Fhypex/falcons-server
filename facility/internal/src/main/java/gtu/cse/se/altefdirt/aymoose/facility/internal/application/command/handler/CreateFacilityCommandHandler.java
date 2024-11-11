@@ -28,17 +28,14 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
                 command.facilityName(),
                 command.phoneNumber(),
                 command.facilityDescription(),
-                command.location(),      
-                command.city(),          
-                command.district(),     
+                command.location(),
+                command.city(),
+                command.district(),
                 command.contactDetails(),
-                new FacilityCapacity(command.courtCount())
-        );
+                new FacilityCapacity(command.courtCount()));
 
-        
         Facility savedFacility = facilityRepository.save(facility);
 
-        
         return service.denormalize(savedFacility);
     }
 }

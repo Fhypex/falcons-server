@@ -6,11 +6,10 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageDat
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface ImageOperationsPort1 {
-    
+
     List<ImageData> findAll(AggregateId facilityId);
 
     ImageData save(String image, String relationId, String title);
 
     void delete(AggregateId imageId);
 }
-

@@ -40,4 +40,3 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
         return service.denormalize(savedFacility);
     }
 }
-

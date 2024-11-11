@@ -24,4 +24,3 @@ class ImageOperationsAdapter1 implements ImageOperationsPort1 {
         // Delete işlemi yapılabilir
     }
 }
-

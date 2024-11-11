@@ -29,10 +29,9 @@ class FacilityCommandV1Controller {
                 request.facilityDescription(),
                 request.city(),
                 request.district(),
-                request.location(), 
+                request.location(),
                 request.contactDetails(),
-                request.courtCount()
-        ));
+                request.courtCount()));
         return Response.success(view, "Facility created successfully");
     }
 }

@@ -1,0 +1,10 @@
+description = 'account'
+jar.archiveBaseName.set('account')
+
+dependencies {
+    implementation project('api')
+}
+
+build {
+    dependsOn 'internal:build', 'api:build'
+}

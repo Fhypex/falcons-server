@@ -18,17 +18,17 @@ public class Facility extends BaseAggregateRoot {
     private FacilityCapacity courtCount;
     private boolean isActive;
 
-    public Facility(AggregateId id, 
-                    AggregateId userId, 
-                    String facilityName, 
-                    String phoneNumber,
-                    String facilityDescription, 
-                    String location,
-                    String city,
-                    String district,
-                    String contactDetails,
-                    FacilityCapacity courtCount,
-                    boolean isActive) {
+    public Facility(AggregateId id,
+            AggregateId userId,
+            String facilityName,
+            String phoneNumber,
+            String facilityDescription,
+            String location,
+            String city,
+            String district,
+            String contactDetails,
+            FacilityCapacity courtCount,
+            boolean isActive) {
         super(id);
         this.userId = userId;
         this.facilityName = facilityName;

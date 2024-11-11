@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class FacilityEntity {
-    
+
     @Id
     private String id;
     private String userId;
@@ -32,17 +32,17 @@ public class FacilityEntity {
 
     public static FacilityEntity from(Facility facility) {
         return FacilityEntity.builder()
-            .id(facility.id().value())
-            .userId(facility.getUserId().value())
-            .facilityName(facility.getFacilityName())
-            .phoneNumber(facility.getPhoneNumber())
-            .facilityDescription(facility.getFacilityDescription())
-            .location(facility.getLocation())
-            .city(facility.getCity())
-            .district(facility.getDistrict())
-            .contactDetails(facility.getContactDetails())
-            .courtCount(facility.getCourtCount().value())
-            .isActive(facility.isActive())
-            .build();
+                .id(facility.id().value())
+                .userId(facility.getUserId().value())
+                .facilityName(facility.getFacilityName())
+                .phoneNumber(facility.getPhoneNumber())
+                .facilityDescription(facility.getFacilityDescription())
+                .location(facility.getLocation())
+                .city(facility.getCity())
+                .district(facility.getDistrict())
+                .contactDetails(facility.getContactDetails())
+                .courtCount(facility.getCourtCount().value())
+                .isActive(facility.isActive())
+                .build();
     }
 }

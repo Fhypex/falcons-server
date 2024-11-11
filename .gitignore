@@ -5,6 +5,27 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### ENVIRONMENT ###
+
+.env
+*.env
+*.p12
+*.key
+*.jks
+*.pem
+*.cer
+*.crt
+*.der
+*.pfx
+
+# Ignore all .env files
+.env.*
+
+# If you want to be more specific and ignore only .env.dev, .env.local, etc.
+*.env.dev
+*.env.local
+*.env.production
+
 ### STS ###
 .apt_generated
 .classpath

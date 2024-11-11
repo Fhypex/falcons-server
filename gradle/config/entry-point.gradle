@@ -1,7 +1,9 @@
 dependencies {
 
     implementation project(':shared')
-    implementation project(':core')
+    implementation project(':core')    
+    implementation project(':account:internal')
+    implementation project(':account:api')
     implementation project(':review:internal')
     implementation project(':review:api')
     implementation project(':court:internal')
