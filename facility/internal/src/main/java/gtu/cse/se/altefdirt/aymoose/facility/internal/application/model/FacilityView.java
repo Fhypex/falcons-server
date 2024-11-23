@@ -3,14 +3,16 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import lombok.Builder;
 
-import java.util.List;
+import java.util.List;AggregateId.generate(),userId,phoneNumber,facilityName,facilityDescription,location,city,contactDetails,true
 
 @Builder
 public record FacilityView(
+
         String id,
-        String userId,
-        String facilityName,
+        String ownerId,
         String phoneNumber,
+        String facilityName,
+
         String facilityDescription,
         String location,
         String city,

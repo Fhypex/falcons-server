@@ -1,27 +1,27 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 import java.util.List;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 
 @Getter
 public class Court extends BaseAggregateRoot {
-   
-    public Court(AggregateId id, 
-                 AggregateId facilityId, 
-                 CourtDetails courtDetails,  
-                 Measurements measurements, 
-                 Capacity capacity,
-                 WorkHours workHours,
-                 Location location,
-                 List<Amenity> amenities,
-                 boolean isActive) {
+
+    public Court(AggregateId id,
+            AggregateId facilityId,
+            CourtDetails courtDetails,
+            Measurements measurements,
+            Capacity capacity,
+            WorkHours workHours,
+            Location location,
+            List<Amenity> amenities,
+            boolean isActive) {
         super(id);
         this.facilityId = facilityId;
         this.details = courtDetails;
@@ -39,7 +39,7 @@ public class Court extends BaseAggregateRoot {
 
     private Measurements measurements;
 
-    private Capacity capacity; 
+    private Capacity capacity;
 
     private WorkHours workHours;
 

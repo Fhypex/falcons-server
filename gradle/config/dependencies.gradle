@@ -40,6 +40,9 @@ dependencies {
     /* implementation "com.auth0:java-jwt:${jwtVersion}" */
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 
+    implementation 'com.google.api-client:google-api-client:1.32.1'
+    implementation 'org.postgresql:postgresql:42.7.4'
+
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
     implementation 'org.keycloak:keycloak-admin-client:26.0.2'
 
