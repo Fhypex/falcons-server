@@ -33,8 +33,7 @@ class CourtCommandV1Controller {
                                                     request.capacity(),
                                                     request.openTime(),
                                                     request.closeTime(),
-                                                    request.latitude(),
-                                                    request.longitude(),
+                                                    request.location(),
                                                     request.amenityIds(),
                                                     request.images()));
         return Response.success(view, "Court created successfully");

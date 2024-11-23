@@ -8,7 +8,6 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.AmenityOpera
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperationsPort;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Amenity;
-import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtDetails;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtFactory;
@@ -18,6 +17,7 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.domain.WorkHours;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import lombok.RequiredArgsConstructor;
 
@@ -44,7 +44,7 @@ public class CreateCourtCommandHandler implements CommandHandler<CreateCourt, Co
                                      new Measurements(command.height(), command.width()),
                                      new Capacity(command.capacity()),
                                      new WorkHours(command.openTime(), command.closeTime()),
-                                     new Location(command.latitude(), command.longitude()),
+                                     new Location(command.location()),
                                      command.amenityIds().stream().map(amenity -> new Amenity(AggregateId.from(amenity))).collect(Collectors.toList()));
         
         Court savedCourt = courtRepository.save(court);

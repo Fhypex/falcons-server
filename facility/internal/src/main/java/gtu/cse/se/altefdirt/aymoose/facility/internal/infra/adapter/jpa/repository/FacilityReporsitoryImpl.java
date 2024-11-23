@@ -6,12 +6,14 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityCapacity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityFactory;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.FacilityEntity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.JpaFacilityRepository;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -23,19 +25,17 @@ class FacilityRepositoryImpl implements FacilityRepository {
     private final JpaFacilityRepository jpaFacilityRepository;
     private final FacilityFactory facilityFactory;
 
-    private Facility build(FacilityEntity facilityEntity) {
+    private Facility build(FacilityEntity entity) {
         return facilityFactory.load(
-                AggregateId.from(facilityEntity.getId()),
-                AggregateId.from(facilityEntity.getUserId()),
-                facilityEntity.getFacilityName(),
-                facilityEntity.getPhoneNumber(),
-                facilityEntity.getFacilityDescription(),
-                facilityEntity.getLocation(),
-                facilityEntity.getCity(),
-                facilityEntity.getDistrict(),
-                facilityEntity.getContactDetails(),
-                new FacilityCapacity(facilityEntity.getCourtCount()),
-                facilityEntity.isActive());
+                AggregateId.from(entity.getId()),
+                AggregateId.from(entity.getOwnerId()),
+                new PhoneNumber(entity.getPhoneNumber()),
+                entity.getName(),
+                entity.getDescription(),
+                new Address(entity.getCity(), entity.getDistrict(), entity.getFullAddress()),
+                new Location(entity.getLocation()),
+                entity.getContactDetails(),
+                entity.isActive());
     }
 
     @Override

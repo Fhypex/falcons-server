@@ -73,8 +73,8 @@ public class Court extends BaseAggregateRoot {
         this.workHours = new WorkHours(openTime, closeTime);
     }
 
-    public void updateLocation(double latitude, double longitude) {
-        this.location = new Location(latitude, longitude);
+    public void updateLocation(String location) {
+        this.location = new Location(location);
     }
 
     public void updateAmenities(List<String> amenityIds) {

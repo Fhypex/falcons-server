@@ -26,9 +26,7 @@ public record UpdateCourt(
 
         Instant closeTime,
 
-        Double latitude,
-
-        Double longitude,
+        String location,
 
         List<String> amenityIds
 ) implements Command {

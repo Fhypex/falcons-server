@@ -5,9 +5,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityData;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageData;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationsPort1;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ReviewOperationPort;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.CourtOperationPort;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.FacilityService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import lombok.RequiredArgsConstructor;
@@ -16,28 +19,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class FacilityServiceImpl implements FacilityService {
 
-    private final ImageOperationsPort1 imageOperationsPort;
+    private final ImageOperationPort imageOperationsPort;
+    private final ReviewOperationPort commentOperationPort;
+    private final CourtOperationPort courtOperationPort;
+
 
     @Override
     public FacilityView denormalize(Facility facility) {
 
-        List<ImageData> images = imageOperationsPort.findAll(facility.id());
+        ImageData image = imageOperationsPort.find(facility.id());
 
-        List<String> imagePaths = images.stream().map(ImageData::id).collect(Collectors.toList());
+        int commentCount = commentOperationPort.reviewCount(facility.id());
 
-        return FacilityView.builder()
-                .id(facility.id().value())
-                .userId(facility.userId().value())
-                .facilityName(facility.facilityName())
-                .phoneNumber(facility.phoneNumber())
-                .facilityDescription(facility.facilityDescription())
-                .location(facility.location())
-                .city(facility.city())
-                .district(facility.district())
-                .contactDetails(facility.contactDetails())
-                .courtCount(facility.courtCount().value())
-                .isActive(facility.isActive())
-                .images(imagePaths)
-                .build();
+        String rating = commentOperationPort.rating(facility.id());
+
+        List<AmenityData> amenities = courtOperationPort.findAllAmenities(facility.id());
+
+        return new FacilityView(facility, image.url(), commentCount, rating, amenities);
     }
 }

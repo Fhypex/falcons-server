@@ -1,9 +1,9 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import lombok.Getter;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.City;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
@@ -11,31 +11,31 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 @Getter
 public class Facility extends BaseAggregateRoot {
 
-    private AggregateId userId;
+    private AggregateId ownerId;
     private PhoneNumber phoneNumber;
-    private String facilityName;
-    private String facilityDescription;
+    private String name;
+    private String description;
+    private Address address;
     private Location location;
-    private City city;
     private String contactDetails;
     private boolean isActive;
 
     public Facility(AggregateId id,
-            AggregateId userId,
+            AggregateId ownerId,
             PhoneNumber phoneNumber,
-            String facilityName,
-            String facilityDescription,
+            String name,
+            String description,
+            Address address,
             Location location,
-            City city,
             String contactDetails,
             boolean isActive) {
         super(id);
-        this.userId = userId;
-        this.facilityName = facilityName;
+        this.ownerId = ownerId;
+        this.name = name;
         this.phoneNumber = phoneNumber;
-        this.facilityDescription = facilityDescription;
+        this.description = description;
+        this.address = address;
         this.location = location;
-        this.city = city;
         this.contactDetails = contactDetails;
         this.isActive = isActive;
     }
@@ -49,8 +49,39 @@ public class Facility extends BaseAggregateRoot {
     }
 
     public void updateFacilityDetails(String name, String description) {
-        this.facilityName = name;
-        this.facilityDescription = description;
+        this.name = name;
+        this.description = description;
     }
 
+    public AggregateId ownerId() {
+        return this.ownerId;
+    }
+
+    public PhoneNumber phoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public String name() {
+        return this.name;
+    }
+
+    public String description() {
+        return this.description;
+    }
+
+    public Location location() {
+        return this.location;
+    }
+
+    public String contactDetails() {
+        return this.contactDetails;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    public Address address() {
+        return this.address;
+    }
 }

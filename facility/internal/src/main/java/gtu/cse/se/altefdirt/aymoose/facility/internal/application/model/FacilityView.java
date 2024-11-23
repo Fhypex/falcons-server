@@ -1,38 +1,43 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 
+import java.util.List;
+import java.util.Map;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import lombok.Builder;
 
-import java.util.List;AggregateId.generate(),userId,phoneNumber,facilityName,facilityDescription,location,city,contactDetails,true
-
 @Builder
 public record FacilityView(
-
         String id,
         String ownerId,
         String phoneNumber,
-        String facilityName,
-
-        String facilityDescription,
+        String name,
+        String description,
         String location,
         String city,
         String district,
+        String fullAddress,
         String contactDetails,
-        Integer courtCount,
         boolean isActive,
-        List<String> images) {
-    public FacilityView(Facility facility, List<String> images) {
+        String imageUrl,
+        int reviewCount,
+        String rating,
+        List<Map<String, Object>> reviews) {
+    public FacilityView(Facility facility, String imageUrl, int reviewCount, String rating, List<AmenityData> reviews) {
         this(facility.id().value(),
-                facility.userId().value(),
-                facility.facilityName(),
-                facility.phoneNumber(),
-                facility.facilityDescription(),
-                facility.location(),
-                facility.city(),
-                facility.district(),
+                facility.ownerId().value(),
+                facility.phoneNumber().value(),
+                facility.name(),
+                facility.description(),
+                facility.location().value(),
+                facility.address().city(),
+                facility.address().district(),
+                facility.address().fullAddress(),
                 facility.contactDetails(),
-                facility.courtCount().value(),
                 facility.isActive(),
-                images);
+                imageUrl,
+                reviewCount,
+                rating,
+                reviews.stream().map(AmenityData::toMap).toList());
     }
 }

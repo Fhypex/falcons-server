@@ -4,12 +4,14 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Create
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.FacilityService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityCapacity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityFactory;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
@@ -24,15 +26,14 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
     public FacilityView handle(CreateFacility command) {
 
         Facility facility = factory.create(
-                AggregateId.from(command.userId()),
-                command.facilityName(),
-                command.phoneNumber(),
-                command.facilityDescription(),
-                command.location(),
-                command.city(),
-                command.district(),
+                AggregateId.from(command.ownerId()),
+                new PhoneNumber(command.phoneNumber()),
+                command.name(),
+                command.description(),
+                new Address(command.city(), command.district(),command.fullAddress()),
+                new Location(command.location()),
                 command.contactDetails(),
-                new FacilityCapacity(command.courtCount()));
+                command.isActive());
 
         Facility savedFacility = facilityRepository.save(facility);
 

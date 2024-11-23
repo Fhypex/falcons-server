@@ -7,29 +7,28 @@ import lombok.Builder;
 @Builder
 public record FacilityResponseDTO(
         String id,
-        String facilityName,
-        String facilityDescription,
         String phoneNumber,
-        String contactDetails,
-        Integer courtCount,
-        Double latitude,
-        Double longitude,
+        String name,
+        String description,
         String city,
         String district,
+        String fullAddress,
         String location,
+        String imageUrl,
+        String contactDetails,
         List<String> images) {
     public static FacilityResponseDTO fromView(FacilityView facilityView) {
         return FacilityResponseDTO.builder()
                 .id(facilityView.id())
-                .facilityName(facilityView.facilityName())
-                .facilityDescription(facilityView.facilityDescription())
                 .phoneNumber(facilityView.phoneNumber())
-                .contactDetails(facilityView.contactDetails())
-                .courtCount(facilityView.courtCount())
+                .name(facilityView.name())
+                .description(facilityView.description())
                 .city(facilityView.city())
                 .district(facilityView.district())
+                .fullAddress(facilityView.fullAddress())
                 .location(facilityView.location())
-                .images(facilityView.images())
+                .contactDetails(facilityView.contactDetails())
+                .imageUrl(facilityView.imageUrl())
                 .build();
     }
 }

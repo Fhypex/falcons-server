@@ -17,8 +17,7 @@ public record CourtView (
     Integer capacity,
     Instant openTime,
     Instant closeTime,
-    Double latitude,
-    Double longitude,
+    String location,
     boolean isActive,
     List<List<String>> amenities,
     List<String> images
@@ -34,8 +33,7 @@ public record CourtView (
              court.capacity().value(), 
              court.workHours().openTime(), 
              court.workHours().closeTime(), 
-             court.location().latitude(), 
-             court.location().longitude(), 
+             court.location().value(),
              court.isActive(),
              amenities, 
              images);

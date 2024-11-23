@@ -19,29 +19,29 @@ public class FacilityEntity {
 
     @Id
     private String id;
-    private String userId;
-    private String facilityName;
+    private String ownerId;
+    private String name;
+    private String description;
     private String phoneNumber;
-    private String facilityDescription;
     private String city;
     private String district;
-    private String contactDetails;
-    private int courtCount;
+    private String fullAddress;
     private String location;
+    private String contactDetails;
     private boolean isActive;
 
     public static FacilityEntity from(Facility facility) {
         return FacilityEntity.builder()
                 .id(facility.id().value())
-                .userId(facility.getUserId().value())
-                .facilityName(facility.getFacilityName())
-                .phoneNumber(facility.getPhoneNumber())
-                .facilityDescription(facility.getFacilityDescription())
-                .location(facility.getLocation())
-                .city(facility.getCity())
-                .district(facility.getDistrict())
+                .ownerId(facility.ownerId().value())
+                .name(facility.name())
+                .description(facility.description())
+                .phoneNumber(facility.phoneNumber().value())
+                .location(facility.location().value())
+                .city(facility.address().city())
+                .district(facility.address().district())
+                .fullAddress(facility.address().fullAddress())
                 .contactDetails(facility.getContactDetails())
-                .courtCount(facility.getCourtCount().value())
                 .isActive(facility.isActive())
                 .build();
     }

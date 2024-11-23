@@ -18,8 +18,7 @@ public record CreateCourt(
         Integer capacity,
         Instant openTime,
         Instant closeTime,
-        Double latitude,
-        Double longitude,
+        String location,
         List<String> amenityIds,
         List<String> images
 ) implements Command {

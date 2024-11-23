@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 @Service
 public class ImageServiceImplement implements ImageServicexd {
 
-    private final Path fileStorageLocation = Paths.get("D:\\Codes\\Java\\Images").toAbsolutePath().normalize();
+    private final Path fileStorageLocation = Paths.get(".").normalize();
 
     public ImageServiceImplement() {
         try {

@@ -5,9 +5,9 @@ import java.util.List;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
-public interface ImageOperationsPort1 {
+public interface ImageOperationPort {
 
-    List<ImageData> findAll(AggregateId facilityId);
+    ImageData find(AggregateId facilityId);
 
     ImageData save(String image, String relationId, String title);
 

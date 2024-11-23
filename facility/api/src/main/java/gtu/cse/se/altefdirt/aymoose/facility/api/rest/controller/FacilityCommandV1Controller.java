@@ -23,15 +23,16 @@ class FacilityCommandV1Controller {
     @PostMapping("/facilities")
     public Response<FacilityView> createFacility(@RequestBody CreateFacilityRequestDTO request) {
         FacilityView view = runner.run(new CreateFacility(
-                request.userId(),
-                request.facilityName(),
+                request.ownerId(),
                 request.phoneNumber(),
-                request.facilityDescription(),
+                request.name(),
+                request.description(),
                 request.city(),
                 request.district(),
+                request.fullAddress(),
                 request.location(),
                 request.contactDetails(),
-                request.courtCount()));
+                request.isActive()));
         return Response.success(view, "Facility created successfully");
     }
 }

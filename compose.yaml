@@ -7,14 +7,14 @@ services:
       POSTGRES_PASSWORD: 5ay58MOO58se8
       POSTGRES_DB: server
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U server"]
+      test: ["CMD-SHELL", "pg_isready -U aymoose -d server"]
       interval: 5s
       timeout: 5s
       retries: 5
     volumes:
       - ./postgresql/init/:/docker-entrypoint-initdb.d/
     ports:
-      - 5432:5432
+      - 5434:5432
     networks:
       - db_network
 
