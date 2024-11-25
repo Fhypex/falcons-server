@@ -1,12 +1,15 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import lombok.Getter;
+
+import java.util.List;
+
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.City;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 
 @Getter
 public class Facility extends BaseAggregateRoot {
@@ -18,6 +21,8 @@ public class Facility extends BaseAggregateRoot {
     private Address address;
     private Location location;
     private String contactDetails;
+    private WorkHours workHours;
+    private List<AggregateId> amenities;
     private boolean isActive;
 
     public Facility(AggregateId id,
@@ -28,6 +33,8 @@ public class Facility extends BaseAggregateRoot {
             Address address,
             Location location,
             String contactDetails,
+            WorkHours workHours,
+            List<AggregateId> amenities,
             boolean isActive) {
         super(id);
         this.ownerId = ownerId;
@@ -37,6 +44,8 @@ public class Facility extends BaseAggregateRoot {
         this.address = address;
         this.location = location;
         this.contactDetails = contactDetails;
+        this.workHours = workHours;
+        this.amenities = amenities;
         this.isActive = isActive;
     }
 
@@ -83,5 +92,13 @@ public class Facility extends BaseAggregateRoot {
 
     public Address address() {
         return this.address;
+    }
+
+    public WorkHours workHours() {
+        return this.workHours;
+    }
+
+    public List<AggregateId> amenities() {
+        return this.amenities;
     }
 }

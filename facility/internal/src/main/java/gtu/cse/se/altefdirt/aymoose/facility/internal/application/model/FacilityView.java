@@ -18,26 +18,30 @@ public record FacilityView(
         String district,
         String fullAddress,
         String contactDetails,
+        int openTime,
+        int closeTime,
         boolean isActive,
         String imageUrl,
         int reviewCount,
         String rating,
-        List<Map<String, Object>> reviews) {
-    public FacilityView(Facility facility, String imageUrl, int reviewCount, String rating, List<AmenityData> reviews) {
+        List<Map<String, Object>> amenities) {
+    public FacilityView(Facility facility, String imageUrl, int reviewCount, String rating, String city, String district, List<AmenityView> amenities) {
         this(facility.id().value(),
                 facility.ownerId().value(),
                 facility.phoneNumber().value(),
                 facility.name(),
                 facility.description(),
                 facility.location().value(),
-                facility.address().city(),
-                facility.address().district(),
+                city,
+                district,
                 facility.address().fullAddress(),
                 facility.contactDetails(),
+                facility.workHours().openTime(),
+                facility.workHours().closeTime(),
                 facility.isActive(),
                 imageUrl,
                 reviewCount,
                 rating,
-                reviews.stream().map(AmenityData::toMap).toList());
+                amenities.stream().map(AmenityView::toMap).toList());
     }
 }

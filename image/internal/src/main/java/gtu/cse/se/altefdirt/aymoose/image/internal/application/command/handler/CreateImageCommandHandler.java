@@ -18,19 +18,15 @@ import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
 @RequiredArgsConstructor
-public class CreateImageCommandHandler implements CommandHandler<CreateImage, ImageView> {
+public class CreateImageCommandHandler implements CommandHandler<CreateImage, Image> {
 
     private final ImageFactory factory;
-    private final ImageService service;
-    private final ImageRepository ImageRepository;
+    private final ImageRepository imageRepository;
 
     @Override
-    public ImageView handle(CreateImage command) {
+    public Image handle(CreateImage command) {
 
-        Image Image = factory.create(AggregateId.from(command.relationId()), command.file() , command.extension());
-
-        service.storeImage(Image);                                                              
-        Image savedImage = ImageRepository.save(Image);
-        return service.denormalize(savedImage);
+        Image image = factory.createBase(AggregateId.from(command.relationId()), command.file());
+        return imageRepository.save(image, command.file());
     }
 }

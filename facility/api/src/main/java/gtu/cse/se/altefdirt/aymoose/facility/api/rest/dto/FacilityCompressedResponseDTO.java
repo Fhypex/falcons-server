@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import lombok.Builder;
 
 @Builder
@@ -17,19 +16,18 @@ public record FacilityCompressedResponseDTO(
         String rating,
         int reviewCount,
         String image,
-        List<Map<String, String>> amenities) {
-    public static FacilityCompressedResponseDTO from(FacilityView facility) {
+        List<Map<String, Object>> amenities) {
+    public static FacilityCompressedResponseDTO from(FacilityView view) {
         return FacilityCompressedResponseDTO.builder()
-                .id(facility.id())
-                .name(facility.name())
-                .description(facility.description())
-                .city(facility.city())
-                .district(facility.district())
-                .rating(facility.rating())
-                .reviewCount(facility.reviewCount())
-                .image(facility.imageUrl())
-                .image("https://tesiskirala.com/wp-content/uploads/2024/01/IMG-20190515-WA0000.jpg")
-                .amenities(List.of(Map.of("name", "Wifi"), Map.of("name", "Parking")))
+                .id(view.id())
+                .name(view.name())
+                .description(view.description())
+                .city(view.city())
+                .district(view.district())
+                .rating(view.rating())
+                .reviewCount(view.reviewCount())
+                .image(view.imageUrl())
+                .amenities(view.amenities())
                 .build();
     }
 }

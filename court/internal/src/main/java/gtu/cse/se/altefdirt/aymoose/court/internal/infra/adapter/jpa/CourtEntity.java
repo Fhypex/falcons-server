@@ -41,9 +41,6 @@ public class CourtEntity {
             .height(court.getMeasurements().height())
             .width(court.getMeasurements().width())
             .capacity(court.getCapacity().value())
-            .openTime(court.getWorkHours().openTime())
-            .closeTime(court.getWorkHours().closeTime())
-            .location(court.getLocation().value())
             .isActive(court.isActive())
             .build();
     }

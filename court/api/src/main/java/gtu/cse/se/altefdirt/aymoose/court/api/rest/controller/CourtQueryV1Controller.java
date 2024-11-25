@@ -42,13 +42,19 @@ class CourtQueryV1Controller {
         return courtRepository.findAll().stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).collect(Collectors.toUnmodifiableList());
     }
 
-    @GetMapping(value = "/court/{id}")
+    @GetMapping(value = "/courts/{id}")
     CourtResponseDTO getCourtById(@PathVariable(Parameter.ID) String id) {
         Optional<Court> fetch = courtRepository.findById(AggregateId.from(id));
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Court does not exist");
         }
         return CourtResponseDTO.fromView(courtService.denormalize(fetch.get()));
+    }
+
+    @GetMapping(value = "/courts", params = Parameter.FACILITY)
+    List<CourtResponseDTO> getCourtsByFacilityId(@RequestParam(value = Parameter.FACILITY) String facilityId) {
+        List<Court> courts = courtRepository.findAllByFacilityId(AggregateId.from(facilityId));
+        return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).collect(Collectors.toUnmodifiableList());
     }
 
 }

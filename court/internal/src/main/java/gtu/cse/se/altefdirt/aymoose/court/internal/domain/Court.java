@@ -2,13 +2,9 @@ package gtu.cse.se.altefdirt.aymoose.court.internal.domain;
 
 import lombok.Getter;
 
-import java.time.Instant;
-import java.util.List;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 
 @Getter
 public class Court extends BaseAggregateRoot {
@@ -18,18 +14,12 @@ public class Court extends BaseAggregateRoot {
             CourtDetails courtDetails,
             Measurements measurements,
             Capacity capacity,
-            WorkHours workHours,
-            Location location,
-            List<Amenity> amenities,
             boolean isActive) {
         super(id);
         this.facilityId = facilityId;
         this.details = courtDetails;
         this.measurements = measurements;
         this.capacity = capacity;
-        this.workHours = workHours;
-        this.location = location;
-        this.amenities = amenities;
         this.isActive = isActive;
     }
 
@@ -40,12 +30,6 @@ public class Court extends BaseAggregateRoot {
     private Measurements measurements;
 
     private Capacity capacity;
-
-    private WorkHours workHours;
-
-    private Location location;
-
-    private List<Amenity> amenities;
 
     private boolean isActive;
 
@@ -69,17 +53,6 @@ public class Court extends BaseAggregateRoot {
         this.capacity = new Capacity(value);
     }
 
-    public void updateWorkHours(Instant openTime, Instant closeTime) {
-        this.workHours = new WorkHours(openTime, closeTime);
-    }
-
-    public void updateLocation(String location) {
-        this.location = new Location(location);
-    }
-
-    public void updateAmenities(List<String> amenityIds) {
-        this.amenities = amenityIds.stream().map(AggregateId::from).map(Amenity::new).toList();
-    }
 
     public AggregateId facilityId() {
         return facilityId;
@@ -95,18 +68,6 @@ public class Court extends BaseAggregateRoot {
 
     public Capacity capacity() {
         return capacity;
-    }
-
-    public WorkHours workHours() {
-        return workHours;
-    }
-
-    public Location location() {
-        return location;
-    }
-
-    public List<Amenity> amenities() {
-        return amenities;
     }
 
     public boolean isActive() {

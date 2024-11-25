@@ -17,4 +17,9 @@ class FacilityOperationAdapter implements FacilityOperationPort {
     public boolean isOwner(String facilityId, String userId) {
         return true;
     }
+
+    @Override
+    public boolean existsById(String facilityId) {
+        return true;
+    }
 }

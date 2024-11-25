@@ -14,6 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -23,19 +24,22 @@ import lombok.RequiredArgsConstructor;
 class FacilityRepositoryImpl implements FacilityRepository {
 
     private final JpaFacilityRepository jpaFacilityRepository;
-    private final FacilityFactory facilityFactory;
+    private final FacilityFactory factory;
 
     private Facility build(FacilityEntity entity) {
-        return facilityFactory.load(
+        return factory.load(
                 AggregateId.from(entity.getId()),
                 AggregateId.from(entity.getOwnerId()),
                 new PhoneNumber(entity.getPhoneNumber()),
                 entity.getName(),
                 entity.getDescription(),
-                new Address(entity.getCity(), entity.getDistrict(), entity.getFullAddress()),
+                new Address(entity.getCityId(), entity.getDistrictId(), entity.getFullAddress()),
                 new Location(entity.getLocation()),
                 entity.getContactDetails(),
-                entity.isActive());
+                new WorkHours(entity.getOpenTime(), entity.getCloseTime()),
+                entity.getAmenities().stream().map(AggregateId::from).collect(Collectors.toUnmodifiableList()),
+                entity.isActive()
+                );
     }
 
     @Override
@@ -46,13 +50,12 @@ class FacilityRepositoryImpl implements FacilityRepository {
 
     @Override
     public Optional<Facility> findById(AggregateId id) {
-        return jpaFacilityRepository.findById(id.value()).map(this::build);
+        FacilityEntity facilityEntity = jpaFacilityRepository.findById(id.value()).get();
+        return Optional.of(build(facilityEntity));
     }
 
     @Override
     public List<Facility> findAll() {
-        return jpaFacilityRepository.findAll().stream()
-                .map(this::build)
-                .collect(Collectors.toList());
+        return jpaFacilityRepository.findAll().stream().map(this::build).collect(Collectors.toUnmodifiableList());
     }
 }

@@ -7,4 +7,6 @@ public interface FacilityOperationPort {
     UserData findOwner(String facilityId);
 
     boolean isOwner(String facilityId, String userId);
+
+    boolean existsById(String facilityId);
 }

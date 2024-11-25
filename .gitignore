@@ -17,6 +17,8 @@ build/
 *.crt
 *.der
 *.pfx
+*env.json
+env.json
 
 # Ignore all .env files
 .env.*

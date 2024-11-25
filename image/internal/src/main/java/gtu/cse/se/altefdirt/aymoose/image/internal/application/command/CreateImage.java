@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 public record CreateImage(
         @NotBlank(message = "Relation Id cannot be null or empty")
         String relationId,        
-        MultipartFile file,  
-        String extension
+        MultipartFile file
 ) implements Command {
 }

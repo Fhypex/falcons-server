@@ -14,4 +14,7 @@ public interface JpaCourtRepository extends JpaRepository<CourtEntity, String> {
 
     Optional<CourtEntity> findById(String id);
 
+    @Query("SELECT c FROM CourtEntity c WHERE c.facilityId = :facilityId")
+    List<CourtEntity> findAllByFacilityId(String facilityId);
+
 }

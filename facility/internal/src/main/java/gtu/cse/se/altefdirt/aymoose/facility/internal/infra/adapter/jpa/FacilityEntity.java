@@ -1,6 +1,9 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
+import java.util.List;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -23,11 +26,15 @@ public class FacilityEntity {
     private String name;
     private String description;
     private String phoneNumber;
-    private String city;
-    private String district;
+    private Long cityId;
+    private Long districtId;
     private String fullAddress;
     private String location;
     private String contactDetails;
+    private int openTime;
+    private int closeTime;
+    @ElementCollection(targetClass = String.class, fetch = jakarta.persistence.FetchType.EAGER)
+    private List<String> amenities;
     private boolean isActive;
 
     public static FacilityEntity from(Facility facility) {
@@ -38,10 +45,13 @@ public class FacilityEntity {
                 .description(facility.description())
                 .phoneNumber(facility.phoneNumber().value())
                 .location(facility.location().value())
-                .city(facility.address().city())
-                .district(facility.address().district())
+                .cityId(facility.address().cityId())
+                .districtId(facility.address().districtId())
                 .fullAddress(facility.address().fullAddress())
                 .contactDetails(facility.getContactDetails())
+                .openTime(facility.workHours().openTime())
+                .closeTime(facility.workHours().closeTime())
+                .amenities(facility.amenities().stream().map(amenity -> amenity.id()).toList())
                 .isActive(facility.isActive())
                 .build();
     }
