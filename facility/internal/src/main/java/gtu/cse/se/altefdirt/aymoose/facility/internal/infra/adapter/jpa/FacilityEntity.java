@@ -1,6 +1,9 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
+import java.util.List;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -19,29 +22,36 @@ public class FacilityEntity {
 
     @Id
     private String id;
-    private String userId;
-    private String facilityName;
+    private String ownerId;
+    private String name;
+    private String description;
     private String phoneNumber;
-    private String facilityDescription;
-    private String city;
-    private String district;
-    private String contactDetails;
-    private int courtCount;
+    private Long cityId;
+    private Long districtId;
+    private String fullAddress;
     private String location;
+    private String contactDetails;
+    private int openTime;
+    private int closeTime;
+    @ElementCollection(targetClass = String.class, fetch = jakarta.persistence.FetchType.EAGER)
+    private List<String> amenities;
     private boolean isActive;
 
     public static FacilityEntity from(Facility facility) {
         return FacilityEntity.builder()
                 .id(facility.id().value())
-                .userId(facility.getUserId().value())
-                .facilityName(facility.getFacilityName())
-                .phoneNumber(facility.getPhoneNumber())
-                .facilityDescription(facility.getFacilityDescription())
-                .location(facility.getLocation())
-                .city(facility.getCity())
-                .district(facility.getDistrict())
+                .ownerId(facility.ownerId().value())
+                .name(facility.name())
+                .description(facility.description())
+                .phoneNumber(facility.phoneNumber().value())
+                .location(facility.location().value())
+                .cityId(facility.address().cityId())
+                .districtId(facility.address().districtId())
+                .fullAddress(facility.address().fullAddress())
                 .contactDetails(facility.getContactDetails())
-                .courtCount(facility.getCourtCount().value())
+                .openTime(facility.workHours().openTime())
+                .closeTime(facility.workHours().closeTime())
+                .amenities(facility.amenities().stream().map(amenity -> amenity.id()).toList())
                 .isActive(facility.isActive())
                 .build();
     }

@@ -1,44 +1,51 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import lombok.Getter;
+
+import java.util.List;
+
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 
 @Getter
 public class Facility extends BaseAggregateRoot {
 
-    private AggregateId userId;
-    private String facilityName;
-    private String phoneNumber;
-    private String facilityDescription;
-    private String location;
-    private String city;
-    private String district;
+    private AggregateId ownerId;
+    private PhoneNumber phoneNumber;
+    private String name;
+    private String description;
+    private Address address;
+    private Location location;
     private String contactDetails;
-    private FacilityCapacity courtCount;
+    private WorkHours workHours;
+    private List<AggregateId> amenities;
     private boolean isActive;
 
     public Facility(AggregateId id,
-            AggregateId userId,
-            String facilityName,
-            String phoneNumber,
-            String facilityDescription,
-            String location,
-            String city,
-            String district,
+            AggregateId ownerId,
+            PhoneNumber phoneNumber,
+            String name,
+            String description,
+            Address address,
+            Location location,
             String contactDetails,
-            FacilityCapacity courtCount,
+            WorkHours workHours,
+            List<AggregateId> amenities,
             boolean isActive) {
         super(id);
-        this.userId = userId;
-        this.facilityName = facilityName;
+        this.ownerId = ownerId;
+        this.name = name;
         this.phoneNumber = phoneNumber;
-        this.facilityDescription = facilityDescription;
+        this.description = description;
+        this.address = address;
         this.location = location;
-        this.city = city;
-        this.district = district;
         this.contactDetails = contactDetails;
-        this.courtCount = courtCount;
+        this.workHours = workHours;
+        this.amenities = amenities;
         this.isActive = isActive;
     }
 
@@ -51,62 +58,47 @@ public class Facility extends BaseAggregateRoot {
     }
 
     public void updateFacilityDetails(String name, String description) {
-        this.facilityName = name;
-        this.facilityDescription = description;
+        this.name = name;
+        this.description = description;
     }
 
-    public void updateContactDetails(String contactDetails, String phoneNumber) {
-        this.contactDetails = contactDetails;
-        this.phoneNumber = phoneNumber;
+    public AggregateId ownerId() {
+        return this.ownerId;
     }
 
-    public void updateLocation(String location, String city, String district) {
-        this.location = location;
-        this.city = city;
-        this.district = district;
+    public PhoneNumber phoneNumber() {
+        return this.phoneNumber;
     }
 
-    public void updateCourtCount(int count) {
-        this.courtCount = new FacilityCapacity(count);
+    public String name() {
+        return this.name;
     }
 
-    public AggregateId userId() {
-        return userId;
+    public String description() {
+        return this.description;
     }
 
-    public String facilityName() {
-        return facilityName;
-    }
-
-    public String phoneNumber() {
-        return phoneNumber;
-    }
-
-    public String facilityDescription() {
-        return facilityDescription;
-    }
-
-    public String location() {
-        return location;
-    }
-
-    public String city() {
-        return city;
-    }
-
-    public String district() {
-        return district;
+    public Location location() {
+        return this.location;
     }
 
     public String contactDetails() {
-        return contactDetails;
-    }
-
-    public FacilityCapacity courtCount() {
-        return courtCount;
+        return this.contactDetails;
     }
 
     public boolean isActive() {
-        return isActive;
+        return this.isActive;
+    }
+
+    public Address address() {
+        return this.address;
+    }
+
+    public WorkHours workHours() {
+        return this.workHours;
+    }
+
+    public List<AggregateId> amenities() {
+        return this.amenities;
     }
 }

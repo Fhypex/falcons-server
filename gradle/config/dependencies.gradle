@@ -40,6 +40,21 @@ dependencies {
     /* implementation "com.auth0:java-jwt:${jwtVersion}" */
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 
+    implementation 'com.google.api-client:google-api-client:1.32.1'
+    implementation 'org.postgresql:postgresql:42.7.4'
+
+
+    // https://mvnrepository.com/artifact/com.google.apis/google-api-services-drive
+    implementation 'com.google.apis:google-api-services-drive:v3-rev197-1.25.0'
+    // https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.30.0'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:3.4.0'
+
+
+    // https://mvnrepository.com/artifact/io.minio/minio
+    implementation 'io.minio:minio:8.5.13'
+
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
     implementation 'org.keycloak:keycloak-admin-client:26.0.2'
 

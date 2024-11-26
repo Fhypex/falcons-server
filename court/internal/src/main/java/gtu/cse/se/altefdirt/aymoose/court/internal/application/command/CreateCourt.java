@@ -1,7 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.application.command;
 
-import java.time.Instant;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
 import jakarta.validation.constraints.NotBlank;
@@ -16,11 +17,6 @@ public record CreateCourt(
         Integer height,
         Integer width,
         Integer capacity,
-        Instant openTime,
-        Instant closeTime,
-        Double latitude,
-        Double longitude,
-        List<String> amenityIds,
-        List<String> images
+        List<MultipartFile> images
 ) implements Command {
 }

@@ -1,36 +1,47 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 
+import java.util.List;
+import java.util.Map;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import lombok.Builder;
-
-import java.util.List;
 
 @Builder
 public record FacilityView(
         String id,
-        String userId,
-        String facilityName,
+        String ownerId,
         String phoneNumber,
-        String facilityDescription,
+        String name,
+        String description,
         String location,
         String city,
         String district,
+        String fullAddress,
         String contactDetails,
-        Integer courtCount,
+        int openTime,
+        int closeTime,
         boolean isActive,
-        List<String> images) {
-    public FacilityView(Facility facility, List<String> images) {
+        String imageUrl,
+        int reviewCount,
+        String rating,
+        List<Map<String, Object>> amenities) {
+    public FacilityView(Facility facility, String imageUrl, int reviewCount, String rating, String city, String district, List<AmenityView> amenities) {
         this(facility.id().value(),
-                facility.userId().value(),
-                facility.facilityName(),
-                facility.phoneNumber(),
-                facility.facilityDescription(),
-                facility.location(),
-                facility.city(),
-                facility.district(),
+                facility.ownerId().value(),
+                facility.phoneNumber().value(),
+                facility.name(),
+                facility.description(),
+                facility.location().value(),
+                city,
+                district,
+                facility.address().fullAddress(),
                 facility.contactDetails(),
-                facility.courtCount().value(),
+                facility.workHours().openTime(),
+                facility.workHours().closeTime(),
                 facility.isActive(),
-                images);
+                imageUrl,
+                reviewCount,
+                rating,
+                amenities.stream().map(AmenityView::toMap).toList());
     }
 }

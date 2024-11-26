@@ -15,16 +15,11 @@ public record CourtView (
     Integer height,
     Integer width,
     Integer capacity,
-    Instant openTime,
-    Instant closeTime,
-    Double latitude,
-    Double longitude,
     boolean isActive,
-    List<List<String>> amenities,
     List<String> images
 )
 {
-    public CourtView (Court court, List<List<String>> amenities, List<String> images) {
+    public CourtView (Court court, List<String> images) {
         this(court.id().value(), 
              court.facilityId().value(), 
              court.details().name(), 
@@ -32,12 +27,7 @@ public record CourtView (
              court.measurements().height(), 
              court.measurements().width(), 
              court.capacity().value(), 
-             court.workHours().openTime(), 
-             court.workHours().closeTime(), 
-             court.location().latitude(), 
-             court.location().longitude(), 
              court.isActive(),
-             amenities, 
              images);
     }
 }

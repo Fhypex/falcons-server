@@ -29,8 +29,7 @@ public class CourtEntity {
     private int capacity;
     private Instant openTime;
     private Instant closeTime;
-    private Double latitude;
-    private Double longitude;
+    private String location;
     private boolean isActive;
 
     public static CourtEntity from(Court court) {
@@ -42,10 +41,6 @@ public class CourtEntity {
             .height(court.getMeasurements().height())
             .width(court.getMeasurements().width())
             .capacity(court.getCapacity().value())
-            .openTime(court.getWorkHours().openTime())
-            .closeTime(court.getWorkHours().closeTime())
-            .latitude(court.getLocation().latitude())
-            .longitude(court.getLocation().longitude())
             .isActive(court.isActive())
             .build();
     }

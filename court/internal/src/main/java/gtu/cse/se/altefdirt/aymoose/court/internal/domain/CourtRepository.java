@@ -13,4 +13,6 @@ public interface CourtRepository {
 
     List<Court> findAll();
 
+    List<Court> findAllByFacilityId(AggregateId facilityId);
+
 }

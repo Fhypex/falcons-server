@@ -13,9 +13,6 @@ public record CourtResponseDTO(
     Integer height,
     Integer width,
     int capacity,
-    Instant openTime,
-    Instant closeTime,
-    List<List<String>> services,
     List<String> images
 )
 {
@@ -27,9 +24,6 @@ public record CourtResponseDTO(
             .height(courtView.height())
             .width(courtView.width())
             .capacity(courtView.capacity())
-            .openTime(courtView.openTime())
-            .closeTime(courtView.closeTime())
-            .services(courtView.amenities())
             .images(courtView.images())
             .build();
     }
