@@ -1,14 +1,11 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.application.command.handler;
 
-import org.apache.commons.lang3.NotImplementedException;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.List;
 
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.command.UpdateCourt;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.CourtView;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.FacilityOperationPort;
-import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperationsPort;
+import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtFactory;
@@ -25,12 +22,12 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
     private final CourtFactory factory;
     private final CourtService service;
     private final FacilityOperationPort facilityOperationPort;
-    private final ImageOperationsPort imageOperationPort;
+    private final ImageOperationPort imageOperationPort;
     private final CourtRepository repository;
 
     @Override
     public CourtView handle(UpdateCourt command) {
-        
+
         Optional<Court> fetch = repository.findById(AggregateId.from(command.id()));
 
         if (fetch.isEmpty()) {

@@ -8,7 +8,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.CreateA
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountView;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AuthDetails;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.AuthServerOperationsPort;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.ImageOperationsPort;
+import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.service.AccountService;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;

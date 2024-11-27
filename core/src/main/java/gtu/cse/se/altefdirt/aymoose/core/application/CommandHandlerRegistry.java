@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.core.application;
 
+import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -35,12 +36,33 @@ public class CommandHandlerRegistry {
         }
     }
 
+    /**
+     * Resolves the command type by checking if the handler is a proxy and
+     * unwrapping it.
+     * 
+     * @param handler the CommandHandler to extract the command type from
+     * @return the Class representing the command type
+     */
     @SuppressWarnings("unchecked")
     private Class<? extends Command> getCommandType(CommandHandler<?, ?> handler) {
-        return (Class<? extends Command>) ((ParameterizedType) handler.getClass()
+        // Unwrap the proxy if necessary
+        Class<?> handlerClass = AopProxyUtils.ultimateTargetClass(handler);
+
+        // Now extract the generic type from the real class
+        return (Class<? extends Command>) ((ParameterizedType) handlerClass
                 .getGenericInterfaces()[0])
                 .getActualTypeArguments()[0];
     }
+
+    /*
+     * @SuppressWarnings("unchecked")
+     * private Class<? extends Command> getCommandType(CommandHandler<?, ?> handler)
+     * {
+     * return (Class<? extends Command>) ((ParameterizedType) handler.getClass()
+     * .getGenericInterfaces()[0])
+     * .getActualTypeArguments()[0];
+     * }
+     */
 
     @SuppressWarnings("unchecked")
     public <C extends Command, R> CommandHandler<C, R> getHandler(Class<C> commandClass) {

@@ -1,7 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.court.api.rest.controller;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.CourtView;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtRepository;
@@ -36,10 +33,12 @@ class CourtQueryV1Controller {
         private static final String RATING_GT = "ratingGt";
         private static final String RATING_LT = "ratingLt";
     }
-    
+
     @GetMapping(value = "/courts")
     List<CourtResponseDTO> getAllCourts() {
-        return courtRepository.findAll().stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).collect(Collectors.toUnmodifiableList());
+        return courtRepository.findAll().stream()
+                .map(court -> CourtResponseDTO.fromView(courtService.denormalize(court)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @GetMapping(value = "/courts/{id}")
@@ -54,7 +53,8 @@ class CourtQueryV1Controller {
     @GetMapping(value = "/courts", params = Parameter.FACILITY)
     List<CourtResponseDTO> getCourtsByFacilityId(@RequestParam(value = Parameter.FACILITY) String facilityId) {
         List<Court> courts = courtRepository.findAllByFacilityId(AggregateId.from(facilityId));
-        return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).collect(Collectors.toUnmodifiableList());
+        return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
 }

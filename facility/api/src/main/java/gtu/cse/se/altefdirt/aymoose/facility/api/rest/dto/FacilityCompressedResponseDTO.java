@@ -15,7 +15,7 @@ public record FacilityCompressedResponseDTO(
         String district,
         String rating,
         int reviewCount,
-        String image,
+        List<String> imageUrls,
         List<Map<String, Object>> amenities) {
     public static FacilityCompressedResponseDTO from(FacilityView view) {
         return FacilityCompressedResponseDTO.builder()
@@ -26,7 +26,7 @@ public record FacilityCompressedResponseDTO(
                 .district(view.district())
                 .rating(view.rating())
                 .reviewCount(view.reviewCount())
-                .image(view.imageUrl())
+                .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
                 .build();
     }

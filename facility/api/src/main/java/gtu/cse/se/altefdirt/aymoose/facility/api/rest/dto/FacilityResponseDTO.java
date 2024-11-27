@@ -19,10 +19,10 @@ public record FacilityResponseDTO(
         String contactDetails,
         int openTime,
         int closeTime,
-        String image,
+        List<String> imageUrls,
         String rating,
         int reviewCount,
-         List<Map<String, Object>> amenities) {
+        List<Map<String, Object>> amenities) {
     public static FacilityResponseDTO fromView(FacilityView view) {
         return FacilityResponseDTO.builder()
                 .id(view.id())
@@ -38,7 +38,7 @@ public record FacilityResponseDTO(
                 .closeTime(view.closeTime())
                 .rating(view.rating())
                 .reviewCount(view.reviewCount())
-                .image(view.imageUrl())
+                .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
                 .build();
     }

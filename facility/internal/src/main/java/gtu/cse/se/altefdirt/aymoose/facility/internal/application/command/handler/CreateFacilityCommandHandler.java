@@ -2,12 +2,11 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.handl
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateFacility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.AmenityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.FacilityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.DistrictRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
@@ -24,21 +23,21 @@ import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
 @RequiredArgsConstructor
-public class CreateFacilityCommandHandler implements CommandHandler<CreateFacility, FacilityView> {
+public class CreateFacilityCommandHandler implements CommandHandler<CreateFacility, Facility> {
 
     private final FacilityFactory factory;
-    private final FacilityService service;
     private final AmenityService amenityService;
     private final FacilityRepository facilityRepository;
     private final DistrictRepository districtRepository;
+    private final ImageOperationPort imageOperationPort;
 
     @Override
-    public FacilityView handle(CreateFacility command) {
+    public Facility handle(CreateFacility command) {
 
         District district = districtRepository.findById(command.districtId()).get();
 
         List<AggregateId> amenities = command.amenities().stream().map(AggregateId::from).toList();
-        if(!amenityService.validateAmenities(amenities)) {
+        if (!amenityService.validateAmenities(amenities)) {
             throw new IllegalArgumentException("Invalid amenities");
         }
 
@@ -47,7 +46,7 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
                 new PhoneNumber(command.phoneNumber()),
                 command.name(),
                 command.description(),
-                new Address(district.cityId(), command.districtId(),command.fullAddress()),
+                new Address(district.cityId(), command.districtId(), command.fullAddress()),
                 new Location(command.location()),
                 command.contactDetails(),
                 new WorkHours(command.openTime(), command.closeTime()),
@@ -59,6 +58,10 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
         district.setInUse(true);
         districtRepository.save(district);
 
-        return service.denormalize(savedFacility);
+        for (MultipartFile image : command.images()) {
+            imageOperationPort.save(savedFacility.id(), image);
+        }
+
+        return savedFacility;
     }
 }

@@ -1,5 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.api.rest.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -10,10 +12,10 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Create
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateDistrict;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateFacility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateAmenityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateCityRequestDTO;
@@ -21,6 +23,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateDistrictRequestD
 import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,8 +34,9 @@ class FacilityCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping("/facilities")
-    public Response<FacilityView> createFacility(@RequestBody CreateFacilityRequestDTO request) {
-        FacilityView view = runner.run(new CreateFacility(
+    public Response<AggregateId> createFacility(@RequestPart("images") List<MultipartFile> images,
+            @RequestPart("data") CreateFacilityRequestDTO request) {
+        Facility facility = runner.run(new CreateFacility(
                 request.ownerId(),
                 request.phoneNumber(),
                 request.name(),
@@ -44,34 +48,32 @@ class FacilityCommandV1Controller {
                 request.openTime(),
                 request.closeTime(),
                 request.amenityIds(),
-                request.isActive()));
-        return Response.success(view, "Facility created successfully");
+                request.isActive(),
+                images));
+        return Response.success(facility.id(), "Facility created successfully");
     }
-
 
     @PostMapping("/amenities")
-    public Response<AmenityView> createAmenity(@RequestPart("image") MultipartFile image, 
-    @RequestPart("data") CreateAmenityRequestDTO request) {
-        AmenityView view = runner.run(new CreateAmenity(
+    public Response<AggregateId> createAmenity(@RequestPart("image") MultipartFile image,
+            @RequestPart("data") CreateAmenityRequestDTO request) {
+        Amenity amenity = runner.run(new CreateAmenity(
                 image,
                 request.name()));
-        return Response.success(view, "Amenity created successfully");
+        return Response.success(amenity.id(), "Amenity created successfully");
     }
 
-
     @PostMapping("/cities")
-    public Response<CityView> createCity(@RequestBody CreateCityRequestDTO request) {
-        CityView view = runner.run(new CreateCity(
+    public Response<Long> createCity(@RequestBody CreateCityRequestDTO request) {
+        City city = runner.run(new CreateCity(
                 request.name()));
-        return Response.success(view, "City created successfully");
+        return Response.success(city.id(), "City created successfully");
     }
 
     @PostMapping("/cities/districts")
-    public Response<District> createDistrict(@RequestBody CreateDistrictRequestDTO request) {
+    public Response<Long> createDistrict(@RequestBody CreateDistrictRequestDTO request) {
         District district = runner.run(new CreateDistrict(request.cityId(),
                 request.name()));
-        return Response.success(district, "District created successfully");
+        return Response.success(district.id(), "District created successfully");
     }
-
 
 }
