@@ -16,4 +16,6 @@ public interface ImageOperationPort {
     int delete(AggregateId imageId);
 
     List<ImageData> findByRelationId(AggregateId relationId);
+
+    int deleteByRelationId(AggregateId relationId);
 }

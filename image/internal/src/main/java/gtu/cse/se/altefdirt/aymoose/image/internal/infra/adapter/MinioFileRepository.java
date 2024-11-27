@@ -15,8 +15,10 @@ import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
+import io.minio.RemoveObjectsArgs;
 import io.minio.errors.MinioException;
 import io.minio.messages.Bucket;
+import io.minio.messages.DeleteObject;
 
 @Component
 public class MinioFileRepository {
@@ -70,6 +72,17 @@ public class MinioFileRepository {
             return objectName;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void deleteFiles(List<String> objectNames) {
+        try {
+                minioClient.removeObjects(RemoveObjectsArgs.builder()
+                        .bucket(defaultBucketName)
+                        .objects(objectNames.stream().map(DeleteObject::new).toList())
+                        .build());
+        } catch (Exception e) {
+            throw new IllegalStateException("The file cannot be delete on the internal storage. Please retry later", e);
         }
     }
 

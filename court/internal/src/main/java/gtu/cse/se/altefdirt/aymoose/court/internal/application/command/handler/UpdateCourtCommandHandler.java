@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.command.UpdateCourt;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.CourtView;
-import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.FacilityOperationPort;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
@@ -21,7 +20,6 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
 
     private final CourtFactory factory;
     private final CourtService service;
-    private final FacilityOperationPort facilityOperationPort;
     private final ImageOperationPort imageOperationPort;
     private final CourtRepository repository;
 

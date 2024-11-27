@@ -19,4 +19,8 @@ public interface JpaCityRepository extends JpaRepository<CityEntity, Long> {
 
     @Query("SELECT COUNT(a) > 0 FROM CityEntity a WHERE a.id = :id")
     boolean existsById(Long id);
+
+    
+    @Query("SELECT COUNT(a) = :size FROM CityEntity a WHERE a.id IN :ids")
+    boolean existsByIds(List<Long> ids, int size);
 }

@@ -9,11 +9,15 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface ImageOperationPort {
 
-    ImageData find(AggregateId relationId);
+    ImageData findById(AggregateId relationId);
 
     ImageData save(AggregateId relationId, MultipartFile image);
 
     int delete(AggregateId imageId);
 
+    ImageData findOneByRelationId(AggregateId relationId);
+    
     List<ImageData> findByRelationId(AggregateId relationId);
+
+    int deleteByRelationId(AggregateId relationId);
 }

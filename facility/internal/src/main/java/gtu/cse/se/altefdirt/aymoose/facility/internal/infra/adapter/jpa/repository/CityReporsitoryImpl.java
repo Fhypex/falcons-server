@@ -56,7 +56,18 @@ class CityRepositoryImpl implements CityRepository {
     }
 
     @Override
-    public List<City> findAll(List<Long> ids) {
+    public List<City> findByIds(List<Long> ids) {
         return jpaCityRepository.findAllById(ids).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        jpaCityRepository.deleteById(id);
+        return 1;
+    }
+
+    @Override
+    public boolean existsByIds(List<Long> ids) {
+        return jpaCityRepository.existsByIdIn(ids);
     }
 }

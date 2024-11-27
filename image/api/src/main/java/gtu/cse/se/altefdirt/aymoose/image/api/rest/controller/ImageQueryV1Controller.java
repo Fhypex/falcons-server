@@ -35,10 +35,7 @@ class ImageQueryV1Controller {
 
     @GetMapping(value = "/images", params = Parameter.RELATION)
     List<ImageResponseDTO> getImagesByRelationId(@RequestParam(Parameter.RELATION) String relationId) {
-        List<Image> images = imageRepository.findAllByRelationId(AggregateId.from(relationId));
-
-        return images.stream().map(image -> {
-            return ImageResponseDTO.fromDomain(image);
-        }).collect(Collectors.toUnmodifiableList());
+        List<Image> images = imageRepository.findByRelationId(AggregateId.from(relationId));
+        return images.stream().map(ImageResponseDTO::fromDomain).collect(Collectors.toUnmodifiableList());
     }
 }

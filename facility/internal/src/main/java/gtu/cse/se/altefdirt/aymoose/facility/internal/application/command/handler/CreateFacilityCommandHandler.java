@@ -20,9 +20,11 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RegisterHandler
 @RequiredArgsConstructor
+@Slf4j
 public class CreateFacilityCommandHandler implements CommandHandler<CreateFacility, Facility> {
 
     private final FacilityFactory factory;
@@ -34,7 +36,10 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
     @Override
     public Facility handle(CreateFacility command) {
 
+        log.debug("Handling create facility command {}", command);
         District district = districtRepository.findById(command.districtId()).get();
+
+        log.debug("Creating facility for district {}", district);
 
         List<AggregateId> amenities = command.amenities().stream().map(AggregateId::from).toList();
         if (!amenityService.validateAmenities(amenities)) {
@@ -53,15 +58,20 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
                 amenities,
                 command.isActive());
 
+        log.debug("Saving facility {}", facility);
+        
         Facility savedFacility = facilityRepository.save(facility);
 
-        district.setInUse(true);
-        districtRepository.save(district);
+        log.debug("Facility saved {}", savedFacility);
+
+
+        log.debug("District updated {}", district);
 
         for (MultipartFile image : command.images()) {
             imageOperationPort.save(savedFacility.id(), image);
         }
-
+        
+        log.debug("Images saved for facility {}", savedFacility);
         return savedFacility;
     }
 }

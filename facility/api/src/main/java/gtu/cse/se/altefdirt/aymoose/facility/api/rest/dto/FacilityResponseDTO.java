@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
 import lombok.Builder;
 
 @Builder
@@ -22,8 +23,9 @@ public record FacilityResponseDTO(
         List<String> imageUrls,
         String rating,
         int reviewCount,
-        List<Map<String, Object>> amenities) {
-    public static FacilityResponseDTO fromView(FacilityView view) {
+        List<Map<String, Object>> amenities,
+        List<CourtData> courts) {
+    public static FacilityResponseDTO fromView(FacilityView view, List<CourtData> courts) {
         return FacilityResponseDTO.builder()
                 .id(view.id())
                 .phoneNumber(view.phoneNumber())
@@ -40,6 +42,7 @@ public record FacilityResponseDTO(
                 .reviewCount(view.reviewCount())
                 .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
+                .courts(courts)
                 .build();
     }
 }

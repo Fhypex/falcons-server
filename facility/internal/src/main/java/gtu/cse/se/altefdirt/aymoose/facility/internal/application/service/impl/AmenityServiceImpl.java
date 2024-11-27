@@ -23,7 +23,7 @@ class AmenityServiceImpl implements AmenityService {
     @Override
     public AmenityView denormalize(Amenity amenity) {
 
-        ImageData image = imageOperationPort.find(amenity.id());
+        ImageData image = imageOperationPort.findOneByRelationId(amenity.id());
 
         return new AmenityView(amenity, image.url());
     }

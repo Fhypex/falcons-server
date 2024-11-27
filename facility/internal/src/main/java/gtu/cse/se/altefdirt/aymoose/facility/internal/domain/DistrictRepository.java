@@ -1,25 +1,14 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface DistrictRepository {
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Repository;
 
-    District save(District city);
+public interface DistrictRepository extends Repository<District, Long> {
 
-    Optional<District> findById(Long id);
-
-    List<District> findAllByCityId(Long cityId);
-
-    List<District> findAll();
-
-    List<District> findAll(List<Long> ids);
+    List<District> findByCityId(Long cityId);
 
     boolean existsByIdIn(List<Long> ids);
 
-    boolean exists(Long id);
-
     boolean existsByCityIdAndName(Long cityId, String name);
-
-    List<District> findAllByInUseTrue();
 }

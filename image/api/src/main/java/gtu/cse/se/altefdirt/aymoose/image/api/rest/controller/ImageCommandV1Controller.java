@@ -1,8 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.image.api.rest.controller;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;

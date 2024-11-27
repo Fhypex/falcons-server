@@ -1,16 +1,16 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Repository;
 
-public interface FacilityRepository {
+public interface FacilityRepository extends Repository<Facility, AggregateId> {
 
-    Facility save(Facility facility);
+    Set<Long> findUniqueDistricts();
 
-    Optional<Facility> findById(AggregateId id);
+    boolean hasFacilityByDistrictId(Long districtId);
 
-    List<Facility> findAll();
-
+    boolean hasFacilityByDistrictIds(List<Long> districtIds);
 }

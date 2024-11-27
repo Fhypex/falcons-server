@@ -23,6 +23,6 @@ public interface JpaDistrictRepository extends JpaRepository<DistrictEntity, Lon
     @Query("SELECT a FROM DistrictEntity a WHERE a.cityId = :cityId")
     List<DistrictEntity> findAllByCityId(Long cityId);
 
-    @Query("SELECT a FROM DistrictEntity a WHERE a.inUse = true")
-    List<DistrictEntity> findAllByInUseTrue();    
+    @Query("SELECT COUNT(a) = :size FROM DistrictEntity a WHERE a.id IN :ids")
+    boolean existsByIds(List<String> ids, int size);
 }

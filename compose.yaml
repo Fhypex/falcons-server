@@ -47,11 +47,9 @@ services:
     ports:
       - 9000:9000
       - 9001:9001
-    entrypoint:  >
-          /bin/sh -c "
-          (sleep 4 && mc alias set aymoose http://localhost:9000 ${DEFAULT_USERNAME} ${DEFAULT_PASSWORD} &/usr/bin/mc mb aymoose/server && mc anonymous set public aymoose/server) & 
-          /usr/bin/minio server /data --console-address ':9001'"
-
+    entrypoint: >
+      /bin/sh -c "
+      (sleep 4 && mc alias set ${MINIO_ALIAS} ${MINIO_API_URL} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} && /usr/bin/mc mb --ignore-existing ${MINIO_ALIAS}/${MINIO_DEFAULT_BUCKET}  && mc anonymous set download ${MINIO_ALIAS}/${MINIO_DEFAULT_BUCKET}) & /usr/bin/minio server /data --console-address ':${MINIO_WEB_PORT}'"  
     networks:
       - mo_network
 

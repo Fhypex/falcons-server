@@ -27,10 +27,6 @@ public class CourtEntity {
     private int height;
     private int width;
     private int capacity;
-    private Instant openTime;
-    private Instant closeTime;
-    private String location;
-    private boolean isActive;
 
     public static CourtEntity from(Court court) {
         return CourtEntity.builder()
@@ -41,7 +37,6 @@ public class CourtEntity {
             .height(court.getMeasurements().height())
             .width(court.getMeasurements().width())
             .capacity(court.getCapacity().value())
-            .isActive(court.isActive())
             .build();
     }
 }

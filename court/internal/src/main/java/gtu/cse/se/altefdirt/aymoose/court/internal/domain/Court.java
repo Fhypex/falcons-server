@@ -13,14 +13,12 @@ public class Court extends BaseAggregateRoot {
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
-            Capacity capacity,
-            boolean isActive) {
+            Capacity capacity) {
         super(id);
         this.facilityId = facilityId;
         this.details = courtDetails;
         this.measurements = measurements;
         this.capacity = capacity;
-        this.isActive = isActive;
     }
 
     private AggregateId facilityId;
@@ -30,16 +28,6 @@ public class Court extends BaseAggregateRoot {
     private Measurements measurements;
 
     private Capacity capacity;
-
-    private boolean isActive;
-
-    public void disable() {
-        this.isActive = false;
-    }
-
-    public void enable() {
-        this.isActive = true;
-    }
 
     public void updateDetails(String name, String description) {
         this.details = new CourtDetails(name, description);
@@ -68,9 +56,5 @@ public class Court extends BaseAggregateRoot {
 
     public Capacity capacity() {
         return capacity;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 }

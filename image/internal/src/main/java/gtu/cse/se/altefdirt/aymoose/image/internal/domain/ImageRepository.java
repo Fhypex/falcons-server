@@ -15,7 +15,9 @@ public interface ImageRepository {
 
     Optional<Image> findById(AggregateId id);
 
-    List<Image> findAllByRelationId(AggregateId relationId);
+    List<Image> findByRelationId(AggregateId relationId);
 
     Integer deleteById(AggregateId id);
+
+    Integer deleteByRelationId(AggregateId relationId);
 }

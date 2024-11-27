@@ -21,14 +21,12 @@ public class DistrictEntity {
     private Long id;
     private Long cityId;
     private String name;
-    private boolean inUse;
 
     public static DistrictEntity from(District amenity) {
         return DistrictEntity.builder()
             .id(amenity.id())
             .name(amenity.name())
             .cityId(amenity.cityId())
-            .inUse(amenity.inUse())
             .build();
     }
 }

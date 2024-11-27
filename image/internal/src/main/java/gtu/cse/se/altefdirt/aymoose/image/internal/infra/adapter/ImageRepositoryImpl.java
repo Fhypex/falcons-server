@@ -78,7 +78,7 @@ class ImageRepositryImpl implements ImageRepository {
     }
 
     @Override
-    public List<Image> findAllByRelationId(AggregateId relationId) {
+    public List<Image> findByRelationId(AggregateId relationId) {
         return jpaImageRepository.findAllByRelationId(relationId.value()).stream().map(this::build)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -88,15 +88,27 @@ class ImageRepositryImpl implements ImageRepository {
         BaseImage baseImage = imageFactory.createBase(relationId, file);
         String url = null;
         try {
-            url = minioFileRepository.uploadFile(file, relationId.value());
+            url = minioFileRepository.uploadFile(file, baseImage.id().value());
         } catch (Exception e) {
             throw new RuntimeException("An error occured during saving to cloud", e);
         }
         if (url == null) {
             throw new RuntimeException("An error occured during saving to cloud");
         }
-        ImageEntity imageEntity = jpaImageRepository.save(ImageEntity.fromBase(baseImage, url));
+        ImageEntity imageEntity = jpaImageRepository.save(ImageEntity.fromBase(baseImage, publicUri + url));
         return build(imageEntity);
+    }
+
+    @Override
+    public Integer deleteByRelationId(AggregateId relationId) {
+        List<ImageEntity> imageEntities = jpaImageRepository.findAllByRelationId(relationId.value());
+            try {
+                minioFileRepository.deleteFiles(imageEntities.stream().map(ImageEntity::getId).collect(Collectors.toList()));
+            } catch (Exception e) {
+                throw new RuntimeException("An error occured during deleting from cloud", e);
+            }
+        jpaImageRepository.deleteByRelationId(relationId.value());
+        return 1;
     }
 
 }

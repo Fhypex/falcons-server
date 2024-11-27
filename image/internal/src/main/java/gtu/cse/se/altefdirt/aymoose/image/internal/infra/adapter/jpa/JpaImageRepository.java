@@ -14,4 +14,6 @@ public interface JpaImageRepository extends JpaRepository<ImageEntity, String> {
     Optional<ImageEntity> findById(String id);
 
     List<ImageEntity> findAllByRelationId(String relationId);
+
+    Integer deleteByRelationId(String relationId);
 }

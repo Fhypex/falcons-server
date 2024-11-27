@@ -19,11 +19,11 @@ public class DistrictFactory {
     }
 
     public District create(Long cityId, String name) {
-        return new District(generateId(), cityId, name, false);
+        return new District(generateId(), cityId, name);
     }
 
     public District load(Long id, Long cityId,
-            String name, boolean inUse) {
-        return new District(id, cityId, name, inUse);
+            String name) {
+        return new District(id, cityId, name);
     }
 }

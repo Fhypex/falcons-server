@@ -2,6 +2,8 @@ package gtu.cse.se.altefdirt.aymoose.facility.api.rest.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -12,6 +14,10 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Create
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateDistrict;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateFacility;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteAmenity;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteCity;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteDistrict;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteFacility;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
@@ -31,10 +37,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class FacilityCommandV1Controller {
 
+    private static final class Parameter {
+        private static final String ID = "id";
+    }
+
     private final CommandRunner runner;
 
     @PostMapping("/facilities")
-    public Response<AggregateId> createFacility(@RequestPart("images") List<MultipartFile> images,
+    public Response<String> createFacility(@RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") CreateFacilityRequestDTO request) {
         Facility facility = runner.run(new CreateFacility(
                 request.ownerId(),
@@ -50,16 +60,16 @@ class FacilityCommandV1Controller {
                 request.amenityIds(),
                 request.isActive(),
                 images));
-        return Response.success(facility.id(), "Facility created successfully");
+        return Response.success(facility.id().value(), "Facility created successfully");
     }
 
     @PostMapping("/amenities")
-    public Response<AggregateId> createAmenity(@RequestPart("image") MultipartFile image,
+    public Response<String> createAmenity(@RequestPart("image") MultipartFile image,
             @RequestPart("data") CreateAmenityRequestDTO request) {
         Amenity amenity = runner.run(new CreateAmenity(
                 image,
                 request.name()));
-        return Response.success(amenity.id(), "Amenity created successfully");
+        return Response.success(amenity.id().value(), "Amenity created successfully");
     }
 
     @PostMapping("/cities")
@@ -74,6 +84,31 @@ class FacilityCommandV1Controller {
         District district = runner.run(new CreateDistrict(request.cityId(),
                 request.name()));
         return Response.success(district.id(), "District created successfully");
+    }
+
+    @DeleteMapping("/cities/district/{id}")
+    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) Long id) {
+        Long districtId = runner.run(new DeleteDistrict(id));
+        return Response.success(districtId, "District created successfully");
+    }
+
+    @DeleteMapping("/cities/{id}")
+    public Response<Long> deleteCity(@PathVariable(Parameter.ID) Long id) {
+        Long cityId = runner.run(new DeleteCity(id));
+        return Response.success(cityId, "City deleted created successfully");
+    }
+
+    @DeleteMapping("/facilities/{id}")
+    public Response<String> createFacility(@PathVariable(Parameter.ID) String id) {
+        AggregateId facilityId = runner.run(new DeleteFacility(id));
+        return Response.success(facilityId.value(), "Facility deleted successfully");
+    }
+
+
+    @PostMapping("/amenities/{id}")
+    public Response<String> createAmenity(@PathVariable(Parameter.ID) String id) {
+        AggregateId amenityId = runner.run(new DeleteAmenity(id));
+        return Response.success(amenityId.value(), "Amenity deleted successfully");
     }
 
 }

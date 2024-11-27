@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -15,15 +14,12 @@ public interface JpaFacilityRepository extends JpaRepository<FacilityEntity, Str
 
     Optional<FacilityEntity> findById(String id);
 
-    /*
-     * @Query("SELECT f FROM FacilityEntity f WHERE " +
-     * "(:city IS NULL OR f.city = :city) AND " +
-     * "(:district IS NULL OR f.district = :district) AND " +
-     * "(:name IS NULL OR f.name LIKE %:name%)")
-     * List<FacilityEntity> findByFilters(@Param("city") String city,
-     * 
-     * @Param("district") String district,
-     * 
-     * @Param("name") String name);
-     */
+    @Query("SELECT COUNT(a) = :size FROM FacilityEntity a WHERE a.id IN :ids")
+    boolean existsByIds(List<String> ids, int size);
+
+    @Query("SELECT COUNT(a) > 0 FROM FacilityEntity a WHERE a.districtId = :districtId")
+    boolean existsByDistrictId(Long districtId);
+
+    @Query("SELECT COUNT(a) > 0 FROM FacilityEntity a WHERE a.districtId IN :districtIds")
+    boolean existsByDistrictIds(List<Long> districtIds);
 }

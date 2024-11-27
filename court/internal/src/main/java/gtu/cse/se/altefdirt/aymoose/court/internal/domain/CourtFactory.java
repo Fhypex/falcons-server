@@ -12,16 +12,15 @@ public class CourtFactory {
             CourtDetails courtDetails,
             Measurements measurements,
             Capacity capacity) {
-        return new Court(AggregateId.generate(), facilityId, courtDetails, measurements, capacity, true);
+        return new Court(AggregateId.generate(), facilityId, courtDetails, measurements, capacity);
     }
 
     public Court load(AggregateId id,
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
-            Capacity capacity,
-            boolean isActive) {
-        return new Court(id, facilityId, courtDetails, measurements, capacity,
-                isActive);
+            Capacity capacity) {
+        return new Court(id, facilityId, courtDetails, measurements, capacity
+                );
     }
 }

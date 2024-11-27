@@ -25,8 +25,7 @@ class DistrictRepositoryImpl implements DistrictRepository {
         return factory.load(
                 entity.getId(),
                 entity.getCityId(),
-                entity.getName(),
-                entity.isInUse()
+                entity.getName()
                 );
     }
 
@@ -53,12 +52,12 @@ class DistrictRepositoryImpl implements DistrictRepository {
     }
 
     @Override
-    public boolean exists(Long id) {
+    public boolean existsById(Long id) {
         return jpaDistrictRepository.existsById(id);
     }
 
     @Override
-    public List<District> findAll(List<Long> ids) {
+    public List<District> findByIds(List<Long> ids) {
         return jpaDistrictRepository.findAllById(ids).stream().map(this::build).collect(Collectors.toUnmodifiableList());
     }
 
@@ -68,12 +67,18 @@ class DistrictRepositoryImpl implements DistrictRepository {
     }
 
     @Override
-    public List<District> findAllByCityId(Long cityId) {
+    public List<District> findByCityId(Long cityId) {
         return jpaDistrictRepository.findAllByCityId(cityId).stream().map(this::build).collect(Collectors.toUnmodifiableList());
     }
 
     @Override
-    public List<District> findAllByInUseTrue() {
-        return jpaDistrictRepository.findAllByInUseTrue().stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    public int deleteById(Long id) {
+        jpaDistrictRepository.deleteById(id);
+        return 1;
+    }
+
+    @Override
+    public boolean existsByIds(List<Long> ids) {
+        return jpaDistrictRepository.existsByIdIn(ids);
     }
 }

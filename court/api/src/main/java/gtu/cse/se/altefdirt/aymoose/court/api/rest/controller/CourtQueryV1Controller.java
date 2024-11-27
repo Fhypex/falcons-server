@@ -27,11 +27,7 @@ class CourtQueryV1Controller {
 
     private static final class Parameter {
         private static final String ID = "id";
-        private static final String USER = "user";
         private static final String FACILITY = "facility";
-        private static final String RATING_EQ = "ratingEq";
-        private static final String RATING_GT = "ratingGt";
-        private static final String RATING_LT = "ratingLt";
     }
 
     @GetMapping(value = "/courts")
@@ -52,7 +48,7 @@ class CourtQueryV1Controller {
 
     @GetMapping(value = "/courts", params = Parameter.FACILITY)
     List<CourtResponseDTO> getCourtsByFacilityId(@RequestParam(value = Parameter.FACILITY) String facilityId) {
-        List<Court> courts = courtRepository.findAllByFacilityId(AggregateId.from(facilityId));
+        List<Court> courts = courtRepository.findByFacilityId(AggregateId.from(facilityId));
         return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court)))
                 .collect(Collectors.toUnmodifiableList());
     }

@@ -1,7 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto;
 
 import org.apache.commons.lang3.Validate;
-import org.springframework.web.multipart.MultipartFile;
 
 public record CreateAmenityRequestDTO(String name){
     public CreateAmenityRequestDTO(
