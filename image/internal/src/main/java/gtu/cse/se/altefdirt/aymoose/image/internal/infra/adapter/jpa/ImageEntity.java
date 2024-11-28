@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.image.internal.infra.adapter.jpa;
 
+import gtu.cse.se.altefdirt.aymoose.image.internal.domain.BaseImage;
 import gtu.cse.se.altefdirt.aymoose.image.internal.domain.Image;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class ImageEntity {
-    
+
     @Id
     private String id;
     private String relationId;
@@ -27,27 +28,26 @@ public class ImageEntity {
     private String name;
     private Long size;
     private String extension;
-    
-    
+
     public static ImageEntity from(Image image) {
         return ImageEntity.builder()
-            .id(image.id().value())
-            .relationId(image.getRelationId().value()) 
-            .url(image.getUrl())
-            .name(image.name())
-            .size(image.getSize())
-            .extension(image.getExtension())          
-            .build();
+                .id(image.id().value())
+                .relationId(image.getRelationId().value())
+                .url(image.getUrl())
+                .name(image.name())
+                .size(image.getSize())
+                .extension(image.getExtension())
+                .build();
     }
 
-    public static ImageEntity withUrl(Image image, String url) {
+    public static ImageEntity fromBase(BaseImage baseImage, String url) {
         return ImageEntity.builder()
-            .id(image.id().value())
-            .relationId(image.getRelationId().value()) 
-            .url(url)
-            .name(image.name())
-            .size(image.getSize())
-            .extension(image.getExtension())          
-            .build();
+                .id(baseImage.id().value())
+                .relationId(baseImage.getRelationId().value())
+                .url(url)
+                .name(baseImage.name())
+                .size(baseImage.getSize())
+                .extension(baseImage.getExtension())
+                .build();
     }
 }

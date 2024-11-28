@@ -5,23 +5,28 @@ import lombok.Getter;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Price;
 
 @Getter
 public class Court extends BaseAggregateRoot {
 
     public Court(AggregateId id,
+            AggregateId ownerId,
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
             Capacity capacity,
-            boolean isActive) {
+            Price price) {
         super(id);
+        this.ownerId = ownerId;
         this.facilityId = facilityId;
         this.details = courtDetails;
         this.measurements = measurements;
         this.capacity = capacity;
-        this.isActive = isActive;
+        this.price = price;
     }
+
+    private AggregateId ownerId;
 
     private AggregateId facilityId;
 
@@ -31,14 +36,14 @@ public class Court extends BaseAggregateRoot {
 
     private Capacity capacity;
 
-    private boolean isActive;
+    private Price price;
 
-    public void disable() {
-        this.isActive = false;
+    public Price price() {
+        return price;
     }
 
-    public void enable() {
-        this.isActive = true;
+    public AggregateId ownerId() {
+        return ownerId;
     }
 
     public void updateDetails(String name, String description) {
@@ -52,7 +57,6 @@ public class Court extends BaseAggregateRoot {
     public void updateCapacity(int value) {
         this.capacity = new Capacity(value);
     }
-
 
     public AggregateId facilityId() {
         return facilityId;
@@ -68,9 +72,5 @@ public class Court extends BaseAggregateRoot {
 
     public Capacity capacity() {
         return capacity;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 }

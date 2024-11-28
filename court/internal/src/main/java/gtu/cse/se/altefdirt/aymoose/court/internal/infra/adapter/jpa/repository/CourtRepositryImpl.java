@@ -14,6 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.jpa.CourtEntity
 import gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.jpa.JpaCourtRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Price;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -26,12 +27,13 @@ class CourtRepositryImpl implements CourtRepository {
     private final CourtFactory courtFactory;
 
     private Court build(CourtEntity courtEntity) {
-        return courtFactory.load(AggregateId.from(courtEntity.getId()), 
-                                 AggregateId.from(courtEntity.getFacilityId()), 
-                                 new CourtDetails(courtEntity.getName(), courtEntity.getDescription()),
-                                 new Measurements(courtEntity.getHeight(), courtEntity.getWidth()),
-                                 new Capacity(courtEntity.getCapacity()),
-                                 courtEntity.isActive());
+        return courtFactory.load(AggregateId.from(courtEntity.getId()),
+                AggregateId.from(courtEntity.getOwnerId()),
+                AggregateId.from(courtEntity.getFacilityId()),
+                new CourtDetails(courtEntity.getName(), courtEntity.getDescription()),
+                new Measurements(courtEntity.getHeight(), courtEntity.getWidth()),
+                new Capacity(courtEntity.getCapacity()),
+                new Price(courtEntity.getPrice()));
     }
 
     @Override
@@ -39,7 +41,6 @@ class CourtRepositryImpl implements CourtRepository {
         CourtEntity courtEntity = jpaCourtRepository.save(CourtEntity.from(court));
         return build(courtEntity);
     }
-
 
     @Override
     public Optional<Court> findById(AggregateId id) {
@@ -53,7 +54,37 @@ class CourtRepositryImpl implements CourtRepository {
     }
 
     @Override
-    public List<Court> findAllByFacilityId(AggregateId facilityId) {
-        return jpaCourtRepository.findAllByFacilityId(facilityId.value()).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    public List<Court> findByFacilityId(AggregateId facilityId) {
+        return jpaCourtRepository.findAllByFacilityId(facilityId.value()).stream().map(this::build)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public int deleteById(AggregateId id) {
+        jpaCourtRepository.deleteById(id.value());
+        return 1;
+    }
+
+    @Override
+    public int deleteByFacilityId(AggregateId facilityId) {
+        jpaCourtRepository.deleteByFacilityId(facilityId.value());
+        return 1;
+    }
+
+    @Override
+    public List<Court> findByIds(List<AggregateId> ids) {
+        return jpaCourtRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toList()))
+                .stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public boolean existsById(AggregateId id) {
+        return jpaCourtRepository.existsById(id.value());
+    }
+
+    @Override
+    public boolean existsByIds(List<AggregateId> ids) {
+        return jpaCourtRepository.existsByIds(ids.stream().map(AggregateId::value).collect(Collectors.toList()),
+                ids.size());
     }
 }

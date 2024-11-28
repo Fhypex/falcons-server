@@ -17,4 +17,10 @@ public interface JpaCourtRepository extends JpaRepository<CourtEntity, String> {
     @Query("SELECT c FROM CourtEntity c WHERE c.facilityId = :facilityId")
     List<CourtEntity> findAllByFacilityId(String facilityId);
 
+    @Query("DELETE FROM CourtEntity c WHERE c.facilityId = :facilityId")
+    int deleteByFacilityId(String facilityId);
+
+    @Query("SELECT COUNT(a) = :size FROM CourtEntity a WHERE a.id IN :ids")
+    boolean existsByIds(List<String> ids, int size);
+
 }

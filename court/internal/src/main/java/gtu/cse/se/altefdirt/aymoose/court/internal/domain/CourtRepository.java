@@ -1,18 +1,14 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.domain;
 
 import java.util.List;
-import java.util.Optional;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Repository;
 
-public interface CourtRepository {
+public interface CourtRepository extends Repository<Court, AggregateId> {
+
+    int deleteByFacilityId(AggregateId facilityId);
     
-    Court save(Court court);
-
-    Optional<Court> findById(AggregateId id);
-
-    List<Court> findAll();
-
-    List<Court> findAllByFacilityId(AggregateId facilityId);
+    List<Court> findByFacilityId(AggregateId facilityId);
 
 }

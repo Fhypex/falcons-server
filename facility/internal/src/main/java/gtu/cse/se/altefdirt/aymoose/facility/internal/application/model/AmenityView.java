@@ -1,9 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 
-import java.util.List;
 import java.util.Map;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import lombok.Builder;
 

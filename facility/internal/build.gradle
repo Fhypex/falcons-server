@@ -3,6 +3,8 @@ jar.archiveBaseName.set('aymoose-facility-internal')
 dependencies {
     implementation project(':shared')
     implementation project(':core')
+    implementation project(':image:api')
+    implementation project(':court:api')
 }
 
 test {

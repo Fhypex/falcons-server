@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.ImageData;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.ImageOperationsPort;
+import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 @Component
-class ImageOperationsAdapter implements ImageOperationsPort {
+class ImageOperationsAdapter implements ImageOperationPort {
 
     @Value("https://imgcdn.stablediffusionweb.com/2024/9/16/778175e0-33f9-4224-9e6b-5c0984042816.jpg")
     String imageName;

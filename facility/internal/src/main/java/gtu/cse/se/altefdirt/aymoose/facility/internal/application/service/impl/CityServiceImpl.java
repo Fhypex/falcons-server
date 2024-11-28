@@ -25,16 +25,17 @@ class CityServiceImpl implements CityService {
     @Override
     public CityView denormalize(City city) {
 
-        List<District> districts = districtRepository.findAllByCityId(city.id());
+        List<District> districts = districtRepository.findByCityId(city.id());
         return new CityView(city, districts);
     }
 
     @Override
-    public List<CityView> denormalizeInUseCitiesByDistricts(List<District> districts) {
-        Set<Long> cityIds = districts.stream().map(District::cityId).collect(Collectors.toUnmodifiableSet());
-        List<City> cities = cityRepository.findAll(cityIds.stream().collect(Collectors.toUnmodifiableList()));
+    public List<CityView> denormalizeInUseCitiesByDistricts(Set<Long> districts) {
+        List<District> allDistricts = districtRepository.findByIds(districts.stream().toList()).stream().collect(Collectors.toUnmodifiableList());
+        Set<Long> cityIds = allDistricts.stream().map(District::cityId).collect(Collectors.toUnmodifiableSet());
+        List<City> cities = cityRepository.findByIds(cityIds.stream().collect(Collectors.toUnmodifiableList()));
         return cities.stream().map(city -> {
-            List<District> cityDistricts = districts.stream().filter(district -> district.cityId().equals(city.id()))
+            List<District> cityDistricts = allDistricts.stream().filter(district -> district.cityId().equals(city.id()))
                     .collect(Collectors.toList());
             return new CityView(city, cityDistricts);
         }).collect(Collectors.toUnmodifiableList());

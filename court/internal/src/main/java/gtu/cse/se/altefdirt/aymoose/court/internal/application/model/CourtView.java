@@ -1,6 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.application.model;
 
-import java.time.Instant;
 import java.util.List;
 
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
@@ -15,7 +14,6 @@ public record CourtView (
     Integer height,
     Integer width,
     Integer capacity,
-    boolean isActive,
     List<String> images
 )
 {
@@ -27,7 +25,6 @@ public record CourtView (
              court.measurements().height(), 
              court.measurements().width(), 
              court.capacity().value(), 
-             court.isActive(),
              images);
     }
 }

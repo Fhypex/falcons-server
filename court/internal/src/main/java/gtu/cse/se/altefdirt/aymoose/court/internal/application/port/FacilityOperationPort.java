@@ -1,12 +1,21 @@
 package gtu.cse.se.altefdirt.aymoose.court.internal.application.port;
 
-import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.UserData;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import gtu.cse.se.altefdirt.aymoose.shared.application.FacilityData;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface FacilityOperationPort {
-    
-    UserData findOwner(String facilityId);
 
-    boolean isOwner(String facilityId, String userId);
+    FacilityData find(AggregateId facilityId);
 
-    boolean existsById(String facilityId);
+    FacilityData save(AggregateId relationId, MultipartFile image);
+
+    int delete(AggregateId imageId);
+
+    List<FacilityData> findByRelationId(AggregateId relationId);
+
+    int deleteByRelationId(AggregateId relationId);
 }

@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Component
+@Transactional
 public @interface RegisterHandler {
-    
+
 }

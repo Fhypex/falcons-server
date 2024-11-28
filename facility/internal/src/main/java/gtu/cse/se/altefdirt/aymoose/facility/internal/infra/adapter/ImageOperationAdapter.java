@@ -1,25 +1,52 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageData;
+import org.springframework.web.multipart.MultipartFile;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
+import gtu.cse.se.altefdirt.aymoose.image.api.provider.ImageProvider;
+import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 class ImageOperationAdapter implements ImageOperationPort {
 
+    private final ImageProvider imageProvider;
+
     @Override
-    public ImageData find(AggregateId facilityId) {
-        return new ImageData("https://d26itsb5vlqdeq.cloudfront.net/image/98CE1963-0E26-F9B2-D4713C65A9683442");
+    public ImageData findById(AggregateId id) {
+        return imageProvider.getImageById(id);
     }
 
     @Override
-    public ImageData save(String image, String relationId, String title) {
-        return new ImageData("https://d26itsb5vlqdeq.cloudfront.net/image/98CE1963-0E26-F9B2-D4713C65A9683442");
+    public ImageData findOneByRelationId(AggregateId relationId) {
+        return imageProvider.getImagesByRelationId(relationId).get(0);
     }
 
     @Override
-    public void delete(AggregateId imageId) {
-        // Delete işlemi yapılabilir
+    public ImageData save(AggregateId relationId, MultipartFile image) {
+        log.debug("Saving image for relationId {}", relationId);
+        return imageProvider.save(relationId, image);
+    }
+
+    @Override
+    public int delete(AggregateId imageId) {
+        return imageProvider.deleteById(imageId);
+    }
+
+    @Override
+    public List<ImageData> findByRelationId(AggregateId relationId) {
+        return imageProvider.getImagesByRelationId(relationId);
+    }
+
+    @Override
+    public int deleteByRelationId(AggregateId relationId) {
+        return imageProvider.deleteByRelationId(relationId);
     }
 }

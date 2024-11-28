@@ -2,6 +2,7 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.reposit
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -57,5 +58,41 @@ class FacilityRepositoryImpl implements FacilityRepository {
     @Override
     public List<Facility> findAll() {
         return jpaFacilityRepository.findAll().stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public Set<Long> findUniqueDistricts() {
+        return jpaFacilityRepository.findAll().stream().map(entity -> entity.getDistrictId()).collect(Collectors.toUnmodifiableSet());
+    }
+
+    @Override
+    public boolean existsById(AggregateId id) {
+        return jpaFacilityRepository.existsById(id.value());
+    }
+
+    @Override
+    public List<Facility> findByIds(List<AggregateId> ids) {
+        return jpaFacilityRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toList())).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public int deleteById(AggregateId id) {
+        jpaFacilityRepository.deleteById(id.value());
+        return 1;
+    }
+
+    @Override
+    public boolean existsByIds(List<AggregateId> ids) {
+        return jpaFacilityRepository.existsByIds(ids.stream().map(AggregateId::value).toList(), ids.size());
+    }
+
+    @Override
+    public boolean hasFacilityByDistrictId(Long districtId) {
+        return jpaFacilityRepository.existsByDistrictId(districtId);
+    }
+
+    @Override
+    public boolean hasFacilityByDistrictIds(List<Long> districtIds) {
+        return jpaFacilityRepository.existsByDistrictIds(districtIds);
     }
 }

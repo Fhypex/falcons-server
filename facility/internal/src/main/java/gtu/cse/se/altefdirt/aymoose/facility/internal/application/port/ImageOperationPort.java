@@ -2,14 +2,22 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.application.port;
 
 import java.util.List;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.ImageData;
+import org.springframework.web.multipart.MultipartFile;
+
+import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface ImageOperationPort {
 
-    ImageData find(AggregateId facilityId);
+    ImageData findById(AggregateId relationId);
 
-    ImageData save(String image, String relationId, String title);
+    ImageData save(AggregateId relationId, MultipartFile image);
 
-    void delete(AggregateId imageId);
+    int delete(AggregateId imageId);
+
+    ImageData findOneByRelationId(AggregateId relationId);
+    
+    List<ImageData> findByRelationId(AggregateId relationId);
+
+    int deleteByRelationId(AggregateId relationId);
 }
