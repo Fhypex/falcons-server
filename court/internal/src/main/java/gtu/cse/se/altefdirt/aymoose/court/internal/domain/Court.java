@@ -5,6 +5,7 @@ import lombok.Getter;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Price;
 
 @Getter
 public class Court extends BaseAggregateRoot {
@@ -14,12 +15,15 @@ public class Court extends BaseAggregateRoot {
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
-            Capacity capacity) {
+            Capacity capacity,
+            Price price) {
         super(id);
+        this.ownerId = ownerId;
         this.facilityId = facilityId;
         this.details = courtDetails;
         this.measurements = measurements;
         this.capacity = capacity;
+        this.price = price;
     }
 
     private AggregateId ownerId;
@@ -31,6 +35,12 @@ public class Court extends BaseAggregateRoot {
     private Measurements measurements;
 
     private Capacity capacity;
+
+    private Price price;
+
+    public Price price() {
+        return price;
+    }
 
     public AggregateId ownerId() {
         return ownerId;

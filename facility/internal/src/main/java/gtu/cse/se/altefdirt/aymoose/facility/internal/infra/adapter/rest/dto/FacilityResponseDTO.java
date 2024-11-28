@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
-import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import lombok.Builder;
 
 @Builder
@@ -23,9 +23,12 @@ public record FacilityResponseDTO(
         List<String> imageUrls,
         String rating,
         int reviewCount,
+        int lowerPriceLimit,
+        int upperPriceLimit,
         List<Map<String, Object>> amenities,
-        List<Map<String, Object>> courts) {
-    public static FacilityResponseDTO fromView(FacilityView view, List<Map<String, Object>> courts) {
+        List<CourtRichData> courts) {
+
+    public static FacilityResponseDTO richened(FacilityView view, List<CourtRichData> courtDatas) {
 
         return FacilityResponseDTO.builder()
                 .id(view.id())
@@ -41,9 +44,11 @@ public record FacilityResponseDTO(
                 .closeTime(view.closeTime())
                 .rating(view.rating())
                 .reviewCount(view.reviewCount())
+                .lowerPriceLimit(view.lowerPriceLimit())
+                .upperPriceLimit(view.upperPriceLimit())
                 .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
-                .courts(courts)
+                .courts(courtDatas)
                 .build();
     }
 }

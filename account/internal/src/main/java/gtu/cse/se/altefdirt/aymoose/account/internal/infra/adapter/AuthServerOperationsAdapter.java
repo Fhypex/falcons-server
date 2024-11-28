@@ -3,7 +3,6 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
@@ -13,11 +12,9 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AuthDetails;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.AuthServerOperationsPort;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -63,11 +60,9 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
     }
 
     @Override
-    public Optional<UserId> register(String username, String password, String email) {
+    public Optional<AggregateId> register(String username, String password, String email) {
         try {
-            System.out.println("username: " + username);
-            System.out.println("email: " + email);
-            System.out.println("password: " + password);
+            log.debug("Registering user with username: {}, email: {}", username, email);
             // Get the realm resource from Keycloak
             RealmResource realmResource = keycloak.realm(realm);
 
@@ -87,27 +82,25 @@ class AuthServerOperationsAdapter implements AuthServerOperationsPort {
             // Check if the user was created successfully
             if (response.getStatus() != 201) {
                 // Log the error (optional)
-                System.err.println("Error registering user: " + response.getStatusInfo().getReasonPhrase());
+                log.error("Error registering user: {}", response.getStatusInfo().getReasonPhrase());
                 // Return empty result in case of failure
 
                 return Optional.empty();
-            }
-            System.out.println("response: " + response.getLocation().getPath());
+            }        
             String userId = response.getLocation().getPath().split("(.)*users/")[1];
-            System.out.println("userId: " + userId);
 
             // Return successful result
-            return Optional.of(UserId.from(userId));
+            return Optional.of(AggregateId.from(userId));
         } catch (Exception e) {
             // Log the exception (optional)
-            System.err.println("Error registering user: " + e.getMessage());
+            log.error("Error registering user", e.getMessage());
             // Return empty result in case of failure
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<AuthDetails> getDetails(UserId userId) {
+    public Optional<AuthDetails> getDetails(AggregateId userId) {
         try {
             RealmResource realmResource = keycloak.realm(realm);
             UserResource user = realmResource.users().get(userId.value());

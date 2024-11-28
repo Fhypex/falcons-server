@@ -17,7 +17,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.AmenityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.DistrictRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
-import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import lombok.RequiredArgsConstructor;
 
@@ -46,8 +46,12 @@ class FacilityServiceImpl implements FacilityService {
         String city = cityRepository.findById(facility.address().cityId()).get().name();
         String district = districtRepository.findById(facility.address().districtId()).get().name();
 
-        List<CourtData> courts = courtOperationPort.findByFacilityId(facility.id());
+        List<CourtRichData> courts = courtOperationPort.findByFacilityIdRich(facility.id());
 
-        return new FacilityView(facility, imageUrls, commentCount, rating, city, district, amenityViews);
+        int lowerPriceLimit = courts.stream().map(CourtRichData::price).min(Integer::compareTo).orElse(0);
+        int upperPriceLimit = courts.stream().map(CourtRichData::price).max(Integer::compareTo).orElse(0);
+
+        return new FacilityView(facility, imageUrls, commentCount, rating, city, district, amenityViews, courts,
+                lowerPriceLimit, upperPriceLimit);
     }
 }

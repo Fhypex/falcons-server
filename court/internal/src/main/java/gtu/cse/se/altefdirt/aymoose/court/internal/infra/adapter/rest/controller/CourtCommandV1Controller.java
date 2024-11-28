@@ -3,6 +3,7 @@ package gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.rest.controlle
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class CourtCommandV1Controller {
 
@@ -33,6 +34,7 @@ class CourtCommandV1Controller {
                 request.height(),
                 request.width(),
                 request.capacity(),
+                request.price(),
                 images));
         return Response.success(view, "Court created successfully");
     }

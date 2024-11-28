@@ -4,10 +4,8 @@ import java.util.Optional;
 
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.command.UpdateCourt;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.model.CourtView;
-import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.court.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
-import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtFactory;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
@@ -18,9 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, CourtView> {
 
-    private final CourtFactory factory;
     private final CourtService service;
-    private final ImageOperationPort imageOperationPort;
     private final CourtRepository repository;
 
     @Override

@@ -4,11 +4,9 @@ import java.time.Instant;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.UpdatedAt;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -46,7 +44,7 @@ public class AccountEntity {
 
     public Account toDomain(AccountFactory factory) {
         return factory.load(
-                UserId.from(id),
+                AggregateId.from(id),
                 FullName.of(fullName),
                 AggregateId.from(imageId),
                 new CreatedAt(createdAt),

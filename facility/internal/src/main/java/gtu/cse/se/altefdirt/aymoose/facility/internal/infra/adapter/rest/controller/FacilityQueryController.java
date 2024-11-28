@@ -16,7 +16,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Cit
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityCompressedResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
-import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,12 +55,9 @@ public class FacilityQueryController {
 
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .collect(Collectors.toList());
-        List<List<CourtData>> courtData = facilityViews.stream()
-                .map(facilityView -> courtOperationPort.findByFacilityId(AggregateId.from(facilityView.id())))
-                .collect(Collectors.toList());
 
         return facilityViews.stream()
-                .map(view -> FacilityResponseDTO.fromView(view, courtData.get(facilityViews.indexOf(view))))
+                .map(view -> FacilityResponseDTO.richened(view, courtOperationPort.findByFacilityIdRich(AggregateId.from(view.id()))))
                 .collect(Collectors.toList());
     }
 
@@ -81,8 +78,8 @@ public class FacilityQueryController {
     public FacilityResponseDTO getFacility(@PathVariable(Parameter.ID) String id) {
         Facility facility = facilityRepository.findById(new AggregateId(id)).get();
         FacilityView facilityView = facilityService.denormalize(facility);
-        List<CourtData> courtData = courtOperationPort.findByFacilityId(AggregateId.from(id));
-        return FacilityResponseDTO.fromView(facilityView, courtData);
+        List<CourtRichData> courtData = courtOperationPort.findByFacilityIdRich(AggregateId.from(id));
+        return FacilityResponseDTO.richened(facilityView, courtData);
     }
 
     @GetMapping(value = "/amenities")

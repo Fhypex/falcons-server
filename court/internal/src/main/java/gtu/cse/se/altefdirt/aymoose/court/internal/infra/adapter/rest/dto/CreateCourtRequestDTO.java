@@ -9,7 +9,8 @@ public record CreateCourtRequestDTO(
         String description,
         Integer height,
         Integer width,
-        Integer capacity) {
+        Integer capacity,
+        Integer price) {
 
     public CreateCourtRequestDTO(
             String ownerId,
@@ -18,7 +19,9 @@ public record CreateCourtRequestDTO(
             String description,
             Integer height,
             Integer width,
-            Integer capacity) {
+            Integer capacity,
+            Integer price) {
+        Validate.notNull(ownerId, "Owner ID cannot be null");
         Validate.notNull(facilityId, "Facility ID cannot be null");
         Validate.notNull(name, "Court name cannot be null");
         Validate.notNull(description, "Court description cannot be null");
@@ -32,6 +35,7 @@ public record CreateCourtRequestDTO(
         Validate.isTrue(height >= 1 && height <= 100, "Court height must be between 1 and 100");
         Validate.isTrue(width >= 1 && width <= 100, "Court width must be between 1 and 100");
         Validate.isTrue(capacity >= 1 && capacity <= 100, "Court capacity must be between 1 and 100");
+        Validate.isTrue(price >= 1 && price <= 1000, "Court price must be between 1 and 1000");
         this.ownerId = ownerId;
         this.facilityId = facilityId;
         this.name = name;
@@ -39,5 +43,6 @@ public record CreateCourtRequestDTO(
         this.height = height;
         this.width = width;
         this.capacity = capacity;
+        this.price = price;
     }
 }

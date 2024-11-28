@@ -26,6 +26,7 @@ public class CourtEntity {
     private int height;
     private int width;
     private int capacity;
+    private int price;
 
     public static CourtEntity from(Court court) {
         return CourtEntity.builder()
@@ -37,6 +38,7 @@ public class CourtEntity {
                 .height(court.getMeasurements().height())
                 .width(court.getMeasurements().width())
                 .capacity(court.getCapacity().value())
+                .price(court.getPrice().value())
                 .build();
     }
 }

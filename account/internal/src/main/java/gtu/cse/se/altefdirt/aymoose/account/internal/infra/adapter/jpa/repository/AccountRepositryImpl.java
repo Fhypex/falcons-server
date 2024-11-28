@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.UserId;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.AccountEntity;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.JpaAccountRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.Location;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +25,7 @@ class AccountRepositryImpl implements AccountRepository {
     private final AccountFactory accountFactory;
 
     private Account build(AccountEntity accountEntity) {
-        return accountFactory.load(UserId.from(accountEntity.getId()), 
+        return accountFactory.load(AggregateId.from(accountEntity.getId()), 
                                     new FullName(accountEntity.getFullName()),
                                     AggregateId.from(accountEntity.getImageId()),
                                     new CreatedAt(accountEntity.getCreatedAt()),
@@ -49,8 +47,6 @@ class AccountRepositryImpl implements AccountRepository {
 
     @Override
     public List<Account> findAll() {
-        return jpaAccountRepository.findAll().stream().map(entity -> {
-            return build(entity);
-        }).collect(Collectors.toList());
+        return jpaAccountRepository.findAll().stream().map(this::build).collect(Collectors.toList());
     }
 }

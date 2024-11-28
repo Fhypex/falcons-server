@@ -15,5 +15,6 @@ public record CreateCourt(
                 Integer height,
                 Integer width,
                 Integer capacity,
+                Integer price,
                 List<MultipartFile> images) implements Command {
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import lombok.Builder;
 
 @Builder
@@ -25,11 +26,11 @@ public record FacilityView(
         int reviewCount,
         String rating,
         List<Map<String, Object>> amenities,
-        List<Map<String, Object>> courts,
+        List<CourtRichData> courts,
         Integer lowerPriceLimit,
         Integer upperPriceLimit) {
     public FacilityView(Facility facility, List<String> images, int reviewCount, String rating, String city,
-            String district, List<AmenityView> amenities, List<Map<String, Object>> courts, int lowerPriceLimit,
+            String district, List<AmenityView> amenities, List<CourtRichData> courts, int lowerPriceLimit,
             int upperPriceLimit) {
         this(facility.id().value(),
                 facility.ownerId().value(),

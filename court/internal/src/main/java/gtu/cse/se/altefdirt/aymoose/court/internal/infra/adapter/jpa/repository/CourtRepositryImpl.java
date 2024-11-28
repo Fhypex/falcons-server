@@ -14,6 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.jpa.CourtEntity
 import gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.jpa.JpaCourtRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Price;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,8 @@ class CourtRepositryImpl implements CourtRepository {
                 AggregateId.from(courtEntity.getFacilityId()),
                 new CourtDetails(courtEntity.getName(), courtEntity.getDescription()),
                 new Measurements(courtEntity.getHeight(), courtEntity.getWidth()),
-                new Capacity(courtEntity.getCapacity()));
+                new Capacity(courtEntity.getCapacity()),
+                new Price(courtEntity.getPrice()));
     }
 
     @Override

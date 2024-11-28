@@ -10,6 +10,8 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperati
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,23 @@ class CourtProviderImpl implements CourtProvider {
                 .height(court.getMeasurements().height())
                 .width(court.getMeasurements().width())
                 .capacity(court.getCapacity().value())
+                .build();
+    }
+
+    private CourtRichData buildRich(Court court) {
+
+        List<String> imageUrls = imageOperationPort.findByRelationId(court.id()).stream()
+                .map(ImageData::url).collect(Collectors.toUnmodifiableList());
+        return CourtRichData.builder()
+                .id(court.id().value())
+                .facilityId(court.getFacilityId().value())
+                .name(court.getDetails().name())
+                .description(court.getDetails().description())
+                .height(court.getMeasurements().height())
+                .width(court.getMeasurements().width())
+                .capacity(court.getCapacity().value())
+                .price(court.getPrice().value())
+                .imageUrls(imageUrls)
                 .build();
     }
 
@@ -61,4 +80,11 @@ class CourtProviderImpl implements CourtProvider {
         // delete courts
         return courtRepository.deleteByFacilityId(facilityId);
     }
+
+    @Override
+    public List<CourtRichData> getCourtsByFacilityIdRich(AggregateId facilityId) {
+        List<Court> courts = courtRepository.findByFacilityId(facilityId);
+        return courts.stream().map(this::buildRich).collect(Collectors.toUnmodifiableList());
+    }
+    
 }

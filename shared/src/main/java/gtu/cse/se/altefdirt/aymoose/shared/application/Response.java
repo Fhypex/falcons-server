@@ -10,11 +10,11 @@ public record Response<T> (int status, boolean success, String message, T respon
     }
 
     public static <T> Response<T> failure(String message) {
-        return new Response<>(400, false, message, null);
+        return new Response<T>(400, false, message, null);
     }
 
     public static <T> Response<T> created(T response) {
-        return new Response<>(201, true, "Created", response);
+        return new Response<T>(201, true, "Created", response);
     }
 
     public static <T> Response<T> notFound() {
