@@ -26,12 +26,12 @@ class CourtRepositryImpl implements CourtRepository {
     private final CourtFactory courtFactory;
 
     private Court build(CourtEntity courtEntity) {
-        return courtFactory.load(AggregateId.from(courtEntity.getId()), 
-                                 AggregateId.from(courtEntity.getFacilityId()), 
-                                 new CourtDetails(courtEntity.getName(), courtEntity.getDescription()),
-                                 new Measurements(courtEntity.getHeight(), courtEntity.getWidth()),
-                                 new Capacity(courtEntity.getCapacity())
-                              );
+        return courtFactory.load(AggregateId.from(courtEntity.getId()),
+                AggregateId.from(courtEntity.getOwnerId()),
+                AggregateId.from(courtEntity.getFacilityId()),
+                new CourtDetails(courtEntity.getName(), courtEntity.getDescription()),
+                new Measurements(courtEntity.getHeight(), courtEntity.getWidth()),
+                new Capacity(courtEntity.getCapacity()));
     }
 
     @Override
@@ -39,7 +39,6 @@ class CourtRepositryImpl implements CourtRepository {
         CourtEntity courtEntity = jpaCourtRepository.save(CourtEntity.from(court));
         return build(courtEntity);
     }
-
 
     @Override
     public Optional<Court> findById(AggregateId id) {
@@ -54,7 +53,8 @@ class CourtRepositryImpl implements CourtRepository {
 
     @Override
     public List<Court> findByFacilityId(AggregateId facilityId) {
-        return jpaCourtRepository.findAllByFacilityId(facilityId.value()).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaCourtRepository.findAllByFacilityId(facilityId.value()).stream().map(this::build)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
@@ -71,7 +71,8 @@ class CourtRepositryImpl implements CourtRepository {
 
     @Override
     public List<Court> findByIds(List<AggregateId> ids) {
-        return jpaCourtRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toList())).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaCourtRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toList()))
+                .stream().map(this::build).collect(Collectors.toUnmodifiableList());
     }
 
     @Override
@@ -81,6 +82,7 @@ class CourtRepositryImpl implements CourtRepository {
 
     @Override
     public boolean existsByIds(List<AggregateId> ids) {
-        return jpaCourtRepository.existsByIds(ids.stream().map(AggregateId::value).collect(Collectors.toList()), ids.size());
+        return jpaCourtRepository.existsByIds(ids.stream().map(AggregateId::value).collect(Collectors.toList()),
+                ids.size());
     }
 }

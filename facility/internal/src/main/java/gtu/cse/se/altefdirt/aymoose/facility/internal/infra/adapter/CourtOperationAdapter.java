@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 class CourtOperationAdapter implements CourtOperationPort {
-    
+
     private final CourtProvider courtProvider;
-    
+
     @Override
     public int deleteByFacilityId(AggregateId facilityId) {
         return courtProvider.deleteByFacilityId(facilityId);

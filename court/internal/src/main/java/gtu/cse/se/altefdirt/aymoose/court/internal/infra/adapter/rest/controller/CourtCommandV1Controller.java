@@ -23,14 +23,17 @@ class CourtCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping("/courts")
-    public Response<CourtView> createCourt(@RequestPart(value = "files", required = false) List<MultipartFile> images, @RequestPart("data") CreateCourtRequestDTO request) {
-        CourtView view = runner.run(new CreateCourt(request.facilityId(),
-                                                    request.name(),
-                                                    request.description(),
-                                                    request.height(),
-                                                    request.width(),
-                                                    request.capacity(),
-                                                    images));
+    public Response<CourtView> createCourt(@RequestPart(value = "files", required = false) List<MultipartFile> images,
+            @RequestPart("data") CreateCourtRequestDTO request) {
+        CourtView view = runner.run(new CreateCourt(
+                request.ownerId(),
+                request.facilityId(),
+                request.name(),
+                request.description(),
+                request.height(),
+                request.width(),
+                request.capacity(),
+                images));
         return Response.success(view, "Court created successfully");
     }
 }

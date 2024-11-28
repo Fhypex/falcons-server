@@ -28,7 +28,9 @@ public class CreateCourtCommandHandler implements CommandHandler<CreateCourt, Co
     @Override
     public CourtView handle(CreateCourt command) {
 
-        Court court = factory.create(AggregateId.from(command.facilityId()),
+        Court court = factory.create(
+                AggregateId.from(command.ownerId()),
+                AggregateId.from(command.facilityId()),
                 new CourtDetails(command.name(), command.description()),
                 new Measurements(command.height(), command.width()),
                 new Capacity(command.capacity()));

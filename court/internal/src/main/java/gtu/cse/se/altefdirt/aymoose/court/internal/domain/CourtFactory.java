@@ -8,19 +8,21 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 @Component
 public class CourtFactory {
 
-    public Court create(AggregateId facilityId,
-            CourtDetails courtDetails,
-            Measurements measurements,
-            Capacity capacity) {
-        return new Court(AggregateId.generate(), facilityId, courtDetails, measurements, capacity);
-    }
-
-    public Court load(AggregateId id,
+    public Court create(
+            AggregateId ownerId,
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
             Capacity capacity) {
-        return new Court(id, facilityId, courtDetails, measurements, capacity
-                );
+        return new Court(AggregateId.generate(), ownerId, facilityId, courtDetails, measurements, capacity);
+    }
+
+    public Court load(AggregateId id,
+            AggregateId ownerId,
+            AggregateId facilityId,
+            CourtDetails courtDetails,
+            Measurements measurements,
+            Capacity capacity) {
+        return new Court(id, ownerId, facilityId, courtDetails, measurements, capacity);
     }
 }

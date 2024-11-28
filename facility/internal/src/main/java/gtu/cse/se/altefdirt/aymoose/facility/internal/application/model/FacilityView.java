@@ -24,9 +24,13 @@ public record FacilityView(
         List<String> imageUrls,
         int reviewCount,
         String rating,
-        List<Map<String, Object>> amenities) {
+        List<Map<String, Object>> amenities,
+        List<Map<String, Object>> courts,
+        Integer lowerPriceLimit,
+        Integer upperPriceLimit) {
     public FacilityView(Facility facility, List<String> images, int reviewCount, String rating, String city,
-            String district, List<AmenityView> amenities) {
+            String district, List<AmenityView> amenities, List<Map<String, Object>> courts, int lowerPriceLimit,
+            int upperPriceLimit) {
         this(facility.id().value(),
                 facility.ownerId().value(),
                 facility.phoneNumber().value(),
@@ -43,6 +47,9 @@ public record FacilityView(
                 images,
                 reviewCount,
                 rating,
-                amenities.stream().map(AmenityView::toMap).toList());
+                amenities.stream().map(AmenityView::toMap).toList(),
+                courts,
+                lowerPriceLimit,
+                upperPriceLimit);
     }
 }

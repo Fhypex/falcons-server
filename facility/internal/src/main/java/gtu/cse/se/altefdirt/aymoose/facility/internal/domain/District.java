@@ -2,14 +2,12 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.SimpleAggregateRoot;
 import lombok.Getter;
 
 @Getter
-public class District extends SimpleAggregateRoot{
-    
+public class District extends SimpleAggregateRoot {
+
     private Long cityId;
     private String name;
 

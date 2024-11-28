@@ -24,8 +24,9 @@ public record FacilityResponseDTO(
         String rating,
         int reviewCount,
         List<Map<String, Object>> amenities,
-        List<CourtData> courts) {
-    public static FacilityResponseDTO fromView(FacilityView view, List<CourtData> courts) {
+        List<Map<String, Object>> courts) {
+    public static FacilityResponseDTO fromView(FacilityView view, List<Map<String, Object>> courts) {
+
         return FacilityResponseDTO.builder()
                 .id(view.id())
                 .phoneNumber(view.phoneNumber())

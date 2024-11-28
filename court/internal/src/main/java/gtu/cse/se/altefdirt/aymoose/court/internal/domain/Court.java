@@ -10,6 +10,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 public class Court extends BaseAggregateRoot {
 
     public Court(AggregateId id,
+            AggregateId ownerId,
             AggregateId facilityId,
             CourtDetails courtDetails,
             Measurements measurements,
@@ -21,6 +22,8 @@ public class Court extends BaseAggregateRoot {
         this.capacity = capacity;
     }
 
+    private AggregateId ownerId;
+
     private AggregateId facilityId;
 
     private CourtDetails details;
@@ -28,6 +31,10 @@ public class Court extends BaseAggregateRoot {
     private Measurements measurements;
 
     private Capacity capacity;
+
+    public AggregateId ownerId() {
+        return ownerId;
+    }
 
     public void updateDetails(String name, String description) {
         this.details = new CourtDetails(name, description);
@@ -40,7 +47,6 @@ public class Court extends BaseAggregateRoot {
     public void updateCapacity(int value) {
         this.capacity = new Capacity(value);
     }
-
 
     public AggregateId facilityId() {
         return facilityId;

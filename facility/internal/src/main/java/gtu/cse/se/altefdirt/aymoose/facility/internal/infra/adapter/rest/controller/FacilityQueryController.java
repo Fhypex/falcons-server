@@ -53,27 +53,31 @@ public class FacilityQueryController {
     @GetMapping(value = "/facilities")
     public List<FacilityResponseDTO> getFacilities() {
 
-        List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize).collect(Collectors.toList());
-        List<List<CourtData>> courtData = facilityViews.stream().map(facilityView -> courtOperationPort.findByFacilityId(AggregateId.from(facilityView.id()))).collect(Collectors.toList());
+        List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
+                .collect(Collectors.toList());
+        List<List<CourtData>> courtData = facilityViews.stream()
+                .map(facilityView -> courtOperationPort.findByFacilityId(AggregateId.from(facilityView.id())))
+                .collect(Collectors.toList());
 
-        return facilityViews.stream().map(view -> FacilityResponseDTO.fromView(view, courtData.get(facilityViews.indexOf(view)))).collect(Collectors.toList());
+        return facilityViews.stream()
+                .map(view -> FacilityResponseDTO.fromView(view, courtData.get(facilityViews.indexOf(view))))
+                .collect(Collectors.toList());
     }
-
 
     @GetMapping(value = "/facilities", params = Parameter.COMPRESSED)
     public List<FacilityCompressedResponseDTO> getFacilitiesCompressed(
-        @RequestParam(Parameter.COMPRESSED) boolean compressed) {
+            @RequestParam(Parameter.COMPRESSED) boolean compressed) {
 
-        if(compressed) {
-            List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize).collect(Collectors.toList());
+        if (compressed) {
+            List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
+                    .collect(Collectors.toList());
             return facilityViews.stream().map(FacilityCompressedResponseDTO::from)
-                .collect(Collectors.toList());
-        }
-        else 
+                    .collect(Collectors.toList());
+        } else
             throw new IllegalArgumentException("Invalid parameter");
     }
 
-     @GetMapping(value = "/facilities/{id}")
+    @GetMapping(value = "/facilities/{id}")
     public FacilityResponseDTO getFacility(@PathVariable(Parameter.ID) String id) {
         Facility facility = facilityRepository.findById(new AggregateId(id)).get();
         FacilityView facilityView = facilityService.denormalize(facility);
@@ -84,8 +88,9 @@ public class FacilityQueryController {
     @GetMapping(value = "/amenities")
     public List<AmenityResponseDTO> getAmenities() {
         log.debug("Amenity list requested");
-        List<AmenityView> amenityViews = amenityRepository.findAll().stream().map(amenityService::denormalize).collect(Collectors.toList());
-            return amenityViews.stream().map(AmenityResponseDTO::fromView)
+        List<AmenityView> amenityViews = amenityRepository.findAll().stream().map(amenityService::denormalize)
+                .collect(Collectors.toList());
+        return amenityViews.stream().map(AmenityResponseDTO::fromView)
                 .collect(Collectors.toUnmodifiableList());
 
     }
@@ -98,21 +103,21 @@ public class FacilityQueryController {
         return AmenityResponseDTO.fromView(amenityView);
     }
 
-
     @GetMapping(value = "/cities")
     public List<CityResponseDTO> getCities() {
-        List<CityView> cityViews = cityRepository.findAll().stream().map(cityService::denormalize).collect(Collectors.toList());
+        List<CityView> cityViews = cityRepository.findAll().stream().map(cityService::denormalize)
+                .collect(Collectors.toList());
         return cityViews.stream().map(CityResponseDTO::fromView)
                 .collect(Collectors.toUnmodifiableList());
-    }  
+    }
 
     @GetMapping(value = "/cities", params = Parameter.IN_USE)
     public List<CityResponseDTO> getCities(@RequestParam(Parameter.IN_USE) boolean inUse) {
         Set<Long> districts = facilityRepository.findUniqueDistricts();
-        
+
         return cityService.denormalizeInUseCitiesByDistricts(districts).stream().map(CityResponseDTO::fromView)
                 .collect(Collectors.toUnmodifiableList());
-    }  
+    }
 
     @GetMapping(value = "/cities/{id}")
     public CityResponseDTO getCityById(@PathVariable(Parameter.ID) Long id) {
