@@ -1,9 +1,5 @@
-package gtu.cse.se.altefdirt.aymoose.facility.api.rest.controller;
+package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.AmenityResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CityResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.FacilityCompressedResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.FacilityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
@@ -15,6 +11,10 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.AmenityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CityRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.AmenityResponseDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CityResponseDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityCompressedResponseDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;

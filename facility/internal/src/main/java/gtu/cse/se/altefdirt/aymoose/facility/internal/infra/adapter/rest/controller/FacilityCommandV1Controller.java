@@ -1,4 +1,4 @@
-package gtu.cse.se.altefdirt.aymoose.facility.api.rest.controller;
+package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateAmenityRequestDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateCityRequestDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateDistrictRequestDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateAmenityRequestDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateCityRequestDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateDistrictRequestDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto.CreateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;

@@ -1,4 +1,4 @@
-package gtu.cse.se.altefdirt.aymoose.facility.api.rest.dto;
+package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto;
 
 import java.util.List;
 import org.apache.commons.lang3.Validate;

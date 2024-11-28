@@ -1,4 +1,4 @@
-package gtu.cse.se.altefdirt.aymoose.court.api.provider.impl;
+package gtu.cse.se.altefdirt.aymoose.court.internal.infra.adapter.provider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +10,7 @@ import gtu.cse.se.altefdirt.aymoose.court.internal.application.port.ImageOperati
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.court.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
+import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ class CourtProviderImpl implements CourtProvider {
                 .height(court.getMeasurements().height())
                 .width(court.getMeasurements().width())
                 .capacity(court.getCapacity().value())
+                .imageUrls(imageOperationPort.findByRelationId(court.id()).stream().map(ImageData::url).collect(Collectors.toUnmodifiableList()))
                 .build();
     }
 
