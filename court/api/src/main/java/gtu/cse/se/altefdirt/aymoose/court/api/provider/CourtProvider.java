@@ -8,6 +8,8 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface CourtProvider {
 
+    boolean isOwner(AggregateId courtId, AggregateId ownerId);
+
     int deleteById(AggregateId id);
 
     CourtData getCourtById(AggregateId id);

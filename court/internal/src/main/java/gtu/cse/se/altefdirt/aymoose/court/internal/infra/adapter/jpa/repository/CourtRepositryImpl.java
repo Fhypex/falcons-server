@@ -87,4 +87,9 @@ class CourtRepositryImpl implements CourtRepository {
         return jpaCourtRepository.existsByIds(ids.stream().map(AggregateId::value).collect(Collectors.toList()),
                 ids.size());
     }
+
+    @Override
+    public boolean existsByIdAndOwnerId(AggregateId id, AggregateId ownerId) {
+        return jpaCourtRepository.existsByIdAndOwnerId(id.value(), ownerId.value());
+    }
 }

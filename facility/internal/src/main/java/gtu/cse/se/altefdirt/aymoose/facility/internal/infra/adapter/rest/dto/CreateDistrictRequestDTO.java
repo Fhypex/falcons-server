@@ -6,7 +6,7 @@ public record CreateDistrictRequestDTO(Long cityId, String name){
     public CreateDistrictRequestDTO(Long cityId,
         String name) {
         Validate.notNull(name, "District name cannot be null");
-        Validate.isTrue(name.length() >= 3 && name.length() <= 80, "District name must be between 3 and 80 characters");
+        Validate.isTrue(name.length() >= 2 && name.length() <= 80, "District name must be between 2 and 80 characters");
         this.name = name;
         this.cityId = cityId;
     }

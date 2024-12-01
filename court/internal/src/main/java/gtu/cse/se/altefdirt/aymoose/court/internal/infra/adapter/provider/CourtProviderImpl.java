@@ -54,6 +54,11 @@ class CourtProviderImpl implements CourtProvider {
     }
 
     @Override
+    public boolean isOwner(AggregateId courtId, AggregateId ownerId) {
+        return courtRepository.existsByIdAndOwnerId(courtId, ownerId);
+    }
+
+    @Override
     public int deleteById(AggregateId id) {
         // delete images
         imageOperationPort.deleteByRelationId(id);

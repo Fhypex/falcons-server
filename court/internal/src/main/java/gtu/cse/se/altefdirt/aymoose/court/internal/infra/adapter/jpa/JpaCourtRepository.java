@@ -23,4 +23,7 @@ public interface JpaCourtRepository extends JpaRepository<CourtEntity, String> {
     @Query("SELECT COUNT(a) = :size FROM CourtEntity a WHERE a.id IN :ids")
     boolean existsByIds(List<String> ids, int size);
 
+    @Query("SELECT COUNT(a) = 1 FROM CourtEntity a WHERE a.id = :id AND a.ownerId = :ownerId")
+    boolean existsByIdAndOwnerId(String id, String ownerId);
+
 }

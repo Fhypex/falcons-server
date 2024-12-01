@@ -35,7 +35,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1")
+@ApiVersionV1
 @RequiredArgsConstructor
 class FacilityCommandV1Controller {
 
@@ -45,7 +45,6 @@ class FacilityCommandV1Controller {
 
     private final CommandRunner runner;
 
-    @ResponseBody
     @PostMapping("/facilities")
     public Response<String> createFacility(@RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") CreateFacilityRequestDTO request) {

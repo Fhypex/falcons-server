@@ -62,7 +62,7 @@ class FacilityRepositoryImpl implements FacilityRepository {
 
     @Override
     public Set<Long> findUniqueDistricts() {
-        return jpaFacilityRepository.findAll().stream().map(entity -> entity.getDistrictId()).collect(Collectors.toUnmodifiableSet());
+        return jpaFacilityRepository.findAll().stream().map(FacilityEntity::getDistrictId).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override
@@ -94,5 +94,17 @@ class FacilityRepositoryImpl implements FacilityRepository {
     @Override
     public boolean hasFacilityByDistrictIds(List<Long> districtIds) {
         return jpaFacilityRepository.existsByDistrictIds(districtIds);
+    }
+
+    @Override
+    public boolean existsByIdAndOwnerId(AggregateId id, AggregateId ownerId) {
+        return jpaFacilityRepository.existsByIdAndOwnerId(id.value(), ownerId.value());
+    }
+
+
+    @Override
+    public int deleteByOwnerId(AggregateId ownerId) {
+        jpaFacilityRepository.deleteByOwnerId(ownerId.value());
+        return 1;
     }
 }
