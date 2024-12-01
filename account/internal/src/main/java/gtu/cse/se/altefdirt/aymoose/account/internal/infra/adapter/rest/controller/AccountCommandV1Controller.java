@@ -14,6 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountVi
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.CreateAccountRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUtils;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -39,8 +40,8 @@ class AccountCommandV1Controller {
 
 
     @PostMapping("/account/my/profile-picture")
-    public Response<AggregateId> updateProfilePicture(@AuthenticationPrincipal Jwt jwt, @RequestPart("image") MultipartFile request) {
-        AggregateId id = runner.run(new UpdateProfilePicture(JwtUtils.extractUserId(jwt), request));
+    public Response<AggregateId> updateProfilePicture(@AuthenticationPrincipal SecuredUser user, @RequestPart("image") MultipartFile request) {
+        AggregateId id = runner.run(new UpdateProfilePicture(user.id(), request));
         return Response.success(id, "Account created successfully");
     }
 }
