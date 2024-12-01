@@ -9,7 +9,6 @@ import lombok.Builder;
 @Builder
 public record AccountView (
     String id,
-    String username,
     String mail,
     String fullName,
     String profilePicture,
@@ -18,12 +17,11 @@ public record AccountView (
     List<String> roles
 )
 {
-    public AccountView (Account account, AuthDetails authDetails, ImageData imageData) {
+    public AccountView (Account account, AuthDetails authDetails, String profilePicture) {
         this(account.id().value(), 
-            authDetails.username(), 
             authDetails.mailAddress(),
              account.fullName().value(),
-             imageData.image(), 
+             profilePicture, 
              account.createdAt().value(),
              account.isActive(),
              authDetails.roles());

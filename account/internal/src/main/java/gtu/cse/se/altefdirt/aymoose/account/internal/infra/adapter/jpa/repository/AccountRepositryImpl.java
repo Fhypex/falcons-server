@@ -27,7 +27,6 @@ class AccountRepositryImpl implements AccountRepository {
     private Account build(AccountEntity accountEntity) {
         return accountFactory.load(AggregateId.from(accountEntity.getId()), 
                                     new FullName(accountEntity.getFullName()),
-                                    AggregateId.from(accountEntity.getImageId()),
                                     new CreatedAt(accountEntity.getCreatedAt()),
                                     accountEntity.isActive());
     }
@@ -48,5 +47,27 @@ class AccountRepositryImpl implements AccountRepository {
     @Override
     public List<Account> findAll() {
         return jpaAccountRepository.findAll().stream().map(this::build).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public int deleteById(AggregateId id) {
+        jpaAccountRepository.deleteById(id.value());
+        return 1;
+    }
+
+    @Override
+    public List<Account> findByIds(List<AggregateId> ids) {
+        return jpaAccountRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toList())).stream().map(this::build).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean existsById(AggregateId id) {
+        return jpaAccountRepository.existsById(id.value());
+    }
+
+    @Override
+    public boolean existsByIds(List<AggregateId> ids) {
+        return jpaAccountRepository.existsByIds(ids.stream().map(AggregateId::value).collect(Collectors.toList()), ids.size());
     }
 }

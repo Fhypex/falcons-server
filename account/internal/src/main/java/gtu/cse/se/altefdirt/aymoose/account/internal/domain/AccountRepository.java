@@ -4,13 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Repository;
 
-public interface AccountRepository {
-    
-    Account save(Account account);
+public interface AccountRepository extends Repository <Account, AggregateId> {
 
-    Optional<Account> findById(AggregateId id);
-
-    List<Account> findAll();
 
 }

@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.shared.application;
 
+
 public record Response<T> (int status, boolean success, String message, T response) {    
     public static <T> Response<T> success(T response) {
         return new Response<>(200, true, "Success", response);
@@ -10,7 +11,7 @@ public record Response<T> (int status, boolean success, String message, T respon
     }
 
     public static <T> Response<T> failure(String message) {
-        return new Response<T>(400, false, message, null);
+        return new Response<>(400, false, message, null);
     }
 
     public static <T> Response<T> created(T response) {

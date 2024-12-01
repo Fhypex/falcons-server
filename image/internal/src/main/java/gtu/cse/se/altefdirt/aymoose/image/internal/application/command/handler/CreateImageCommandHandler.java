@@ -10,7 +10,6 @@ import gtu.cse.se.altefdirt.aymoose.image.internal.domain.ImageRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RegisterHandler

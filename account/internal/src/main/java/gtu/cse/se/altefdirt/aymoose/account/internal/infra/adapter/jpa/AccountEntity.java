@@ -26,7 +26,6 @@ public class AccountEntity {
     @Id
     private String id;
     private String fullName;
-    private String imageId;
     private Instant createdAt;
     private boolean isActive;
 
@@ -36,7 +35,6 @@ public class AccountEntity {
         return AccountEntity.builder()
                 .id(account.id().value())
                 .fullName(account.fullName().value())
-                .imageId(account.imageId().value())
                 .createdAt(account.createdAt().value())
                 .isActive(account.isActive())
                 .build();
@@ -46,7 +44,6 @@ public class AccountEntity {
         return factory.load(
                 AggregateId.from(id),
                 FullName.of(fullName),
-                AggregateId.from(imageId),
                 new CreatedAt(createdAt),
                 isActive
         );

@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.core.infra;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -10,8 +11,9 @@ public class GlobalExceptionHandler {
 
     // Handle generic exceptions
     @ExceptionHandler(Exception.class)
-    public Response<Void> handleException(Exception e) {
+    public ResponseEntity<Response<String>> handleException(Exception e) {
         // You can customize the error code based on the exception
-        return Response.failure(e.getMessage());
+        Response<String> response = Response.failure(e.getMessage());
+        return ResponseEntity.status(response.status()).body(response);
     }
 }

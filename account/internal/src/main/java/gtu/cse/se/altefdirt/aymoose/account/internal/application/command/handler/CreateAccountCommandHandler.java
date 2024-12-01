@@ -1,10 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.account.internal.application.command.handler;
 
-import java.util.Optional;
-
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.CreateAccount;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountView;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.AuthServerOperationsPort;
+import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.KeycloakOperationPort;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.service.AccountService;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
@@ -20,26 +17,19 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class CreateAccountCommandHandler implements CommandHandler<CreateAccount, AccountView> {
+public class CreateAccountCommandHandler implements CommandHandler<CreateAccount, AggregateId> {
 
     private final AccountFactory factory;
-    private final AccountService service;
     private final AccountRepository accountRepository;
-    private final AuthServerOperationsPort authServerOperationsPort;
+    private final KeycloakOperationPort keycloakOperationPort;
 
     @Override
-    public AccountView handle(CreateAccount command) {
+    public AggregateId handle(CreateAccount command) {
 
-        Optional<AggregateId> id = authServerOperationsPort.register(command.username(), command.password(),
-                command.mailAddress());
-
-        if (id.isEmpty()) {
-            throw new RuntimeException("User registration failed");
-        }
+        AggregateId id = keycloakOperationPort.register(command.mailAddress(), command.password());
 
         // Mocked image id
-        AggregateId imageId = AggregateId.generate();
-        Account account = factory.load(id.get(), FullName.of(command.firstName(), command.lastName()), imageId,
+        Account account = factory.load(id, FullName.of(command.firstName(), command.lastName()),
                 CreatedAt.now(), true);
 
         log.debug("Account created: {}", account);
@@ -47,6 +37,6 @@ public class CreateAccountCommandHandler implements CommandHandler<CreateAccount
         Account savedAccount = accountRepository.save(account);
 
         log.debug("Account saved: {}", savedAccount);
-        return service.denormalize(savedAccount);
+        return savedAccount.id();
     }
 }

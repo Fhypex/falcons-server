@@ -23,7 +23,7 @@ class ImageProviderImpl implements ImageProvider {
 
     private ImageData build(Image image) {
         return ImageData.builder()
-                .id(image.id().value())
+                .id(image.id())
                 .url(image.url())
                 .size(image.size())
                 .extension(image.extension())

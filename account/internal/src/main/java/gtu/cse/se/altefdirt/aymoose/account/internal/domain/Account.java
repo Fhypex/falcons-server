@@ -12,19 +12,16 @@ public class Account extends BaseAggregateRoot {
    
     public Account(AggregateId id, 
                  FullName fullName,
-                 AggregateId imageId, 
                  CreatedAt createdAt,  
                  Boolean isActive)  {
         super(id);
         this.fullName = fullName;
-        this.imageId = imageId;
         this.createdAt = createdAt;
         this.isActive = isActive;
     } 
 
     private AggregateId id;
     private FullName fullName;
-    private AggregateId imageId;
     private CreatedAt createdAt;
     private Boolean isActive;
 
@@ -42,10 +39,6 @@ public class Account extends BaseAggregateRoot {
 
     public FullName fullName() {
         return fullName;
-    }
-
-    public AggregateId imageId() {
-        return imageId;
     }
 
     public CreatedAt createdAt() {
