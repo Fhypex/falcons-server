@@ -12,4 +12,7 @@ public interface JpaAccountRepository extends JpaRepository<AccountEntity, Strin
 
     List<AccountEntity> findAll();
 
+    @Query("SELECT COUNT(a) = :size FROM CourtEntity a WHERE a.id IN :ids")
+    boolean existsByIds(List<String> ids, int size);
+
 }

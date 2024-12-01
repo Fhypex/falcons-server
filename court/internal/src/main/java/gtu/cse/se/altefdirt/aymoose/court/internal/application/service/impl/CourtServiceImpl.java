@@ -22,7 +22,7 @@ class CourtServiceImpl implements CourtService {
     public CourtView denormalize(Court court) {
         List<ImageData> images = imageOperationPort.findByRelationId(court.id());
 
-        List<String> imagePaths = images.stream().map(image -> image.id()).collect(Collectors.toList());
+        List<String> imageUrls = images.stream().map(image -> image.url()).collect(Collectors.toList());
 
         return CourtView.builder()
                 .id(court.id().value())
@@ -31,7 +31,7 @@ class CourtServiceImpl implements CourtService {
                 .height(court.measurements().height())
                 .width(court.measurements().width())
                 .capacity(court.capacity().value())
-                .images(imagePaths)
+                .images(imageUrls)
                 .build();
     }
 }

@@ -1,7 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.shared.api.rest.version;
 
 
-import org.springframework.context.annotation.Configuration;
+/* import org.springframework.context.annotation.Configuration;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -18,4 +18,4 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 			ResourceUrlProvider resourceUrlProvider) {
                 return new VersionedRequestMappingHandlerMapping();
     }
-}
+} */

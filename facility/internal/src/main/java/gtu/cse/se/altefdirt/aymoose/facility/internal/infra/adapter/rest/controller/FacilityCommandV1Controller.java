@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,6 +45,7 @@ class FacilityCommandV1Controller {
 
     private final CommandRunner runner;
 
+    @ResponseBody
     @PostMapping("/facilities")
     public Response<String> createFacility(@RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") CreateFacilityRequestDTO request) {
@@ -88,14 +90,14 @@ class FacilityCommandV1Controller {
     }
 
     @DeleteMapping("/cities/district/{id}")
-    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) Long id) {
-        Long districtId = runner.run(new DeleteDistrict(id));
+    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) String id) {
+        Long districtId = runner.run(new DeleteDistrict(Long.parseLong(id)));
         return Response.success(districtId, "District created successfully");
     }
 
     @DeleteMapping("/cities/{id}")
-    public Response<Long> deleteCity(@PathVariable(Parameter.ID) Long id) {
-        Long cityId = runner.run(new DeleteCity(id));
+    public Response<Long> deleteCity(@PathVariable(Parameter.ID) String id) {
+        Long cityId = runner.run(new DeleteCity(Long.parseLong(id)));
         return Response.success(cityId, "City deleted created successfully");
     }
 
