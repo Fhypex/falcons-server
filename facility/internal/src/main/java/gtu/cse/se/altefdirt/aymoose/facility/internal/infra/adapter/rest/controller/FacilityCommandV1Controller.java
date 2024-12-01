@@ -45,6 +45,7 @@ class FacilityCommandV1Controller {
 
     private final CommandRunner runner;
 
+    @ResponseBody
     @PostMapping("/facilities")
     public Response<String> createFacility(@RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") CreateFacilityRequestDTO request) {
