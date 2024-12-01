@@ -47,7 +47,7 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
         }
 
         Facility facility = factory.create(
-                AggregateId.from(command.ownerId()),
+                AggregateId.from(command.userId()),
                 new PhoneNumber(command.phoneNumber()),
                 command.name(),
                 command.description(),

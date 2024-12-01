@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.port;
 
-import java.util.List;
+/* import java.util.List;
 
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
@@ -14,3 +14,4 @@ public interface CourtOperationPort {
 
     List<CourtRichData> findByFacilityIdRich(AggregateId facilityId);
 }
+ */

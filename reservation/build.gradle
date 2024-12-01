@@ -1,0 +1,12 @@
+
+description = 'facility'
+jar.archiveBaseName.set('facility')
+
+dependencies {
+    implementation project('api')
+}
+
+build {
+    dependsOn 'internal:build', 'api:build'
+}
+

@@ -36,5 +36,9 @@ public record WorkHours(
         return timeSlots;
     }
 
+    public boolean isWithin(int hour) {
+        return hour >= openTime && hour < closeTime;
+    }
+
 }
 

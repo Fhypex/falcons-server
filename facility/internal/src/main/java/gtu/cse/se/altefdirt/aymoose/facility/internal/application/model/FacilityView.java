@@ -10,7 +10,7 @@ import lombok.Builder;
 @Builder
 public record FacilityView(
         String id,
-        String ownerId,
+        String userId,
         String phoneNumber,
         String name,
         String description,
@@ -33,7 +33,7 @@ public record FacilityView(
             String district, List<AmenityView> amenities, List<CourtRichData> courts, int lowerPriceLimit,
             int upperPriceLimit) {
         this(facility.id().value(),
-                facility.ownerId().value(),
+                facility.userId().value(),
                 facility.phoneNumber().value(),
                 facility.name(),
                 facility.description(),

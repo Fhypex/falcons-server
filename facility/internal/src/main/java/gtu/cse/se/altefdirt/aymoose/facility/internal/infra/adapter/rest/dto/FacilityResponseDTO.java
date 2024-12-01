@@ -28,7 +28,7 @@ public record FacilityResponseDTO(
         List<Map<String, Object>> amenities,
         List<CourtRichData> courts) {
 
-    public static FacilityResponseDTO richened(FacilityView view, List<CourtRichData> courtDatas) {
+    public static FacilityResponseDTO richened(FacilityView view) {
 
         return FacilityResponseDTO.builder()
                 .id(view.id())
@@ -48,7 +48,7 @@ public record FacilityResponseDTO(
                 .upperPriceLimit(view.upperPriceLimit())
                 .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
-                .courts(courtDatas)
+                .courts(view.courts())
                 .build();
     }
 }

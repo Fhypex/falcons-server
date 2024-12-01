@@ -1,8 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.handler;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteFacility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
@@ -17,13 +17,13 @@ public class DeleteFacilityCommandHandler implements CommandHandler<DeleteFacili
 
     private final FacilityRepository facilityRepository;
     private final ImageOperationPort imageOperationPort;
-    private final CourtOperationPort courtOperationPort;
+    private final CourtRepository courtRepository;
 
     @Override
     public Integer handle(DeleteFacility command) {
 
         // Delete all courts of the facility
-        courtOperationPort.deleteByFacilityId(AggregateId.from(command.id()));
+        courtRepository.deleteByFacilityId(AggregateId.from(command.id()));
 
         // Delete facility
         facilityRepository.deleteById(AggregateId.from(command.id()));

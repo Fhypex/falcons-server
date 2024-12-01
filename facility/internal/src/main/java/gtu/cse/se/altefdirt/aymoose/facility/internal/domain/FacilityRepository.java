@@ -14,7 +14,7 @@ public interface FacilityRepository extends Repository<Facility, AggregateId> {
 
     boolean hasFacilityByDistrictIds(List<Long> districtIds);
 
-    boolean existsByIdAndOwnerId(AggregateId id, AggregateId ownerId);
+    boolean existsByIdAndOwnerId(AggregateId id, AggregateId userId);
 
-    int deleteByOwnerId(AggregateId ownerId);
+    int deleteByOwnerId(AggregateId userId);
 }

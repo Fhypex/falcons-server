@@ -1,0 +1,22 @@
+jar.archiveBaseName.set('aymoose-facility-api')
+
+dependencies {
+    implementation project(':shared')
+    implementation project(':core')
+}
+
+test {
+    useJUnitPlatform()
+
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: ${descriptor}")
+    }
+}

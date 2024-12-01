@@ -14,7 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 @Getter
 public class Facility extends BaseAggregateRoot {
 
-    private AggregateId ownerId;
+    private AggregateId userId;
     private PhoneNumber phoneNumber;
     private String name;
     private String description;
@@ -26,7 +26,7 @@ public class Facility extends BaseAggregateRoot {
     private boolean isActive;
 
     public Facility(AggregateId id,
-            AggregateId ownerId,
+            AggregateId userId,
             PhoneNumber phoneNumber,
             String name,
             String description,
@@ -37,7 +37,7 @@ public class Facility extends BaseAggregateRoot {
             List<AggregateId> amenities,
             boolean isActive) {
         super(id);
-        this.ownerId = ownerId;
+        this.userId = userId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.description = description;
@@ -62,8 +62,8 @@ public class Facility extends BaseAggregateRoot {
         this.description = description;
     }
 
-    public AggregateId ownerId() {
-        return this.ownerId;
+    public AggregateId userId() {
+        return this.userId;
     }
 
     public PhoneNumber phoneNumber() {

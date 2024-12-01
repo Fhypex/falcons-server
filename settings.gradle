@@ -20,8 +20,8 @@ include ':facility'
 include ':facility:internal'
 include ':facility:api'
 
-include ':court'
-include ':court:internal'
-include ':court:api'
+include ':reservation'
+include ':reservation:internal'
+include ':reservation:api'
 
 

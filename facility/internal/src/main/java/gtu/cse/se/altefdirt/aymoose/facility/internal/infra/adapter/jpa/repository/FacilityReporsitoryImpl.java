@@ -30,7 +30,7 @@ class FacilityRepositoryImpl implements FacilityRepository {
     private Facility build(FacilityEntity entity) {
         return factory.load(
                 AggregateId.from(entity.getId()),
-                AggregateId.from(entity.getOwnerId()),
+                AggregateId.from(entity.getUserId()),
                 new PhoneNumber(entity.getPhoneNumber()),
                 entity.getName(),
                 entity.getDescription(),
@@ -97,14 +97,14 @@ class FacilityRepositoryImpl implements FacilityRepository {
     }
 
     @Override
-    public boolean existsByIdAndOwnerId(AggregateId id, AggregateId ownerId) {
-        return jpaFacilityRepository.existsByIdAndOwnerId(id.value(), ownerId.value());
+    public boolean existsByIdAndOwnerId(AggregateId id, AggregateId userId) {
+        return jpaFacilityRepository.existsByIdAndOwnerId(id.value(), userId.value());
     }
 
 
     @Override
-    public int deleteByOwnerId(AggregateId ownerId) {
-        jpaFacilityRepository.deleteByOwnerId(ownerId.value());
+    public int deleteByOwnerId(AggregateId userId) {
+        jpaFacilityRepository.deleteByOwnerId(userId.value());
         return 1;
     }
 }

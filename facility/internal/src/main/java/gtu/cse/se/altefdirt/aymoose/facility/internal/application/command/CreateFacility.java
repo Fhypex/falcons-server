@@ -8,7 +8,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
 import jakarta.validation.constraints.NotBlank;
 
 public record CreateFacility(
-        @NotBlank(message = "Owner Id cannot be null or empty") String ownerId,
+        @NotBlank(message = "Owner Id cannot be null or empty") String userId,
         @NotBlank(message = "Phone number cannot be null or empty") String phoneNumber,
         @NotBlank(message = "Facility name cannot be null or empty") String name,
         String description,

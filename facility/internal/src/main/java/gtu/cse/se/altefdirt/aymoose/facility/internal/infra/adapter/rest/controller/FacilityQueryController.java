@@ -5,7 +5,6 @@ import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.AmenityService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CityService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.FacilityService;
@@ -18,15 +17,11 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Cit
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityCompressedResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
-import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +40,6 @@ public class FacilityQueryController {
     private final FacilityRepository facilityRepository;
     private final FacilityService facilityService;
     private final AmenityRepository amenityRepository;
-    private final CourtOperationPort courtOperationPort;
     private final AmenityService amenityService;
     private final CityRepository cityRepository;
     private final CityService cityService;
@@ -64,7 +58,7 @@ public class FacilityQueryController {
                 .collect(Collectors.toList());
 
         return facilityViews.stream()
-                .map(view -> FacilityResponseDTO.richened(view, courtOperationPort.findByFacilityIdRich(AggregateId.from(view.id()))))
+                .map(view -> FacilityResponseDTO.richened(view))
                 .collect(Collectors.toList());
     }
 
@@ -85,8 +79,7 @@ public class FacilityQueryController {
     public FacilityResponseDTO getFacility(@PathVariable(Parameter.ID) String id) {
         Facility facility = facilityRepository.findById(new AggregateId(id)).get();
         FacilityView facilityView = facilityService.denormalize(facility);
-        List<CourtRichData> courtData = courtOperationPort.findByFacilityIdRich(AggregateId.from(id));
-        return FacilityResponseDTO.richened(facilityView, courtData);
+        return FacilityResponseDTO.richened(facilityView);
     }
 
     @GetMapping(value = "/amenities")
