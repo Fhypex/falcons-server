@@ -63,7 +63,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200","https://app.aymoose.devodev.online", "https://sahancepte.com", "*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173","https://app.aymoose.devodev.online", "https://sahancepte.com", "*"));
         configuration.setAllowCredentials(false);
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(),
