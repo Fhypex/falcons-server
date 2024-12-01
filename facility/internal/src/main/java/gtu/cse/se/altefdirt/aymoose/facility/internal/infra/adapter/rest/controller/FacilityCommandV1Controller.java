@@ -35,7 +35,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1")
+@ApiVersionV1
 @RequiredArgsConstructor
 class FacilityCommandV1Controller {
 

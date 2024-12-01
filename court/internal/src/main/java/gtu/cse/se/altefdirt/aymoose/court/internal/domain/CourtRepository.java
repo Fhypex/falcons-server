@@ -7,6 +7,8 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Repository;
 
 public interface CourtRepository extends Repository<Court, AggregateId> {
 
+    boolean existsByIdAndOwnerId(AggregateId id, AggregateId ownerId);
+
     int deleteByFacilityId(AggregateId facilityId);
     
     List<Court> findByFacilityId(AggregateId facilityId);

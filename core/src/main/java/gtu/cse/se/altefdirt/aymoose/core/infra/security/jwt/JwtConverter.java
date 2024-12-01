@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
@@ -39,10 +38,11 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
                 grantedAuthorities.stream(),
                 extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
 
-        return new JwtAuthenticationToken(
+        return new SecuredUser(
                 jwt,
                 authorities,
                 getPrincipleClaimName(jwt));
+        
     }
 
     private String getPrincipleClaimName(Jwt jwt) {

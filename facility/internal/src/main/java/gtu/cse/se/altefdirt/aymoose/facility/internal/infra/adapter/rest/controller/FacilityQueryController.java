@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessFacilityOwner;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
@@ -23,6 +24,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,8 +58,8 @@ public class FacilityQueryController {
 
     @GetMapping(value = "/facilities")
     @AccessFacilityOwner
-    public List<FacilityResponseDTO> getFacilities() {
-
+    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal SecuredUser user) {
+    
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .collect(Collectors.toList());
 

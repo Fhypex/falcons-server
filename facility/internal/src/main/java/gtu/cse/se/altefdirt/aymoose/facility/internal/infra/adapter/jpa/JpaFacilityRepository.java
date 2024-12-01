@@ -22,4 +22,10 @@ public interface JpaFacilityRepository extends JpaRepository<FacilityEntity, Str
 
     @Query("SELECT COUNT(a) > 0 FROM FacilityEntity a WHERE a.districtId IN :districtIds")
     boolean existsByDistrictIds(List<Long> districtIds);
+
+    @Query("SELECT COUNT(a) > 0 FROM FacilityEntity a WHERE a.id = :id AND a.ownerId = :ownerId")
+    boolean existsByIdAndOwnerId(String id, String ownerId);
+
+    @Query("DELETE FROM FacilityEntity a WHERE a.ownerId = :ownerId")
+    int deleteByOwnerId(String ownerId);
 }

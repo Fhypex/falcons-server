@@ -42,16 +42,15 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                /* .cors(cors -> corsConfigurationSource()) */
-               /*  .cors(cors -> cors.disable()) */
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                     .requestMatchers(HttpMethod.GET, "/**").permitAll()  // Allow all GET requests
                     .requestMatchers(HttpMethod.POST, "/api/v1/accounts").anonymous()
-                    .anyRequest().authenticated() // Require authentication for all other requests
+                    .anyRequest().hasRole("USER")
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
+                .oauth2ResourceServer(oauth2 -> {
+                        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));})
                 
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 /* .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint())
