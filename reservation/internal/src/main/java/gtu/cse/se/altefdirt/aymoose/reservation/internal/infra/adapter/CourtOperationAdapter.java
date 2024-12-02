@@ -1,11 +1,11 @@
-package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter;
+package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.CourtProvider;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.CourtOperationPort;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtData;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;

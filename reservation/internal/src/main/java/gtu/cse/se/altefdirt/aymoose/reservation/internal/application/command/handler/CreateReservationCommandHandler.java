@@ -43,7 +43,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
 
-        if(repository.isTimeSlotInUse(courtId, LocalDate.now(), command.hour())) {
+        if(repository.isTimeSlotInUse(courtId, command.date(), command.hour())) {
             throw new RuntimeException("Time slot is in use");
         }
 
@@ -56,7 +56,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
         Reservation reservation = factory.create(
                 AggregateId.from(command.userId()),
                 AggregateId.from(command.courtId()),
-                LocalDate.now(),
+                command.date(),
                 command.hour(),
                 ReservationStatus.PENDING,
                 Instant.now(),
