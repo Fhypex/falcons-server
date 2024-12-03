@@ -1,22 +1,7 @@
-package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
+package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessFacilityOwner;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.CourtOperationPort;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.AmenityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.FacilityService;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.AmenityRepository;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CityRepository;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.AmenityResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CityResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityCompressedResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -59,12 +44,13 @@ public class FacilityQueryController {
     @GetMapping(value = "/facilities")
     @AccessFacilityOwner
     public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal SecuredUser user) {
-    
+
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .collect(Collectors.toList());
 
         return facilityViews.stream()
-                .map(view -> FacilityResponseDTO.richened(view, courtOperationPort.findByFacilityIdRich(AggregateId.from(view.id()))))
+                .map(view -> FacilityResponseDTO.richened(view,
+                        courtOperationPort.findByFacilityIdRich(AggregateId.from(view.id()))))
                 .collect(Collectors.toList());
     }
 
