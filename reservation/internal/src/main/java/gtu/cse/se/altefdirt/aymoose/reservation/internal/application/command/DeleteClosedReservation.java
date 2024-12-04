@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command;
 
 import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
-public record DeleteClosedReservation(Long reservationId) implements Command {
+public record DeleteClosedReservation(AggregateId id) implements Command {
 }

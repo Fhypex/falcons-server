@@ -36,10 +36,9 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
         log.debug("Creating reservation {}", command);
 
-        AggregateId userId = AggregateId.from(command.userId());
         AggregateId courtId = AggregateId.from(command.courtId());
 
-        if(repository.countByPendingReservationsByUserId(userId) > 3) {
+        if(repository.countByPendingReservationsByUserId(command.userId()) > 3) {
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
 
@@ -54,7 +53,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
         }
 
         Reservation reservation = factory.create(
-                AggregateId.from(command.userId()),
+                command.userId(),
                 AggregateId.from(command.courtId()),
                 command.date(),
                 command.hour(),
