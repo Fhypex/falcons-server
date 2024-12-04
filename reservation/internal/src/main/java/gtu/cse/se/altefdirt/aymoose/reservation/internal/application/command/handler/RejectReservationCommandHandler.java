@@ -1,8 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.RejectReservation;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;

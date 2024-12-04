@@ -1,18 +1,11 @@
-package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
-
-import java.util.List;
+package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
@@ -43,7 +36,8 @@ class ReservationCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=default")
-    public Response<String> createReservation(@AuthenticationPrincipal SecuredUser user, @RequestBody @Valid CreateReservationRequestDTO request) {
+    public Response<String> createReservation(@AuthenticationPrincipal SecuredUser user,
+            @RequestBody @Valid CreateReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateReservation(
                 user.id(),
                 request.courtId(),
@@ -53,7 +47,8 @@ class ReservationCommandV1Controller {
     }
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=local")
-    public Response<String> createLocalReservation(@AuthenticationPrincipal SecuredUser user, @RequestBody CreateReservationRequestDTO request) {
+    public Response<String> createLocalReservation(@AuthenticationPrincipal SecuredUser user,
+            @RequestBody CreateReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateLocalReservation(
                 request.courtId(),
                 request.date(),
@@ -86,11 +81,5 @@ class ReservationCommandV1Controller {
     public Response<String> approveReservation(@PathVariable(Parameter.ID) String id) {
         AggregateId facilityId = runner.run(new ApproveReservation(id));
         return Response.success(facilityId.value(), "Reservation approved successfully");
-    }
-
-    @PatchMapping("/reservation/{id}/reject")
-    public Response<String> rejectReservation(@PathVariable(Parameter.ID) String id) {
-        AggregateId facilityId = runner.run(new RejectReservation(id));
-        return Response.success(facilityId.value(), "Reservation rejected successfully");
     }
 }

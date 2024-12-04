@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 class FacilityProviderImpl implements FacilityProvider {
-    
+
     private final FacilityRepository facilityRepository;
 
     @Override

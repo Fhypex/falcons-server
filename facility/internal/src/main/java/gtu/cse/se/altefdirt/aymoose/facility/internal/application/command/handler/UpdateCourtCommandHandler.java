@@ -7,6 +7,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Update
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtRepository;
+import gtu.cse.se.altefdirt.aymoose.image.api.provider.ImageProvider;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -18,6 +19,7 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
 
     private final CourtService service;
     private final CourtRepository repository;
+    private final ImageProvider imageProvider;
 
     @Override
     public CourtView handle(UpdateCourt command) {
@@ -30,9 +32,36 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
 
         Court court = fetch.get();
 
-        court.updateDetails(command.name(), command.description());
-        court.updateMeasurements(command.height(), command.width());
-        court.updateCapacity(command.capacity());
+        if (command.name() != null) {
+            court.updateName(command.name());
+        }
+        if (command.description() != null) {
+            court.updateDescription(command.description());
+        }
+        if (command.height() != null) {
+            court.updateHeight(command.height());
+        }
+        if (command.width() != null) {
+            court.updateWidth(command.width());
+        }
+        if (command.capacity() != null) {
+            court.updateCapacity(command.capacity());
+        }
+        if (command.price() != null) {
+            court.updatePrice(command.price());
+        }
+
+        if (command.deletedImages() != null) {
+            for (String image : command.deletedImages()) {
+                imageProvider.deleteById(AggregateId.from(image));
+            }
+        }
+
+        if (command.newImages() != null) {
+            for (var image : command.newImages()) {
+                imageProvider.save(court.id(), image);
+            }
+        }
 
         Court savedCourt = repository.save(court);
 

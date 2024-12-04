@@ -101,4 +101,56 @@ public class Facility extends BaseAggregateRoot {
     public List<AggregateId> amenities() {
         return this.amenities;
     }
+
+    public void updateAmenities(List<AggregateId> amenities) {
+        this.amenities = amenities;
+    }
+
+    public void updateLocation(String location) {
+        this.location = new Location(location);
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = new PhoneNumber(phoneNumber);
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
+
+    public void updateFullAddress(String fullAddress) {
+        this.address = new Address(this.address.cityId(), this.address.districtId(), fullAddress);
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void updateContactDetails(String contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+
+    public void updateOpenTime(int openTime) {
+        this.workHours = new WorkHours(openTime, this.workHours.closeTime());
+    }
+
+    public void updateCloseTime(int closeTime) {
+        this.workHours = new WorkHours(this.workHours.openTime(), closeTime);
+    }
+
+    public void setAmenities(List<AggregateId> amenities) {
+        this.amenities = amenities;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public void updateDistrictId(Long districtId) {
+        this.address = new Address(this.address.cityId(), districtId, this.address.fullAddress());
+    }
 }

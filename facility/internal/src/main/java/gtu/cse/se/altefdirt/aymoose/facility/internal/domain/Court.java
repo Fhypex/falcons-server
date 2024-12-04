@@ -70,7 +70,43 @@ public class Court extends BaseAggregateRoot {
         return measurements;
     }
 
+    public void updateHeight(int height) {
+        this.measurements = new Measurements(height, measurements.width());
+    }
+
+    public void updateWidth(int width) {
+        this.measurements = new Measurements(measurements.height(), width);
+    }
+
     public Capacity capacity() {
         return capacity;
+    }
+
+    public void updatePrice(int value) {
+        this.price = new Price(value);
+    }
+
+    public void updatePrice(Price price) {
+        this.price = price;
+    }
+
+    public void updateCapacity(Capacity capacity) {
+        this.capacity = capacity;
+    }
+
+    public void updateMeasurements(Measurements measurements) {
+        this.measurements = measurements;
+    }
+
+    public void updateDetails(CourtDetails details) {
+        this.details = details;
+    }
+
+    public void updateName(String name) {
+        this.details = new CourtDetails(name, details.description());
+    }
+
+    public void updateDescription(String description) {
+        this.details = new CourtDetails(details.name(), description);
     }
 }

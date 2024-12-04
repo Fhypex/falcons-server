@@ -1,4 +1,4 @@
-jar.archiveBaseName.set('aymoose-facility-api')
+jar.archiveBaseName.set('aymoose-reservation-api')
 
 dependencies {
     implementation project(':shared')

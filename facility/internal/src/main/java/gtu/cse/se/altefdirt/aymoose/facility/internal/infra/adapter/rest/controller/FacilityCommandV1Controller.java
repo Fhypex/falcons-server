@@ -1,8 +1,10 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Delete
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteDistrict;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteFacility;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.UpdateFacility;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
@@ -26,6 +29,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Cre
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateCityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateDistrictRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateFacilityRequestDTO;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.UpdateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
@@ -99,11 +103,32 @@ class FacilityCommandV1Controller {
     }
 
     @DeleteMapping("/facilities/{id}")
-    public Response<String> createFacility(@PathVariable(Parameter.ID) String id) {
+    public Response<String> deleteFacility(@PathVariable(Parameter.ID) String id) {
         AggregateId facilityId = runner.run(new DeleteFacility(id));
         return Response.success(facilityId.value(), "Facility deleted successfully");
     }
 
+    @PatchMapping("/facilities/{id}")
+    public Response<String> updateFacility(@PathVariable(Parameter.ID) UUID id,
+            @RequestPart("images") List<MultipartFile> images,
+            @RequestPart("data") UpdateFacilityRequestDTO request) {
+        AggregateId facilityId = runner.run(new UpdateFacility(
+                id,
+                request.phoneNumber(),
+                request.name(),
+                request.description(),
+                request.districtId(),
+                request.fullAddress(),
+                request.location(),
+                request.contactDetails(),
+                request.openTime(),
+                request.closeTime(),
+                request.amenityIds(),
+                request.isActive(),
+                request.deletedImages(),
+                images));
+        return Response.success(facilityId.value(), "Facility updated successfully");
+    }
 
     @PostMapping("/amenities/{id}")
     public Response<String> createAmenity(@PathVariable(Parameter.ID) String id) {
