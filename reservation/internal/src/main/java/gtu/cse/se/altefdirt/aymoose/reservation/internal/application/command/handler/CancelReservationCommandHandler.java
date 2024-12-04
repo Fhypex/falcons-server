@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.ApproveReservation;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
@@ -13,13 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class ApproveReservationCommandHandler implements CommandHandler<ApproveReservation, AggregateId> {
+public class CancelReservationCommandHandler implements CommandHandler<CancelReservation, AggregateId> {
 
     private final ReservationRepository repository;
-    private final CourtOperationPort courtOperationPort;
 
     @Override
-    public AggregateId handle(ApproveReservation command) {
+    public AggregateId handle(CancelReservation command) {
 
         log.debug("Approving reservation {}", command);
 
@@ -28,12 +27,11 @@ public class ApproveReservationCommandHandler implements CommandHandler<ApproveR
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        reservation.approve();
+        reservation.cancel();
 
         log.debug("Reservation approved {}", reservation);
 
         log.debug("Saving reservation", reservation);
-
 
         Reservation savedReservation = repository.save(reservation);
 

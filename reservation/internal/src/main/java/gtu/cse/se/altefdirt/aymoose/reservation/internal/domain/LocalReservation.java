@@ -4,11 +4,10 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.SimpleAggregateRoot;
-
+import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 
 @Getter
-public class LocalReservation extends SimpleAggregateRoot {
+public class LocalReservation extends BaseAggregateRoot {
 
     private AggregateId courtId;
     private String name;
@@ -16,7 +15,7 @@ public class LocalReservation extends SimpleAggregateRoot {
     private LocalDate date;
     private int hour;
 
-    public LocalReservation(Long id,
+    public LocalReservation(AggregateId id,
             AggregateId courtId,
             String name,
             String phoneNumber,

@@ -17,11 +17,11 @@ include ':review:internal'
 include ':review:api'
 
 include ':facility'
-include ':facility:internal'
 include ':facility:api'
+include ':facility:internal'
 
 include ':reservation'
-include ':reservation:internal'
 include ':reservation:api'
+include ':reservation:internal'
 
 

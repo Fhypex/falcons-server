@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class CreateReservationCommandHandler implements CommandHandler<CreateReservation, AggregateId> {
+public class CreateClosedReservationCommandHandler implements CommandHandler<CreateReservation, AggregateId> {
 
     private final ReservationFactory factory;
     private final ReservationRepository repository;

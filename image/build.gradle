@@ -7,5 +7,5 @@ dependencies {
 }
 
 build {
-    dependsOn 'internal:build', 'api:build'
+    dependsOn 'api:build', 'internal:build'
 }

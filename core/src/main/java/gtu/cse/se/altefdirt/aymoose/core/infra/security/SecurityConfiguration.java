@@ -27,7 +27,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtConverter;
 
-
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -45,17 +44,19 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
-                    .requestMatchers(HttpMethod.GET, "/**").permitAll()  // Allow all GET requests
-                    .requestMatchers(HttpMethod.POST, "/api/v1/accounts").anonymous()
-                    .anyRequest().hasRole("USER")
-                )
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll() // Allow all GET requests
+                        .requestMatchers(HttpMethod.POST, "/api/v1/accounts").anonymous()
+                        .anyRequest().hasRole("USER"))
                 .oauth2ResourceServer(oauth2 -> {
-                        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));})
-                
+                    oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
+                })
+
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                /* .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint())
-                        .accessDeniedHandler(accessDeniedHandler())) */;
-                        
+        /*
+         * .exceptionHandling(e ->
+         * e.authenticationEntryPoint(authenticationEntryPoint())
+         * .accessDeniedHandler(accessDeniedHandler()))
+         */;
 
         return httpSecurity.build();
     }
@@ -63,7 +64,8 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "https://app.aymoose.devodev.online", "https:sahancepte.com"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "https://app.aymoose.devodev.online",
+                "https://app.aymoose.devodev.online", "https://aymoose.devodev.online"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(),
@@ -75,58 +77,71 @@ public class SecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
         return source;
-    } 
-
-   /*  @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return (request, response, exception) -> {
-            log.warn("Authentication failure : {}", exception.getMessage());
-            HttpStatus status;
-            if (exception instanceof DisabledException) {
-                status = HttpStatus.FORBIDDEN;
-            } else {
-                status = HttpStatus.UNAUTHORIZED;
-            }
-            response.setStatus(status.value());
-            String jwtResponse = objectMapper.writeValueAsString(ResponseEntity.status(status.value()).body(status));
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(jwtResponse);
-            response.getWriter().flush();
-        };
-    } */
-
-/*     @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> {
-            log.warn("Authentication failed for request:{}, with cause:{}", request.getRequestURI(),
-                    authException.getMessage());
-            Response<CustodyErrorResponse> errorResponse = ResponseBuilder.build(HttpStatus.UNAUTHORIZED.value(),
-                    AUTH_FAILED);
-            String jwtResponse = objectMapper.writeValueAsString(errorResponse);
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write(jwtResponse);
-            response.getWriter().flush();
-        };
-    } */
-
-    /* @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return (request, response, accessDeniedException) -> {
-            log.warn("Access denied for request:{} with reason:{}", request.getRequestURI(),
-                    accessDeniedException.getMessage());
-            String jwtResponse = objectMapper
-                    .writeValueAsString(ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(HttpStatus.FORBIDDEN));
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write(jwtResponse);
-        };
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    } */
+    /*
+     * @Bean
+     * public AuthenticationFailureHandler authenticationFailureHandler() {
+     * return (request, response, exception) -> {
+     * log.warn("Authentication failure : {}", exception.getMessage());
+     * HttpStatus status;
+     * if (exception instanceof DisabledException) {
+     * status = HttpStatus.FORBIDDEN;
+     * } else {
+     * status = HttpStatus.UNAUTHORIZED;
+     * }
+     * response.setStatus(status.value());
+     * String jwtResponse =
+     * objectMapper.writeValueAsString(ResponseEntity.status(status.value()).body(
+     * status));
+     * response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+     * response.getWriter().write(jwtResponse);
+     * response.getWriter().flush();
+     * };
+     * }
+     */
+
+    /*
+     * @Bean
+     * public AuthenticationEntryPoint authenticationEntryPoint() {
+     * return (request, response, authException) -> {
+     * log.warn("Authentication failed for request:{}, with cause:{}",
+     * request.getRequestURI(),
+     * authException.getMessage());
+     * Response<CustodyErrorResponse> errorResponse =
+     * ResponseBuilder.build(HttpStatus.UNAUTHORIZED.value(),
+     * AUTH_FAILED);
+     * String jwtResponse = objectMapper.writeValueAsString(errorResponse);
+     * response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+     * response.setStatus(HttpStatus.UNAUTHORIZED.value());
+     * response.getWriter().write(jwtResponse);
+     * response.getWriter().flush();
+     * };
+     * }
+     */
+
+    /*
+     * @Bean
+     * public AccessDeniedHandler accessDeniedHandler() {
+     * return (request, response, accessDeniedException) -> {
+     * log.warn("Access denied for request:{} with reason:{}",
+     * request.getRequestURI(),
+     * accessDeniedException.getMessage());
+     * String jwtResponse = objectMapper
+     * .writeValueAsString(ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(
+     * HttpStatus.FORBIDDEN));
+     * response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+     * response.setStatus(HttpStatus.FORBIDDEN.value());
+     * response.getWriter().write(jwtResponse);
+     * };
+     * }
+     * 
+     * @Bean
+     * public AuthenticationManager
+     * authenticationManager(AuthenticationConfiguration config) throws Exception {
+     * return config.getAuthenticationManager();
+     * }
+     */
 
     @Bean
     public ModelMapper modelMapper() {

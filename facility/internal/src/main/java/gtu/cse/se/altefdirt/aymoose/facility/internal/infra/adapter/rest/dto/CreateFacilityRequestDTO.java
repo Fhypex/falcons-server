@@ -15,20 +15,20 @@ public record CreateFacilityRequestDTO(
         int openTime,
         int closeTime,
         List<String> amenityIds,
-        boolean isActive){
+        Boolean isActive) {
     public CreateFacilityRequestDTO(
-        String userId,
-        String phoneNumber,
-        String name,
-        String description,
-        Long districtId,
-        String fullAddress,
-        String location,
-        String contactDetails,
-        int openTime,
-        int closeTime,
-        List<String> amenityIds,
-        boolean isActive) {
+            String userId,
+            String phoneNumber,
+            String name,
+            String description,
+            Long districtId,
+            String fullAddress,
+            String location,
+            String contactDetails,
+            int openTime,
+            int closeTime,
+            List<String> amenityIds,
+            Boolean isActive) {
         Validate.notNull(userId, "User ID cannot be null");
         Validate.notNull(phoneNumber, "Phone number cannot be null");
         Validate.notNull(name, "Facility name cannot be null");
@@ -40,11 +40,16 @@ public record CreateFacilityRequestDTO(
 
         Validate.isTrue(userId.length() == 36, "Invalid user ID");
         Validate.isTrue(name.length() >= 3 && name.length() <= 80, "Facility name must be between 3 and 80 characters");
-        Validate.isTrue(description.length() >= 3 && description.length() <= 200, "Facility description must be between 3 and 200 characters");
-        Validate.isTrue(phoneNumber.length() >= 10 && phoneNumber.length() <= 15, "Phone number must be between 10 and 15 characters");
-        Validate.isTrue(fullAddress.length() >= 5 && fullAddress.length() <= 100, "Full address must be between 5 and 100 characters");
-        Validate.isTrue(location.length() >= 5 && location.length() <= 100, "Location must be between 5 and 100 characters");
-        Validate.isTrue(contactDetails.length() >= 5 && contactDetails.length() <= 100, "Contact details must be between 5 and 100 characters");
+        Validate.isTrue(description.length() >= 3 && description.length() <= 200,
+                "Facility description must be between 3 and 200 characters");
+        Validate.isTrue(phoneNumber.length() >= 10 && phoneNumber.length() <= 15,
+                "Phone number must be between 10 and 15 characters");
+        Validate.isTrue(fullAddress.length() >= 5 && fullAddress.length() <= 100,
+                "Full address must be between 5 and 100 characters");
+        Validate.isTrue(location.length() >= 5 && location.length() <= 100,
+                "Location must be between 5 and 100 characters");
+        Validate.isTrue(contactDetails.length() >= 5 && contactDetails.length() <= 100,
+                "Contact details must be between 5 and 100 characters");
 
         Validate.isTrue(openTime >= 0 && openTime <= 24, "Invalid open time");
         Validate.isTrue(closeTime >= 0 && closeTime <= 24, "Invalid close time");

@@ -1,6 +1,6 @@
 
-description = 'facility'
-jar.archiveBaseName.set('facility')
+description = 'reservation'
+jar.archiveBaseName.set('reservation')
 
 dependencies {
     implementation project('api')

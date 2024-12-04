@@ -3,31 +3,18 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command;
 import java.time.Instant;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
-import jakarta.validation.constraints.NotBlank;
 
 public record UpdateCourt(
-        @NotBlank(message = "Court Id cannot be null or empty")
-        String id,
-
-        @NotBlank(message = "Name cannot be null or empty")
-        String name,
-
-        @NotBlank(message = "Court description can not be null or empty")
-        String description,
-
-        Integer capacity,
-
-        Integer height,
-
-        Integer width,
-
-        Instant openTime,
-
-        Instant closeTime,
-
-        String location,
-
-        List<String> amenityIds
-) implements Command {
+                String id,
+                String name,
+                String description,
+                Integer height,
+                Integer width,
+                Integer capacity,
+                Integer price,
+                List<String> deletedImages,
+                List<MultipartFile> newImages) implements Command {
 }

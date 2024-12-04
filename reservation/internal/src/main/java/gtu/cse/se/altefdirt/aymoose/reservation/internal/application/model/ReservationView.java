@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model;
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import lombok.Builder;
 
 
@@ -13,8 +14,9 @@ public record ReservationView(
         int hour,
         String status,
         String requestedAt,
-        String updatedAt) {
-    public ReservationView(Reservation reservation) {
+        String updatedAt,
+        String reserverName) {
+    public ReservationView(Reservation reservation, FullName reserverName) {
         this(reservation.id().value(),
                 reservation.userId().value(),
                 reservation.courtId().value(),
@@ -22,6 +24,7 @@ public record ReservationView(
                 reservation.hour(),
                 reservation.status().name(),
                 reservation.requestedAt().toString(),
-                reservation.updatedAt().toString());
+                reservation.updatedAt().toString(),
+                reserverName.value());
     }
 }

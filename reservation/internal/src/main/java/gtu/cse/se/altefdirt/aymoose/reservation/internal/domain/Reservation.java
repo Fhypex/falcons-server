@@ -43,6 +43,21 @@ public class Reservation extends BaseAggregateRoot {
         this.updatedAt = Instant.now();
     }
 
+    public void reject() {
+        this.status = ReservationStatus.REJECTED;
+        this.updatedAt = Instant.now();
+    }
+
+    public void cancel() {
+        this.status = ReservationStatus.CANCELLED;
+        this.updatedAt = Instant.now();
+    }
+
+    public void complete() {
+        this.status = ReservationStatus.COMPLETED;
+        this.updatedAt = Instant.now();
+    }
+
     public AggregateId userId() {
         return this.userId;
     }
