@@ -20,6 +20,11 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
     container_name: keycloak
+    volumes:
+      - ./theme.jar:/opt/keycloak/providers/theme.jar
+      - ./register-event-listener-local-network.jar:/opt/keycloak/providers/register-event-listener-local-network.jar
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
     environment:
       - KEYCLOAK_ADMIN=${DEFAULT_USERNAME}
       - KEYCLOAK_ADMIN_PASSWORD=${DEFAULT_PASSWORD}
