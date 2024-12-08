@@ -21,15 +21,11 @@ public class CreateAccountCommandHandler implements CommandHandler<CreateAccount
 
     private final AccountFactory factory;
     private final AccountRepository accountRepository;
-    private final KeycloakOperationPort keycloakOperationPort;
 
     @Override
     public AggregateId handle(CreateAccount command) {
 
-        AggregateId id = keycloakOperationPort.register(command.mailAddress(), command.password());
-
-        // Mocked image id
-        Account account = factory.load(id, FullName.of(command.firstName(), command.lastName()),
+        Account account = factory.load(command.id(), FullName.of(command.firstName(), command.lastName()),
                 CreatedAt.now(), true);
 
         log.debug("Account created: {}", account);

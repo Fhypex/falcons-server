@@ -28,10 +28,9 @@ class AccountCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping("/accounts")
-    public Response<AggregateId> create(@RequestBody CreateAccountRequestDTO request) {
+    public Response<AggregateId> create(@AuthenticationPrincipal SecuredUser user, @RequestBody CreateAccountRequestDTO request) {
         AggregateId id = runner.run(new CreateAccount(
-                request.mailAddress(),
-                request.password(),
+                user.id(),
                 request.firstName(),
                 request.lastName()));
 
