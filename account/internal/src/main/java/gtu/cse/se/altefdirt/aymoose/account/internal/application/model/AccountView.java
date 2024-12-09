@@ -10,7 +10,8 @@ import lombok.Builder;
 public record AccountView (
     String id,
     String mail,
-    String fullName,
+    String firstName,
+    String lastName,
     String profilePicture,
     Instant createdAt,
     Boolean isActive,
@@ -20,7 +21,8 @@ public record AccountView (
     public AccountView (Account account, AuthDetails authDetails, String profilePicture) {
         this(account.id().value(), 
             authDetails.mailAddress(),
-             account.fullName().value(),
+             account.fullName().firstName(),
+             account.fullName().lastName(),
              profilePicture, 
              account.createdAt().value(),
              account.isActive(),

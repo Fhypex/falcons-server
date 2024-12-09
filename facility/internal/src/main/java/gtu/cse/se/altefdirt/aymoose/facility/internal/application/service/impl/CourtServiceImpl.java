@@ -32,6 +32,7 @@ class CourtServiceImpl implements CourtService {
                 .width(court.measurements().width())
                 .capacity(court.capacity().value())
                 .images(imageUrls)
+                .price(court.price().value())
                 .build();
     }
 }

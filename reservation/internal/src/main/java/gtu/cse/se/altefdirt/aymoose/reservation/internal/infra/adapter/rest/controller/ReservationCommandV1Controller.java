@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.ApproveReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateClosedReservation;
@@ -36,7 +36,7 @@ class ReservationCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=default")
-    public Response<String> createReservation(@AuthenticationPrincipal SecuredUser user,
+    public Response<String> createReservation(@AuthenticationPrincipal JwtUser user,
             @RequestBody @Valid CreateReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateReservation(
                 user.id(),
@@ -47,7 +47,7 @@ class ReservationCommandV1Controller {
     }
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=local")
-    public Response<String> createLocalReservation(@AuthenticationPrincipal SecuredUser user,
+    public Response<String> createLocalReservation(@AuthenticationPrincipal JwtUser user,
             @RequestBody CreateReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateLocalReservation(
                 request.courtId(),

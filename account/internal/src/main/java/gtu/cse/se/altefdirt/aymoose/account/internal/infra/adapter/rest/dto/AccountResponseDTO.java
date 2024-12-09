@@ -9,7 +9,8 @@ import lombok.Builder;
 public record AccountResponseDTO(
     String id,
     String email,
-    String fullName,
+    String firstName,
+    String lastName,
     String profilePicture,
     Instant createdAt,
     List<String> roles
@@ -19,7 +20,8 @@ public record AccountResponseDTO(
         return AccountResponseDTO.builder()
             .id(accountView.id())
             .email(accountView.mail())
-            .fullName(accountView.fullName())
+            .firstName(accountView.firstName())
+            .lastName(accountView.lastName())
             .profilePicture(accountView.profilePicture())
             .createdAt(accountView.createdAt())
             .roles(accountView.roles())

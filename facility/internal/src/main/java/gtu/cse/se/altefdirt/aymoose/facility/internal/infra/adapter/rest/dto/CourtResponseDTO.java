@@ -12,7 +12,7 @@ public record CourtResponseDTO(
         Integer height,
         Integer width,
         int capacity,
-        int price,
+        Integer price,
         List<String> images) {
     public static CourtResponseDTO fromView(CourtView courtView) {
         return CourtResponseDTO.builder()

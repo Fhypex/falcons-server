@@ -14,7 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.AccountResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessAdmin;
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ class AccountQueryV1Controller {
 
 
     @GetMapping(value = "/account/my")
-    AccountResponseDTO getAccountById(@AuthenticationPrincipal SecuredUser user) {
+    AccountResponseDTO getAccountById(@AuthenticationPrincipal JwtUser user) {
         Optional<Account> fetch = accountRepository.findById(user.id());
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Account does not exist");

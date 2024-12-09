@@ -4,18 +4,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record FullName(
-    @NotNull @Size(min = 3, max = 255) String fullName) implements SingleValueObject<String> { 
+    @NotNull @Size(min = 3, max = 255) String firstName,
+    @NotNull @Size(min = 3, max = 255) String lastName) { 
         
-    public static FullName of(String value) {
-        return new FullName(value);
+    public static FullName of(String firstName, String lastName) {
+        return new FullName(firstName, lastName);
     }
 
-    public static FullName of(String name, String surname) {
-        return new FullName(name + " " + surname);
-    }
-
-    @Override
     public String value() {
-        return fullName;
+        return firstName + " " + lastName;
     }
 }

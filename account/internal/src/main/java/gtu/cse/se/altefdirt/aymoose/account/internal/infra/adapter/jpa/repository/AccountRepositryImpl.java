@@ -26,7 +26,7 @@ class AccountRepositryImpl implements AccountRepository {
 
     private Account build(AccountEntity accountEntity) {
         return accountFactory.load(AggregateId.from(accountEntity.getId()), 
-                                    new FullName(accountEntity.getFullName()),
+                                    new FullName(accountEntity.getFirstName(), accountEntity.getLastName()),
                                     new CreatedAt(accountEntity.getCreatedAt()),
                                     accountEntity.isActive());
     }

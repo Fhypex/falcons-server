@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_REALM_ACCESS;
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_ROLES;
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_ROLE_PREFIX;
@@ -36,12 +38,12 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 
         Collection<GrantedAuthority> authorities = Stream.concat(
                 grantedAuthorities.stream(),
-                extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+                extractRoleAuthorities(jwt).stream()).collect(Collectors.toSet());
 
-        return new SecuredUser(
-                jwt,
-                authorities,
-                getPrincipleClaimName(jwt));
+        return new JwtUserToken(
+                    new JwtUser(jwt, AggregateId.from(getPrincipleClaimName(jwt)), extractResourceRolesAsString(jwt)),
+                    authorities,
+                    getPrincipleClaimName(jwt));
         
     }
 
@@ -50,7 +52,16 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
     }
 
     @SuppressWarnings({ "unchecked" })
-    private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
+    private Collection<? extends GrantedAuthority> extractRoleAuthorities(Jwt jwt) {
+        Collection<String> realmRoles = extractResourceRolesAsString(jwt);
+        return realmRoles
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(JWT_ROLE_PREFIX + role))
+                .collect(Collectors.toSet());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private Collection<String> extractResourceRolesAsString(Jwt jwt) {
         Map<String, Object> realmAccess;
         Collection<String> realmRoles;
 
@@ -66,9 +77,6 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
             return Set.of(); // Return an empty set if the value is null or not a Map
         }
 
-        return realmRoles
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.contains(JWT_ROLE_PREFIX) ? role : JWT_ROLE_PREFIX + role))
-                .collect(Collectors.toSet());
+        return realmRoles;
     }
 }

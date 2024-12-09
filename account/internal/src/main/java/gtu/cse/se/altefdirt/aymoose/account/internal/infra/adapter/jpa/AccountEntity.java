@@ -25,7 +25,8 @@ public class AccountEntity {
     
     @Id
     private String id;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private Instant createdAt;
     private boolean isActive;
 
@@ -34,7 +35,8 @@ public class AccountEntity {
     public static AccountEntity fromDomain(Account account) {
         return AccountEntity.builder()
                 .id(account.id().value())
-                .fullName(account.fullName().value())
+                .firstName(account.fullName().firstName())
+                .lastName(account.fullName().lastName())
                 .createdAt(account.createdAt().value())
                 .isActive(account.isActive())
                 .build();
@@ -43,7 +45,7 @@ public class AccountEntity {
     public Account toDomain(AccountFactory factory) {
         return factory.load(
                 AggregateId.from(id),
-                FullName.of(fullName),
+                FullName.of(firstName, lastName),
                 new CreatedAt(createdAt),
                 isActive
         );
