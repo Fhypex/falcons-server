@@ -1,8 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CourtView;
@@ -20,9 +18,10 @@ class CourtServiceImpl implements CourtService {
 
     @Override
     public CourtView denormalize(Court court) {
+
         List<ImageData> images = imageOperationPort.findByRelationId(court.id());
 
-        List<String> imageUrls = images.stream().map(image -> image.url()).collect(Collectors.toList());
+        List<String> imageUrls = images.stream().map(ImageData::url).toList();
 
         return CourtView.builder()
                 .id(court.id().value())
@@ -31,7 +30,8 @@ class CourtServiceImpl implements CourtService {
                 .height(court.measurements().height())
                 .width(court.measurements().width())
                 .capacity(court.capacity().value())
-                .images(imageUrls)
+                .imageUrls(imageUrls)
+                .price(court.price().value())
                 .build();
     }
 }

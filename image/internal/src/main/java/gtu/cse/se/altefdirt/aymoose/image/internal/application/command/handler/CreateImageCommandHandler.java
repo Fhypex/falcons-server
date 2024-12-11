@@ -22,7 +22,7 @@ class CreateImageCommandHandler implements CommandHandler<CreateImage, Image> {
     @Override
     public Image handle(CreateImage command) {
 
-        BaseImage baseImage = factory.createBase(AggregateId.from(command.relationId()), command.file());
+        BaseImage baseImage = factory.createBase(AggregateId.fromUUID(command.relationId()), command.file());
         return imageRepository.save(baseImage, command.file());
     }
 }

@@ -2,14 +2,11 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.reposit
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.District;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.DistrictFactory;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.DistrictRepository;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.DistrictEntity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.JpaDistrictRepository;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.mapper.DistrictMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -18,67 +15,57 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 class DistrictRepositoryImpl implements DistrictRepository {
 
-    private final JpaDistrictRepository jpaDistrictRepository;
-    private final DistrictFactory factory;
-
-    private District build(DistrictEntity entity) {
-        return factory.load(
-                entity.getId(),
-                entity.getCityId(),
-                entity.getName()
-                );
-    }
+    private final JpaDistrictRepository jpaRepository;
+    private final DistrictMapper mapper;
 
     @Override
     public District save(District district) {
-        DistrictEntity facilityEntity = jpaDistrictRepository.save(DistrictEntity.from(district));
-        return build(facilityEntity);
+        return mapper.toDomain(jpaRepository.save(mapper.toEntity(district)));
     }
 
     @Override
     public Optional<District> findById(Long id) {
-        DistrictEntity facilityEntity = jpaDistrictRepository.findById(id).get();
-        return Optional.of(build(facilityEntity));
+        return Optional.of(mapper.toDomain(jpaRepository.findById(id).get()));
     }
 
     @Override
     public List<District> findAll() {
-        return jpaDistrictRepository.findAll().stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaRepository.findAll().stream().map(mapper::toDomain).toList();
     }
 
     @Override
     public boolean existsByIdIn(List<Long> ids) {
-        return jpaDistrictRepository.existsByIdIn(ids);
+        return jpaRepository.existsByIdIn(ids);
     }
 
     @Override
     public boolean existsById(Long id) {
-        return jpaDistrictRepository.existsById(id);
+        return jpaRepository.existsById(id);
     }
 
     @Override
     public List<District> findByIds(List<Long> ids) {
-        return jpaDistrictRepository.findAllById(ids).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaRepository.findAllById(ids).stream().map(mapper::toDomain).toList();
     }
 
     @Override
     public boolean existsByCityIdAndName(Long cityId, String name) {
-        return jpaDistrictRepository.existsByCityIdAndName(cityId, name);
+        return jpaRepository.existsByCityIdAndName(cityId, name);
     }
 
     @Override
     public List<District> findByCityId(Long cityId) {
-        return jpaDistrictRepository.findAllByCityId(cityId).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaRepository.findAllByCityId(cityId).stream().map(mapper::toDomain).toList();
     }
 
     @Override
     public int deleteById(Long id) {
-        jpaDistrictRepository.deleteById(id);
+        jpaRepository.deleteById(id);
         return 1;
     }
 
     @Override
     public boolean existsByIds(List<Long> ids) {
-        return jpaDistrictRepository.existsByIdIn(ids);
+        return jpaRepository.existsByIdIn(ids);
     }
 }

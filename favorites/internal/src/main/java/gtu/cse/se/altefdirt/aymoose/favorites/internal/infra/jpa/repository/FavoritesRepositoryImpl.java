@@ -24,9 +24,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
 
     private Favorites build(FavoritesEntity favoritesEntity) {
         return favoritesFactory.load(
-                AggregateId.from(favoritesEntity.getId()), 
-                AggregateId.from(favoritesEntity.getUserId()), 
-                AggregateId.from(favoritesEntity.getFacilityId())
+                AggregateId.fromUUID(favoritesEntity.getId()), 
+                AggregateId.fromUUID(favoritesEntity.getUserId()), 
+                AggregateId.fromUUID(favoritesEntity.getFacilityId())
         );
     }
 

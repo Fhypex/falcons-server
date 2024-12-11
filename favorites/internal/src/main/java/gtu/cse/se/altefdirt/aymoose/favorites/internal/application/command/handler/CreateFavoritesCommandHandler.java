@@ -24,8 +24,8 @@ public class CreateFavoritesCommandHandler implements CommandHandler<CreateFavor
 
         
         Favorites favorite = factory.create(
-                AggregateId.from(command.userId()),
-                AggregateId.from(command.facilityId())
+                AggregateId.fromUUID(command.userId()),
+                AggregateId.fromUUID(command.facilityId())
         );
 
         

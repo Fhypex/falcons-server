@@ -1,6 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.City;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,15 +15,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class CityEntity {
-    
+
     @Id
     private Long id;
     private String name;
-
-    public static CityEntity from(City city) {
-        return CityEntity.builder()
-            .id(city.id())
-            .name(city.name())
-            .build();
-    }
 }

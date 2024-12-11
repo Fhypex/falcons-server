@@ -18,7 +18,7 @@ public class BaseImage extends BaseAggregateRoot {
         super(id);
         String filteredFilename = file.getOriginalFilename().replaceAll("[^a-zA-Z0-9.-]", "_");
         String extension = filteredFilename.substring(filteredFilename.lastIndexOf('.') + 1);
-        Long size = file.getSize();
+        Long imageSize = file.getSize();
 
         if (filteredFilename == null || filteredFilename.isEmpty()) {
             throw new IllegalArgumentException("File name is empty");
@@ -28,7 +28,7 @@ public class BaseImage extends BaseAggregateRoot {
             throw new IllegalArgumentException("File name is too long");
         }
 
-        if (size > 10000000 || size < 0) {
+        if (imageSize > 10000000 || imageSize < 0) {
             throw new IllegalArgumentException("File size is too large");
         }
 
@@ -38,7 +38,7 @@ public class BaseImage extends BaseAggregateRoot {
 
         this.relationId = relationId;
         this.name = filteredFilename;
-        this.size = size;
+        this.size = imageSize;
         this.extension = extension;
     }
 

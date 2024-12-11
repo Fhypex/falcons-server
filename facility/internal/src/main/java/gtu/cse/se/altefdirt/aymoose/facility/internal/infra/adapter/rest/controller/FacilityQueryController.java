@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.SecuredUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
@@ -19,7 +19,6 @@ import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
 @ApiVersionV1
@@ -50,32 +49,28 @@ public class FacilityQueryController {
     }
 
     @GetMapping(value = "/facilities")
-    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal SecuredUser user) {
+    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUser user) {
 
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
-                .collect(Collectors.toList());
+                .toList();
 
-        return facilityViews.stream()
-                .map(view -> FacilityResponseDTO.richened(view))
-                .collect(Collectors.toList());
+        return facilityViews.stream().map(FacilityResponseDTO::richened).toList();
     }
 
     @GetMapping(value = "/facilities", params = Parameter.COMPRESSED)
     public List<FacilityCompressedResponseDTO> getFacilitiesCompressed(
             @RequestParam(Parameter.COMPRESSED) boolean compressed) {
-
         if (compressed) {
             List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
-                    .collect(Collectors.toList());
-            return facilityViews.stream().map(FacilityCompressedResponseDTO::from)
-                    .collect(Collectors.toList());
+                    .toList();
+            return facilityViews.stream().map(FacilityCompressedResponseDTO::from).toList();
         } else
             throw new IllegalArgumentException("Invalid parameter");
     }
 
     @GetMapping(value = "/facilities/{id}")
-    public FacilityResponseDTO getFacility(@PathVariable(Parameter.ID) String id) {
-        Facility facility = facilityRepository.findById(new AggregateId(id)).get();
+    public FacilityResponseDTO getFacility(@PathVariable(Parameter.ID) UUID id) {
+        Facility facility = facilityRepository.findById(AggregateId.fromUUID(id)).get();
         FacilityView facilityView = facilityService.denormalize(facility);
         return FacilityResponseDTO.richened(facilityView);
     }
@@ -83,27 +78,24 @@ public class FacilityQueryController {
     @GetMapping(value = "/amenities")
     public List<AmenityResponseDTO> getAmenities() {
         log.debug("Amenity list requested");
-        List<AmenityView> amenityViews = amenityRepository.findAll().stream().map(amenityService::denormalize)
-                .collect(Collectors.toList());
-        return amenityViews.stream().map(AmenityResponseDTO::fromView)
-                .collect(Collectors.toUnmodifiableList());
+        List<AmenityView> amenityViews = amenityRepository.findAll().stream().map(amenityService::denormalize).toList();
+        return amenityViews.stream().map(AmenityResponseDTO::fromView).toList();
 
     }
 
     @GetMapping(value = "/amenities/{id}")
-    public AmenityResponseDTO getAmenityById(@PathVariable(Parameter.ID) String id) {
+    public AmenityResponseDTO getAmenityById(@PathVariable(Parameter.ID) UUID id) {
         log.debug("Request to get amenity by id: {}", id);
-        AmenityView amenityView = amenityService.denormalize(amenityRepository.findById(AggregateId.from(id)).get());
+        AmenityView amenityView = amenityService
+                .denormalize(amenityRepository.findById(AggregateId.fromUUID(id)).get());
         log.debug("Amenity found: {}", amenityView);
         return AmenityResponseDTO.fromView(amenityView);
     }
 
     @GetMapping(value = "/cities")
     public List<CityResponseDTO> getCities() {
-        List<CityView> cityViews = cityRepository.findAll().stream().map(cityService::denormalize)
-                .collect(Collectors.toList());
-        return cityViews.stream().map(CityResponseDTO::fromView)
-                .collect(Collectors.toUnmodifiableList());
+        List<CityView> cityViews = cityRepository.findAll().stream().map(cityService::denormalize).toList();
+        return cityViews.stream().map(CityResponseDTO::fromView).toList();
     }
 
     @GetMapping(value = "/cities", params = Parameter.IN_USE)
@@ -111,7 +103,7 @@ public class FacilityQueryController {
         Set<Long> districts = facilityRepository.findUniqueDistricts();
 
         return cityService.denormalizeInUseCitiesByDistricts(districts).stream().map(CityResponseDTO::fromView)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     @GetMapping(value = "/cities/{id}")

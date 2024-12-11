@@ -1,8 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.account.internal.application.command.handler;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.CreateAccount;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.KeycloakOperationPort;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.service.AccountService;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;

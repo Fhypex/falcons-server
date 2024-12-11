@@ -1,10 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.provider;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.CourtProvider;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
@@ -26,8 +23,8 @@ class CourtProviderImpl implements CourtProvider {
 
     private CourtData build(Court court) {
         return CourtData.builder()
-                .id(court.id().value())
-                .facilityId(court.getFacilityId().value())
+                .id(court.id())
+                .facilityId(court.getFacilityId())
                 .name(court.getDetails().name())
                 .description(court.getDetails().description())
                 .height(court.getMeasurements().height())
@@ -39,10 +36,10 @@ class CourtProviderImpl implements CourtProvider {
     private CourtRichData buildRich(Court court) {
 
         List<String> imageUrls = imageOperationPort.findByRelationId(court.id()).stream()
-                .map(ImageData::url).collect(Collectors.toUnmodifiableList());
+                .map(ImageData::url).toList();
         return CourtRichData.builder()
-                .id(court.id().value())
-                .facilityId(court.getFacilityId().value())
+                .id(court.id())
+                .facilityId(court.getFacilityId())
                 .name(court.getDetails().name())
                 .description(court.getDetails().description())
                 .height(court.getMeasurements().height())
@@ -68,14 +65,13 @@ class CourtProviderImpl implements CourtProvider {
 
     @Override
     public CourtData getCourtById(AggregateId id) {
-        Court court = courtRepository.findById(id).get();
-        return build(court);
+        return build(courtRepository.findById(id).get());
     }
 
     @Override
     public List<CourtData> getCourtsByFacilityId(AggregateId facilityId) {
         List<Court> courts = courtRepository.findByFacilityId(facilityId);
-        return courts.stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return courts.stream().map(this::build).toList();
     }
 
     @Override
@@ -89,7 +85,7 @@ class CourtProviderImpl implements CourtProvider {
     @Override
     public List<CourtRichData> getCourtsByFacilityIdRich(AggregateId facilityId) {
         List<Court> courts = courtRepository.findByFacilityId(facilityId);
-        return courts.stream().map(this::buildRich).collect(Collectors.toUnmodifiableList());
+        return courts.stream().map(this::buildRich).toList();
     }
-    
+
 }

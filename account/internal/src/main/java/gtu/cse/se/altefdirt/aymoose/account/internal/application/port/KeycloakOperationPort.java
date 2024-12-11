@@ -8,13 +8,13 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface KeycloakOperationPort {
     
-    List<String> getRoles(String accountId);
+    List<String> getRoles(AggregateId userId);
 
-    Optional<Boolean> hasRole(String accountId, String role);
+    Optional<Boolean> hasRole(AggregateId userId, String role);
 
-    Optional<Boolean> removeRole(String accountId, String role);
+    Optional<Boolean> removeRole(AggregateId userId, String role);
 
-    Optional<Boolean> addRole(String accountId, String role);
+    Optional<Boolean> addRole(AggregateId userId, String role);
 
     AggregateId register(String mailAddress, String password);
 

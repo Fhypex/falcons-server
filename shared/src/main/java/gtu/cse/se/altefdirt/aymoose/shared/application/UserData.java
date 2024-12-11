@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.shared.application;
 
-public record UserData(String id) {
-    
-}
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
+public record UserData(AggregateId id) {
+
+}

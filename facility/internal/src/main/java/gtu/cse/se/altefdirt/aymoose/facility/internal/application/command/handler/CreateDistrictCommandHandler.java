@@ -23,15 +23,15 @@ public class CreateDistrictCommandHandler implements CommandHandler<CreateDistri
     public District handle(CreateDistrict command) {
 
         log.info("CityId: {}", command.cityId());
-        if(!cityRepository.existsById(command.cityId())) {
+        if (!cityRepository.existsById(command.cityId())) {
             throw new IllegalArgumentException("City not found");
         }
 
-        if(districtRepository.existsByCityIdAndName(command.cityId(), command.name())) {
+        if (districtRepository.existsByCityIdAndName(command.cityId(), command.name())) {
             throw new IllegalArgumentException("District already exists");
         }
 
         District district = factory.create(command.cityId(), command.name());
-        return  districtRepository.save(district);
+        return districtRepository.save(district);
     }
 }

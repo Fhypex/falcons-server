@@ -7,7 +7,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 
 @Getter
-public class LocalReservation extends BaseAggregateRoot {
+public class LocalReservation extends BaseAggregateRoot implements Reservable {
 
     private AggregateId courtId;
     private String name;

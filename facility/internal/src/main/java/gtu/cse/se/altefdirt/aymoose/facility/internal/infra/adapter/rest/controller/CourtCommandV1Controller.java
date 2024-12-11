@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +48,7 @@ class CourtCommandV1Controller {
     }
 
     @PatchMapping("/courts/{id}")
-    public Response<CourtView> updateCourt(@PathVariable(Parameter.ID) String id,
+    public Response<CourtView> updateCourt(@PathVariable(Parameter.ID) UUID id,
             @RequestPart(value = "files", required = false) List<MultipartFile> images,
             @RequestPart("data") UpdateCourtRequestDTO request) {
         CourtView view = runner.run(new UpdateCourt(

@@ -16,14 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ApproveReservationCommandHandler implements CommandHandler<ApproveReservation, AggregateId> {
 
     private final ReservationRepository repository;
-    private final CourtOperationPort courtOperationPort;
 
     @Override
     public AggregateId handle(ApproveReservation command) {
 
         log.debug("Approving reservation {}", command);
 
-        AggregateId reservationId = AggregateId.from(command.id());
+        AggregateId reservationId = AggregateId.fromUUID(command.id());
 
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
@@ -33,7 +32,6 @@ public class ApproveReservationCommandHandler implements CommandHandler<ApproveR
         log.debug("Reservation approved {}", reservation);
 
         log.debug("Saving reservation", reservation);
-
 
         Reservation savedReservation = repository.save(reservation);
 

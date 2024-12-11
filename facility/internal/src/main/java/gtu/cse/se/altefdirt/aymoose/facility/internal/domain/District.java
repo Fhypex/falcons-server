@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.SimpleAggregateRoot;
@@ -26,8 +27,10 @@ public class District extends SimpleAggregateRoot {
     }
 
     public Map<String, Object> toMap() {
-        return Map.of(
-                "id", id(),
-                "name", name);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id());
+        map.put("cityId", cityId);
+        map.put("name", name);
+        return map;
     }
 }

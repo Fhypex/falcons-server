@@ -2,17 +2,17 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.ReservationView;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationStatus;
 import lombok.Builder;
 
-
 @Builder
 public record ReservationResponseDTO(
-        String id,
-        String userId,
-        String courtId,
+        UUID id,
+        UUID userId,
+        UUID courtId,
         LocalDate date,
         int hour,
         ReservationStatus status,

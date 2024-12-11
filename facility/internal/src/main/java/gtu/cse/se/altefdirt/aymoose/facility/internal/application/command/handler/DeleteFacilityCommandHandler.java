@@ -23,12 +23,12 @@ public class DeleteFacilityCommandHandler implements CommandHandler<DeleteFacili
     public Integer handle(DeleteFacility command) {
 
         // Delete all courts of the facility
-        courtRepository.deleteByFacilityId(AggregateId.from(command.id()));
+        courtRepository.deleteByFacilityId(AggregateId.fromUUID(command.id()));
 
         // Delete facility
-        facilityRepository.deleteById(AggregateId.from(command.id()));
+        facilityRepository.deleteById(AggregateId.fromUUID(command.id()));
 
         // Delete images
-        return imageOperationPort.deleteByRelationId(AggregateId.from(command.id()));
+        return imageOperationPort.deleteByRelationId(AggregateId.fromUUID(command.id()));
     }
 }

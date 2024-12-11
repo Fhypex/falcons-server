@@ -1,8 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +33,12 @@ class CourtQueryV1Controller {
     @GetMapping(value = "/courts")
     List<CourtResponseDTO> getAllCourts() {
         return courtRepository.findAll().stream()
-                .map(court -> CourtResponseDTO.fromView(courtService.denormalize(court)))
-                .collect(Collectors.toUnmodifiableList());
+                .map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).toList();
     }
 
     @GetMapping(value = "/courts/{id}")
-    CourtResponseDTO getCourtById(@PathVariable(Parameter.ID) String id) {
-        Optional<Court> fetch = courtRepository.findById(AggregateId.from(id));
+    CourtResponseDTO getCourtById(@PathVariable(Parameter.ID) UUID id) {
+        Optional<Court> fetch = courtRepository.findById(AggregateId.fromUUID(id));
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Court does not exist");
         }
@@ -47,10 +46,9 @@ class CourtQueryV1Controller {
     }
 
     @GetMapping(value = "/courts", params = Parameter.FACILITY)
-    List<CourtResponseDTO> getCourtsByFacilityId(@RequestParam(value = Parameter.FACILITY) String facilityId) {
-        List<Court> courts = courtRepository.findByFacilityId(AggregateId.from(facilityId));
-        return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court)))
-                .collect(Collectors.toUnmodifiableList());
+    List<CourtResponseDTO> getCourtsByFacilityId(@RequestParam(value = Parameter.FACILITY) UUID facilityId) {
+        List<Court> courts = courtRepository.findByFacilityId(AggregateId.fromUUID(facilityId));
+        return courts.stream().map(court -> CourtResponseDTO.fromView(courtService.denormalize(court))).toList();
     }
 
 }

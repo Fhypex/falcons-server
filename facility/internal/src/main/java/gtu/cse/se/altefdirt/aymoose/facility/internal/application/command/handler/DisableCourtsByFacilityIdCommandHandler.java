@@ -8,7 +8,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandle
 
 @RegisterHandler
 public class DisableCourtsByFacilityIdCommandHandler implements CommandHandler<DisableCourtsByFacilityId, Long> {
-    
+
     @Override
     public Long handle(DisableCourtsByFacilityId command) {
         throw new NotImplementedException();

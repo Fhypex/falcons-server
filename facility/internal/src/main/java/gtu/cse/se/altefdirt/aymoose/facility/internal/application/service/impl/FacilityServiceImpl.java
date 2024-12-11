@@ -1,10 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ReviewOperationPort;
@@ -26,53 +23,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class FacilityServiceImpl implements FacilityService {
 
-    private final ImageOperationPort imageOperationPort;
-    private final ReviewOperationPort commentOperationPort;
-    private final CourtRepository courtRepository;
-    private final AmenityRepository amenityRepository;
-    private final AmenityService amenityService;
-    private final CityRepository cityRepository;
-    private final DistrictRepository districtRepository;
+        private final ImageOperationPort imageOperationPort;
+        private final ReviewOperationPort commentOperationPort;
+        private final CourtRepository courtRepository;
+        private final AmenityRepository amenityRepository;
+        private final AmenityService amenityService;
+        private final CityRepository cityRepository;
+        private final DistrictRepository districtRepository;
 
-    @Override
-    public FacilityView denormalize(Facility facility) {
+        @Override
+        public FacilityView denormalize(Facility facility) {
 
-        List<Amenity> amenities = amenityRepository.findAll(facility.amenities());
-        List<AmenityView> amenityViews = amenities.stream().map(amenityService::denormalize)
-                .collect(Collectors.toUnmodifiableList());
-        List<ImageData> image = imageOperationPort.findByRelationId(facility.id());
-        List<String> imageUrls = image.stream().map(ImageData::url).collect(Collectors.toList());
-        int commentCount = commentOperationPort.reviewCount(facility.id());
-        String rating = commentOperationPort.rating(facility.id());
-        String city = cityRepository.findById(facility.address().cityId()).get().name();
-        String district = districtRepository.findById(facility.address().districtId()).get().name();
+                List<Amenity> amenities = amenityRepository.findAll(facility.amenities());
+                List<AmenityView> amenityViews = amenities.stream().map(amenityService::denormalize).toList();
+                List<ImageData> image = imageOperationPort.findByRelationId(facility.id());
+                List<String> imageUrls = image.stream().map(ImageData::url).toList();
+                int commentCount = commentOperationPort.reviewCount(facility.id());
+                String rating = commentOperationPort.rating(facility.id());
+                String city = cityRepository.findById(facility.address().cityId()).get().name();
+                String district = districtRepository.findById(facility.address().districtId()).get().name();
 
-        List<Court> courts = courtRepository.findByFacilityId(facility.id());
+                List<Court> courts = courtRepository.findByFacilityId(facility.id());
 
-        List<CourtRichData> richCourts = courts.stream().map(this::buildRich).collect(Collectors.toUnmodifiableList());
+                List<CourtRichData> richCourts = courts.stream().map(this::buildRich)
+                                .toList();
 
-        int lowerPriceLimit = richCourts.stream().map(CourtRichData::price).min(Integer::compareTo).orElse(0);
-        int upperPriceLimit = richCourts.stream().map(CourtRichData::price).max(Integer::compareTo).orElse(0);
+                int lowerPriceLimit = richCourts.stream().map(CourtRichData::price).min(Integer::compareTo).orElse(0);
+                int upperPriceLimit = richCourts.stream().map(CourtRichData::price).max(Integer::compareTo).orElse(0);
 
-        return new FacilityView(facility, imageUrls, commentCount, rating, city, district, amenityViews, richCourts,
-                lowerPriceLimit, upperPriceLimit);
-    }
+                return new FacilityView(facility, imageUrls, commentCount, rating, city, district, amenityViews,
+                                richCourts,
+                                lowerPriceLimit, upperPriceLimit);
+        }
 
+        private CourtRichData buildRich(Court court) {
 
-    private CourtRichData buildRich(Court court) {
-
-        List<String> imageUrls = imageOperationPort.findByRelationId(court.id()).stream()
-                .map(ImageData::url).collect(Collectors.toUnmodifiableList());
-        return CourtRichData.builder()
-                .id(court.id().value())
-                .facilityId(court.getFacilityId().value())
-                .name(court.getDetails().name())
-                .description(court.getDetails().description())
-                .height(court.getMeasurements().height())
-                .width(court.getMeasurements().width())
-                .capacity(court.getCapacity().value())
-                .price(court.getPrice().value())
-                .imageUrls(imageUrls)
-                .build();
-    }
+                List<String> imageUrls = imageOperationPort.findByRelationId(court.id()).stream()
+                                .map(ImageData::url).toList();
+                return CourtRichData.builder()
+                                .id(court.id())
+                                .facilityId(court.getFacilityId())
+                                .name(court.getDetails().name())
+                                .description(court.getDetails().description())
+                                .height(court.getMeasurements().height())
+                                .width(court.getMeasurements().width())
+                                .capacity(court.getCapacity().value())
+                                .price(court.getPrice().value())
+                                .imageUrls(imageUrls)
+                                .build();
+        }
 }

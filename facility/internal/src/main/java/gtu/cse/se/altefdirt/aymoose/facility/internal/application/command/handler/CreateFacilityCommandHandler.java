@@ -41,13 +41,13 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
 
         log.debug("Creating facility for district {}", district);
 
-        List<AggregateId> amenities = command.amenities().stream().map(AggregateId::from).toList();
+        List<AggregateId> amenities = command.amenities().stream().map(AggregateId::fromUUID).toList();
         if (!amenityService.validateAmenities(amenities)) {
             throw new IllegalArgumentException("Invalid amenities");
         }
 
         Facility facility = factory.create(
-                AggregateId.from(command.userId()),
+                AggregateId.fromUUID(command.userId()),
                 new PhoneNumber(command.phoneNumber()),
                 command.name(),
                 command.description(),
@@ -59,18 +59,17 @@ public class CreateFacilityCommandHandler implements CommandHandler<CreateFacili
                 command.isActive());
 
         log.debug("Saving facility {}", facility);
-        
+
         Facility savedFacility = facilityRepository.save(facility);
 
         log.debug("Facility saved {}", savedFacility);
-
 
         log.debug("District updated {}", district);
 
         for (MultipartFile image : command.images()) {
             imageOperationPort.save(savedFacility.id(), image);
         }
-        
+
         log.debug("Images saved for facility {}", savedFacility);
         return savedFacility;
     }

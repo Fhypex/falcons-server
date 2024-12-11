@@ -3,7 +3,6 @@ jar.archiveBaseName.set('aymoose-image-api')
 dependencies {
     implementation project(':shared')
     implementation project(':core')
-    implementation project(':image:internal')
 }
 
 test {

@@ -2,10 +2,8 @@ package gtu.cse.se.altefdirt.aymoose.core.infra.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Arrays;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtConverter;
 
 @Slf4j
@@ -57,7 +54,6 @@ public class SecurityConfiguration {
          * e.authenticationEntryPoint(authenticationEntryPoint())
          * .accessDeniedHandler(accessDeniedHandler()))
          */;
-
         return httpSecurity.build();
     }
 
@@ -69,7 +65,7 @@ public class SecurityConfiguration {
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(),
-                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name(), HttpMethod.PATCH.name()));
         configuration.setExposedHeaders(
                 Arrays.asList(SecurityConstants.AUTHORIZATION, SecurityConstants.CONTENT_TYPE, "token"));
         configuration.setAllowedHeaders(
@@ -157,5 +153,4 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

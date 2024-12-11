@@ -2,14 +2,17 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
+
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountView;
 import lombok.Builder;
 
 @Builder
 public record AccountResponseDTO(
-    String id,
+    UUID id,
     String email,
-    String fullName,
+    String firstName,
+    String lastName,
     String profilePicture,
     Instant createdAt,
     List<String> roles
@@ -19,7 +22,8 @@ public record AccountResponseDTO(
         return AccountResponseDTO.builder()
             .id(accountView.id())
             .email(accountView.mail())
-            .fullName(accountView.fullName())
+            .firstName(accountView.firstName())
+            .lastName(accountView.lastName())
             .profilePicture(accountView.profilePicture())
             .createdAt(accountView.createdAt())
             .roles(accountView.roles())

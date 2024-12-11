@@ -42,24 +42,22 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
     }
 
     @Override
-    public List<String> getRoles(String userId) {
+    public List<String> getRoles(AggregateId userId) {
         // Get the realm resource from Keycloak
         RealmResource realmResource = keycloak.realm(realm);
 
         // Get the user resource from the realm
-        UserResource user = realmResource.users().get(userId);
+        UserResource user = realmResource.users().get(userId.toString());
 
         return extractUserRoles(user);
     }
 
     @Override
-    public Optional<Boolean> hasRole(String userId, String role) {
+    public Optional<Boolean> hasRole(AggregateId userId, String role) {
         // Get the realm resource from Keycloak
         RealmResource realmResource = keycloak.realm(realm);
-
         // Get the user resource from the realm
-        UserResource user = realmResource.users().get(userId);
-
+        UserResource user = realmResource.users().get(userId.toString());
         RoleMappingResource roleMappingResource = user.roles();
         List<RoleRepresentation> roles = roleMappingResource.realmLevel().listAll();
         for (RoleRepresentation roleRepresentation : roles) {
@@ -71,12 +69,12 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
     }
 
     @Override
-    public Optional<Boolean> removeRole(String userId, String role) {
+    public Optional<Boolean> removeRole(AggregateId userId, String role) {
         // Get the realm resource from Keycloak
         RealmResource realmResource = keycloak.realm(realm);
 
         // Get the user resource from the realm
-        UserResource user = realmResource.users().get(userId);
+        UserResource user = realmResource.users().get(userId.toString());
 
         RoleMappingResource roleMappingResource = user.roles();
         List<RoleRepresentation> roles = roleMappingResource.realmLevel().listAll();
@@ -90,14 +88,12 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
     }
 
     @Override
-    public Optional<Boolean> addRole(String userId, String role) {
+    public Optional<Boolean> addRole(AggregateId userId, String role) {
         try {
             // Get the realm resource from Keycloak
             RealmResource realmResource = keycloak.realm(realm);
-
             // Get the user resource from the realm
-            UserResource user = realmResource.users().get(userId);
-
+            UserResource user = realmResource.users().get(userId.toString());
             RoleMappingResource roleMappingResource = user.roles();
             roleMappingResource.realmLevel().add(Collections.singletonList(realmResource.roles().get(role).toRepresentation()));
             return Optional.of(true);
@@ -113,41 +109,29 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
         try {
             // Get the realm resource from Keycloak
             RealmResource realmResource = keycloak.realm(realm);
-
             // Create a new UserRepresentation object
             UserRepresentation user = new UserRepresentation();
-            /* user.setUsername(email); */
             user.setEmail(email);
             user.setEnabled(true);
             user.setFirstName("demo-name");
             user.setLastName("demo-last-name");
             user.setCredentials(Collections.singletonList(createPasswordCredential(password)));
             user.setRealmRoles(Collections.singletonList("101e410b-c892-461e-abba-5e99b3c047ce"));
-
             // Add the user to the realm
             Response response = realmResource.users().create(user);
-
             // Check if the user was created successfully
             if (response.getStatus() != 201) {
-
                 if(response.getStatus() == 409) {
                     throw new RuntimeException("User already exists");
                 }
-                
                 throw new RuntimeException("User registration failed");
             }   
-            //String userId = response.getLocation().getPath().split("(.)*users/")[1];
             String userId = getCreatedId(response);
             UserResource createdUser = realmResource.users().get(userId);
             createdUser.roles().realmLevel().add(Collections.singletonList(realmResource.roles().get(SecurityConstants.ROLE_USER).toRepresentation()));
-            
-
-            // Return successful result
-            return AggregateId.from(userId);
+            return AggregateId.fromString(userId);
         } catch (Exception e) {
-            // Log the exception (optional)
             log.error("Error registering user", e.getMessage());
-            // Return empty result in case of failure
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -171,7 +155,7 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
     public int delete(AggregateId userId) {
         try {
             RealmResource realmResource = keycloak.realm(realm);
-            UserResource user = realmResource.users().get(userId.value());
+            UserResource user = realmResource.users().get(userId.toString());
             if (user == null) {
                 return 0; // User not found
             }
@@ -188,7 +172,7 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
     public Optional<AuthDetails> getDetails(AggregateId userId) {
         try {
             RealmResource realmResource = keycloak.realm(realm);
-            UserResource user = realmResource.users().get(userId.value());
+            UserResource user = realmResource.users().get(userId.toString());
             if (user == null) {
                 return Optional.empty(); // User not found
             }

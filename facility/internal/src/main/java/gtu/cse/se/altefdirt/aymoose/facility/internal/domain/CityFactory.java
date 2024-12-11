@@ -1,7 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import java.util.Random;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +11,7 @@ public class CityFactory {
     private Long generateId() {
         Long fPrime = 31L;
         Long sPrime = 17L;
-        Long result = 1L;
+        Long result;
         result = fPrime * random.nextLong(1, 10000);
         result = sPrime * result + random.nextLong(1, 100000);
         return result;

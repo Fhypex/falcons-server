@@ -1,15 +1,16 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model;
 
+import java.util.UUID;
+
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import lombok.Builder;
 
-
 @Builder
 public record ReservationView(
-        String id,
-        String userId,
-        String courtId,
+        UUID id,
+        UUID userId,
+        UUID courtId,
         String date,
         int hour,
         String status,

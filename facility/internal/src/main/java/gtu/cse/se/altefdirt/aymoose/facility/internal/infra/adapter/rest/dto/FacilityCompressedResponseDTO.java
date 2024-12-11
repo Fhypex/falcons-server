@@ -2,13 +2,14 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
 import lombok.Builder;
 
 @Builder
 public record FacilityCompressedResponseDTO(
-        String id,
+        UUID id,
         String name,
         String description,
         String city,

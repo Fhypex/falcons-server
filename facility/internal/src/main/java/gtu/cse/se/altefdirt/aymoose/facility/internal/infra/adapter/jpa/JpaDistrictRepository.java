@@ -2,7 +2,6 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,5 +23,5 @@ public interface JpaDistrictRepository extends JpaRepository<DistrictEntity, Lon
     List<DistrictEntity> findAllByCityId(Long cityId);
 
     @Query("SELECT COUNT(a) = :size FROM DistrictEntity a WHERE a.id IN :ids")
-    boolean existsByIds(List<String> ids, int size);
+    boolean existsByIds(List<Long> ids, int size);
 }

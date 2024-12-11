@@ -3,7 +3,7 @@ description = 'image'
 jar.archiveBaseName.set('image')
 
 dependencies {
-    implementation project('api')
+    implementation project('internal')
 }
 
 build {

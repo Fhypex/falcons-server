@@ -3,9 +3,9 @@ description = 'Review'
 jar.archiveBaseName.set('review')
 
 dependencies {
-    implementation project('api')
+    implementation project('internal')
 }
 
 build {
-    dependsOn 'internal:build', 'api:build'
+    dependsOn 'api:build', 'internal:build'
 }

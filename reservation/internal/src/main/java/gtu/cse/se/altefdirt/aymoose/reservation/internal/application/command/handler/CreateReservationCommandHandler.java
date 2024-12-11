@@ -26,40 +26,28 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
     @Override
     public AggregateId handle(CreateReservation command) {
-
         log.debug("Creating reservation {}", command);
-
-        AggregateId courtId = AggregateId.from(command.courtId());
-
+        AggregateId courtId = AggregateId.fromUUID(command.courtId());
         if (repository.countByPendingReservationsByUserId(command.userId()) > 3) {
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
-
         if (repository.isTimeSlotInUse(courtId, command.date(), command.hour())) {
             throw new RuntimeException("Time slot is in use");
         }
-
         WorkHours workHours = facilityOperationPort.getWorkHours(courtId);
-
         if (!workHours.isWithin(command.hour())) {
             throw new RuntimeException("Invalid hour");
         }
-
         Reservation reservation = factory.create(
                 command.userId(),
-                AggregateId.from(command.courtId()),
+                AggregateId.fromUUID(command.courtId()),
                 command.date(),
                 command.hour(),
                 ReservationStatus.PENDING,
                 Instant.now(),
                 Instant.now());
-
-        log.debug("Saving reservation {}", reservation);
-
         Reservation savedReservation = repository.save(reservation);
-
         log.debug("Reservation saved {}", savedReservation);
-
         return savedReservation.id();
     }
 }

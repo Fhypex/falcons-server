@@ -29,6 +29,14 @@ public class Account extends BaseAggregateRoot {
         return isActive;
     }
 
+    public void updateFirstName(String firstName) {
+        this.fullName = FullName.of(firstName, this.fullName.lastName());
+    }
+
+    public void updateLastName(String lastName) {
+        this.fullName = FullName.of(this.fullName.firstName(), lastName);
+    }
+
     public void disable() {
         this.isActive = false;
     }

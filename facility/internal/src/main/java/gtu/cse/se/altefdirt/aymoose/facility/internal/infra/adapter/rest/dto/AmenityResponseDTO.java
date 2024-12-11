@@ -1,11 +1,13 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto;
 
+import java.util.UUID;
+
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import lombok.Builder;
 
 @Builder
 public record AmenityResponseDTO(
-        String id,
+        UUID id,
         String name,
         String image) {
     public static AmenityResponseDTO fromView(AmenityView view) {

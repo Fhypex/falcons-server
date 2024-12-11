@@ -5,7 +5,6 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.ImageOpera
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
-import gtu.cse.se.altefdirt.aymoose.shared.application.ImageData;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 

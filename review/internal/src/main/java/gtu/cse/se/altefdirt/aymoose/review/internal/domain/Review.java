@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AggregateRoot
-public final class Review extends BaseAggregateRoot{
+public final class Review extends BaseAggregateRoot {
 
     private AggregateId userId;
     private AggregateId reservationId;
@@ -20,17 +20,17 @@ public final class Review extends BaseAggregateRoot{
     private UpdatedAt updatedAt;
     private boolean isNeedsModeration;
     private boolean isDisabled;
-    
-    public Review(AggregateId aggregateId, 
-                  AggregateId reservationId,
-                  AggregateId userId,
-                  AggregateId facilityId,
-                  Comment comment, 
-                  Rating rating, 
-                  CreatedAt createdAt,
-                  UpdatedAt updatedAt,
-                  boolean isNeedsModeration,
-                  boolean isDisabled) {
+
+    public Review(AggregateId aggregateId,
+            AggregateId reservationId,
+            AggregateId userId,
+            AggregateId facilityId,
+            Comment comment,
+            Rating rating,
+            CreatedAt createdAt,
+            UpdatedAt updatedAt,
+            boolean isNeedsModeration,
+            boolean isDisabled) {
         super(aggregateId);
         this.reservationId = reservationId;
         this.userId = userId;

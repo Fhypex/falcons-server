@@ -3,7 +3,6 @@ jar.archiveBaseName.set('aymoose-account-api')
 dependencies {
     implementation project(':shared')
     implementation project(':core')
-    implementation project(':account:internal')
 }
 
 test {

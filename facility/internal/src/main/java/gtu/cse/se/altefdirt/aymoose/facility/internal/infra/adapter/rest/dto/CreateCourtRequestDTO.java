@@ -1,10 +1,11 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto;
 
+import java.util.UUID;
 import org.apache.commons.lang3.Validate;
 
 public record CreateCourtRequestDTO(
-        String userId,
-        String facilityId,
+        UUID userId,
+        UUID facilityId,
         String name,
         String description,
         Integer height,
@@ -13,8 +14,8 @@ public record CreateCourtRequestDTO(
         Integer price) {
 
     public CreateCourtRequestDTO(
-            String userId,
-            String facilityId,
+            UUID userId,
+            UUID facilityId,
             String name,
             String description,
             Integer height,
@@ -28,7 +29,6 @@ public record CreateCourtRequestDTO(
         Validate.notNull(height, "Court height cannot be null");
         Validate.notNull(width, "Court width cannot be null");
         Validate.notNull(capacity, "Court capacity cannot be null");
-        Validate.isTrue(facilityId.length() == 36, "Invalid facility ID");
         Validate.isTrue(name.length() >= 3 && name.length() <= 80, "Court name must be between 3 and 80 characters");
         Validate.isTrue(description.length() >= 3 && description.length() <= 200,
                 "Court description must be between 3 and 200 characters");
