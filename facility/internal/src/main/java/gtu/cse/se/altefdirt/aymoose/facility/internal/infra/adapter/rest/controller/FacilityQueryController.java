@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
@@ -49,7 +49,7 @@ public class FacilityQueryController {
     }
 
     @GetMapping(value = "/facilities")
-    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUser user) {
+    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUserToken user) {
 
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .toList();

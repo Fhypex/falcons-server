@@ -38,8 +38,8 @@ class FacilityServiceImpl implements FacilityService {
                 List<AmenityView> amenityViews = amenities.stream().map(amenityService::denormalize).toList();
                 List<ImageData> image = imageOperationPort.findByRelationId(facility.id());
                 List<String> imageUrls = image.stream().map(ImageData::url).toList();
-                int commentCount = commentOperationPort.reviewCount(facility.id());
-                String rating = commentOperationPort.rating(facility.id());
+                int commentCount = commentOperationPort.getReviewCountByFacilityId(facility.id());
+                String rating = commentOperationPort.getRatingByFacilityId(facility.id());
                 String city = cityRepository.findById(facility.address().cityId()).get().name();
                 String district = districtRepository.findById(facility.address().districtId()).get().name();
 

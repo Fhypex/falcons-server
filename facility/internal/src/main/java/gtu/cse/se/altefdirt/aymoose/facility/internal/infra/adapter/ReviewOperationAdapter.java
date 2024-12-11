@@ -9,15 +9,12 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 class ReviewOperationAdapter implements ReviewOperationPort {
 
     @Override
-    public int reviewCount(AggregateId userId) {
-    
-        return 2;
+    public int getReviewCountByFacilityId(AggregateId id) {
+        return 0;
     }
 
     @Override
-    public String rating(AggregateId userId) {
-    
-        return "5";
+    public String getRatingByFacilityId(AggregateId id) {
+        return null;
     }
 }
-
