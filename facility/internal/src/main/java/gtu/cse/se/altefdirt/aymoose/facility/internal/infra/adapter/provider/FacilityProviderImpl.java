@@ -1,10 +1,10 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.provider;
 
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.FacilityProvider;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -26,5 +26,15 @@ class FacilityProviderImpl implements FacilityProvider {
     public int deleteByOwnerId(AggregateId userId) {
         facilityRepository.deleteByOwnerId(userId);
         return 1;
+    }
+
+    @Override
+    public WorkHours getWorkHours(AggregateId facilityId) {
+        return facilityRepository.getWorkHours(facilityId);
+    }
+
+    @Override
+    public WorkHours getWorkHoursByCourtId(AggregateId courtId) {
+        return facilityRepository.getWorkHoursByCourtId(courtId);
     }
 }

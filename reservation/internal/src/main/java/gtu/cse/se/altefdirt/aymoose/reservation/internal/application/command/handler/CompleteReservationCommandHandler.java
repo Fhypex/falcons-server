@@ -18,23 +18,14 @@ public class CompleteReservationCommandHandler implements CommandHandler<Complet
 
     @Override
     public AggregateId handle(CompleteReservation command) {
-
         log.debug("Completing reservation {}", command);
-
-        AggregateId reservationId = AggregateId.from(command.id());
-
+        AggregateId reservationId = AggregateId.fromUUID(command.id());
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
         reservation.complete();
-
         log.debug("Reservation completed {}", reservation);
-
         log.debug("Saving reservation", reservation);
-
         Reservation savedReservation = repository.save(reservation);
-
-        // Delete images
         return savedReservation.id();
     }
 }

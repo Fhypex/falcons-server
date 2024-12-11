@@ -1,8 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.review.internal.application.command.handler;
 
 import org.apache.commons.lang3.NotImplementedException;
-
-import gtu.cse.se.altefdirt.aymoose.review.internal.application.command.CreateReview;
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.command.DisableReview;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.Review;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;

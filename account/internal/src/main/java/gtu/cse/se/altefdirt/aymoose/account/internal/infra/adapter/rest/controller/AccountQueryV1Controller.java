@@ -3,6 +3,7 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.control
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +39,8 @@ class AccountQueryV1Controller {
     }
 
     @GetMapping(value = "/account/{id}")
-    AccountResponseDTO getAccountById(@PathVariable(Parameter.ID) String id) {
-        Optional<Account> fetch = accountRepository.findById(AggregateId.from(id));
+    AccountResponseDTO getAccountById(@PathVariable(Parameter.ID) UUID id) {
+        Optional<Account> fetch = accountRepository.findById(AggregateId.fromUUID(id));
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Account does not exist");
         }
@@ -55,8 +56,4 @@ class AccountQueryV1Controller {
         }
         return AccountResponseDTO.fromView(accountService.denormalize(fetch.get()));
     }
-
-
-
-
 }

@@ -1,7 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Capacity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Price;

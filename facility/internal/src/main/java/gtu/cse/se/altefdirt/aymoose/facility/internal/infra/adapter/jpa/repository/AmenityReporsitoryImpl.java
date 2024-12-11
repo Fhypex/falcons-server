@@ -2,14 +2,11 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.reposit
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.AmenityFactory;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.AmenityRepository;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.AmenityEntity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa.JpaAmenityRepository;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.mapper.AmenityMapper;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,45 +16,39 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 class AmenityRepositoryImpl implements AmenityRepository {
 
-    private final JpaAmenityRepository jpaAmenityRepository;
-    private final AmenityFactory factory;
-
-    private Amenity build(AmenityEntity entity) {
-        return factory.load(
-                AggregateId.from(entity.getId()),
-                entity.getName()
-                );
-    }
+    private final JpaAmenityRepository jpaRepository;
+    private final AmenityMapper mapper;
 
     @Override
     public Amenity save(Amenity facility) {
-        AmenityEntity facilityEntity = jpaAmenityRepository.save(AmenityEntity.from(facility));
-        return build(facilityEntity);
+        return mapper.toDomain(jpaRepository.save(mapper.toEntity(facility)));
     }
 
     @Override
     public Optional<Amenity> findById(AggregateId id) {
-        AmenityEntity facilityEntity = jpaAmenityRepository.findById(id.value()).get();
-        return Optional.of(build(facilityEntity));
+        return Optional.of(mapper.toDomain(jpaRepository.findById(id.value()).get()));
     }
 
     @Override
     public List<Amenity> findAll() {
-        return jpaAmenityRepository.findAll().stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaRepository.findAll().stream().map(mapper::toDomain).toList();
     }
 
     @Override
     public boolean existsByIdIn(List<AggregateId> ids) {
-        return jpaAmenityRepository.existsByIdIn(ids.stream().map(AggregateId::value).collect(Collectors.toUnmodifiableList()), ids.size());
+        return jpaRepository.existsByIdIn(
+                ids.stream().map(AggregateId::value).toList(), ids.size());
     }
 
     @Override
     public boolean exists(AggregateId id) {
-        return jpaAmenityRepository.existsById(id.value());
+        return jpaRepository.existsById(id.value());
     }
 
     @Override
     public List<Amenity> findAll(List<AggregateId> ids) {
-        return jpaAmenityRepository.findAllById(ids.stream().map(AggregateId::value).collect(Collectors.toUnmodifiableList())).stream().map(this::build).collect(Collectors.toUnmodifiableList());
+        return jpaRepository
+                .findAllById(ids.stream().map(AggregateId::value).toList()).stream()
+                .map(mapper::toDomain).toList();
     }
 }

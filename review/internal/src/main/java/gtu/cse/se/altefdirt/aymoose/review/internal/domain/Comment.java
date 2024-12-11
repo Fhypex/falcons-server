@@ -6,6 +6,6 @@ import jakarta.validation.constraints.Size;
 
 @ValueObject
 public record Comment(
-    @NotNull @Size(min = 3, max = 80) String title,
-    @NotNull @Size(min = 3, max = 255) String content) {
+                @NotNull @Size(min = 3, max = 80) String title,
+                @NotNull @Size(min = 3, max = 255) String content) {
 }

@@ -4,6 +4,6 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.Facility
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 
 public interface FacilityService {
-    
+
     FacilityView denormalize(Facility facility);
 }

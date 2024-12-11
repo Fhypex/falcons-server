@@ -2,6 +2,7 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
@@ -9,8 +10,8 @@ import lombok.Builder;
 
 @Builder
 public record FacilityView(
-        String id,
-        String userId,
+        UUID id,
+        UUID userId,
         String phoneNumber,
         String name,
         String description,
@@ -29,7 +30,7 @@ public record FacilityView(
         List<CourtRichData> courts,
         Integer lowerPriceLimit,
         Integer upperPriceLimit) {
-    public FacilityView(Facility facility, List<String> images, int reviewCount, String rating, String city,
+    public FacilityView(Facility facility, List<String> imageUrls, int reviewCount, String rating, String city,
             String district, List<AmenityView> amenities, List<CourtRichData> courts, int lowerPriceLimit,
             int upperPriceLimit) {
         this(facility.id().value(),
@@ -45,7 +46,7 @@ public record FacilityView(
                 facility.workHours().openTime(),
                 facility.workHours().closeTime(),
                 facility.isActive(),
-                images,
+                imageUrls,
                 reviewCount,
                 rating,
                 amenities.stream().map(AmenityView::toMap).toList(),

@@ -3,6 +3,7 @@ jar.archiveBaseName.set('aymoose-review-internal')
 dependencies {
     implementation project(':shared')
     implementation project(':core')
+    implementation project(':account:api')
 }
 
 test {

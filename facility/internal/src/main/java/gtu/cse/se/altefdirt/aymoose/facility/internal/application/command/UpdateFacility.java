@@ -9,18 +9,18 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.Command;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateFacility(
-        @NotNull UUID id,
-        String phoneNumber,
-        String name,
-        String description,
-        Long districtId,
-        String fullAddress,
-        String location,
-        String contactDetails,
-        Integer openTime,
-        Integer closeTime,
-        List<String> amenities,
-        Boolean isActive,
-        List<String> deletedImages,
-        List<MultipartFile> newImages) implements Command {
+                @NotNull UUID id,
+                String phoneNumber,
+                String name,
+                String description,
+                Long districtId,
+                String fullAddress,
+                String location,
+                String contactDetails,
+                Integer openTime,
+                Integer closeTime,
+                List<UUID> amenities,
+                Boolean isActive,
+                List<UUID> deletedImages,
+                List<MultipartFile> newImages) implements Command {
 }

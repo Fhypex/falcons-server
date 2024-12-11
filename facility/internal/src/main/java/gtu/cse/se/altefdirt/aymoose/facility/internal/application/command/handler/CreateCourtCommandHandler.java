@@ -1,9 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.handler;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CourtView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.port.ImageOperationPort;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCourt;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtDetails;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtFactory;
@@ -18,19 +16,18 @@ import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
 @RequiredArgsConstructor
-public class CreateCourtCommandHandler implements CommandHandler<CreateCourt, CourtView> {
+public class CreateCourtCommandHandler implements CommandHandler<CreateCourt, Court> {
 
     private final CourtFactory factory;
-    private final CourtService service;
     private final ImageOperationPort imageOperationPort;
     private final CourtRepository courtRepository;
 
     @Override
-    public CourtView handle(CreateCourt command) {
+    public Court handle(CreateCourt command) {
 
         Court court = factory.create(
-                AggregateId.from(command.userId()),
-                AggregateId.from(command.facilityId()),
+                AggregateId.fromUUID(command.userId()),
+                AggregateId.fromUUID(command.facilityId()),
                 new CourtDetails(command.name(), command.description()),
                 new Measurements(command.height(), command.width()),
                 new Capacity(command.capacity()),
@@ -38,6 +35,6 @@ public class CreateCourtCommandHandler implements CommandHandler<CreateCourt, Co
 
         Court savedCourt = courtRepository.save(court);
         command.images().forEach(image -> imageOperationPort.save(savedCourt.id(), image));
-        return service.denormalize(savedCourt);
+        return savedCourt;
     }
 }

@@ -18,23 +18,12 @@ public class RejectReservationCommandHandler implements CommandHandler<RejectRes
 
     @Override
     public AggregateId handle(RejectReservation command) {
-
         log.debug("Rejecting reservation {}", command);
-
-        AggregateId reservationId = AggregateId.from(command.id());
-
+        AggregateId reservationId = AggregateId.fromUUID(command.id());
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
         reservation.reject();
-
         log.debug("Reservation rejected {}", reservation);
-
-        log.debug("Saving reservation", reservation);
-
-        Reservation savedReservation = repository.save(reservation);
-
-        // Delete images
-        return savedReservation.id();
+        return repository.save(reservation).id();
     }
 }

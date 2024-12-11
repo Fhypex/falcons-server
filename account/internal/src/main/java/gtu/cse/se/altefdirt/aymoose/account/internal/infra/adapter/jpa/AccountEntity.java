@@ -1,12 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa;
 
 import java.time.Instant;
-
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
+import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -22,33 +17,11 @@ import lombok.Setter;
 @Setter
 @Entity
 public class AccountEntity {
-    
+
     @Id
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private Instant createdAt;
     private boolean isActive;
-
-
-
-    public static AccountEntity fromDomain(Account account) {
-        return AccountEntity.builder()
-                .id(account.id().value())
-                .firstName(account.fullName().firstName())
-                .lastName(account.fullName().lastName())
-                .createdAt(account.createdAt().value())
-                .isActive(account.isActive())
-                .build();
-    }
-
-    public Account toDomain(AccountFactory factory) {
-        return factory.load(
-                AggregateId.from(id),
-                FullName.of(firstName, lastName),
-                new CreatedAt(createdAt),
-                isActive
-        );
-    }
-
 }

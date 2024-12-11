@@ -1,7 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.CourtOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
@@ -19,23 +18,14 @@ public class CancelReservationCommandHandler implements CommandHandler<CancelRes
 
     @Override
     public AggregateId handle(CancelReservation command) {
-
-        log.debug("Approving reservation {}", command);
-
-        AggregateId reservationId = AggregateId.from(command.id());
-
+        log.debug("Cancelling reservation {}", command);
+        AggregateId reservationId = AggregateId.fromUUID(command.id());
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
         reservation.cancel();
-
-        log.debug("Reservation approved {}", reservation);
-
+        log.debug("Reservation cancelled {}", reservation);
         log.debug("Saving reservation", reservation);
-
         Reservation savedReservation = repository.save(reservation);
-
-        // Delete images
         return savedReservation.id();
     }
 }

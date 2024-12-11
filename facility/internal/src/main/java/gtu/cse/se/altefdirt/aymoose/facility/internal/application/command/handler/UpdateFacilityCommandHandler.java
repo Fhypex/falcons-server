@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.handler;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.UpdateFacility;
@@ -29,7 +30,7 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
     @Override
     public Facility handle(UpdateFacility command) {
 
-        Optional<Facility> fetch = facilityRepository.findById(AggregateId.from(command.id()));
+        Optional<Facility> fetch = facilityRepository.findById(AggregateId.fromUUID(command.id()));
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Facility does not exist");
         }
@@ -53,10 +54,10 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
         }
 
         if (command.amenities() != null) {
-            if (!amenityService.validateAmenities(command.amenities().stream().map(AggregateId::from).toList())) {
+            if (!amenityService.validateAmenities(command.amenities().stream().map(AggregateId::fromUUID).toList())) {
                 throw new IllegalArgumentException("Invalid amenities");
             }
-            facility.updateAmenities(command.amenities().stream().map(AggregateId::from).toList());
+            facility.updateAmenities(command.amenities().stream().map(AggregateId::fromUUID).toList());
         }
 
         if (command.description() != null) {
@@ -90,10 +91,9 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
                 imageOperationPort.save(savedFacility.id(), image);
             }
         }
-
         if (command.deletedImages() != null) {
-            for (String image : command.deletedImages()) {
-                imageOperationPort.delete(AggregateId.from(image));
+            for (UUID image : command.deletedImages()) {
+                imageOperationPort.delete(AggregateId.fromUUID(image));
             }
         }
 

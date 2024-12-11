@@ -1,6 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.impl;
 
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,14 +30,13 @@ class CityServiceImpl implements CityService {
 
     @Override
     public List<CityView> denormalizeInUseCitiesByDistricts(Set<Long> districts) {
-        List<District> allDistricts = districtRepository.findByIds(districts.stream().toList()).stream().collect(Collectors.toUnmodifiableList());
+        List<District> allDistricts = districtRepository.findByIds(districts.stream().toList()).stream().toList();
         Set<Long> cityIds = allDistricts.stream().map(District::cityId).collect(Collectors.toUnmodifiableSet());
-        List<City> cities = cityRepository.findByIds(cityIds.stream().collect(Collectors.toUnmodifiableList()));
+        List<City> cities = cityRepository.findByIds(cityIds.stream().toList());
         return cities.stream().map(city -> {
             List<District> cityDistricts = allDistricts.stream().filter(district -> district.cityId().equals(city.id()))
-                    .collect(Collectors.toList());
+                    .toList();
             return new CityView(city, cityDistricts);
-        }).collect(Collectors.toUnmodifiableList());
-
+        }).toList();
     }
 }

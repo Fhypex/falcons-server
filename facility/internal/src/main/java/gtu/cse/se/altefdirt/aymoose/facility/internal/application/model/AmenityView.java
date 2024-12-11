@@ -1,13 +1,14 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.model;
 
 import java.util.Map;
+import java.util.UUID;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import lombok.Builder;
 
 @Builder
 public record AmenityView(
-        String id,
+        UUID id,
         String name,
         String imageUrl) {
     public AmenityView(Amenity amenity, String imageUrl) {

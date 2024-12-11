@@ -9,16 +9,16 @@ include ':image:internal'
 include ':image:api'
 
 include ':account'
-include ':account:internal'
 include ':account:api'
-
-include ':review'
-include ':review:internal'
-include ':review:api'
+include ':account:internal'
 
 include ':facility'
 include ':facility:api'
 include ':facility:internal'
+
+include ':review'
+include ':review:internal'
+include ':review:api'
 
 include ':reservation'
 include ':reservation:api'

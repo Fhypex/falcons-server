@@ -3,7 +3,7 @@ description = 'facility'
 jar.archiveBaseName.set('facility')
 
 dependencies {
-    implementation project('api')
+    implementation project('internal')
 }
 
 build {

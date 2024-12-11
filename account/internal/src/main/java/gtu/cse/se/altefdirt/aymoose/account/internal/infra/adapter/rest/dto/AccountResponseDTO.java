@@ -2,12 +2,14 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
+
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountView;
 import lombok.Builder;
 
 @Builder
 public record AccountResponseDTO(
-    String id,
+    UUID id,
     String email,
     String firstName,
     String lastName,

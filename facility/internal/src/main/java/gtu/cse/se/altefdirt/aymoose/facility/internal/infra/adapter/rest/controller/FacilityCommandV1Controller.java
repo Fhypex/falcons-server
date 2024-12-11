@@ -48,7 +48,7 @@ class FacilityCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping("/facilities")
-    public Response<String> createFacility(@RequestPart("images") List<MultipartFile> images,
+    public Response<UUID> createFacility(@RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") CreateFacilityRequestDTO request) {
         Facility facility = runner.run(new CreateFacility(
                 request.userId(),
@@ -68,7 +68,7 @@ class FacilityCommandV1Controller {
     }
 
     @PostMapping("/amenities")
-    public Response<String> createAmenity(@RequestPart("image") MultipartFile image,
+    public Response<UUID> createAmenity(@RequestPart("image") MultipartFile image,
             @RequestPart("data") CreateAmenityRequestDTO request) {
         Amenity amenity = runner.run(new CreateAmenity(
                 image,
@@ -91,25 +91,25 @@ class FacilityCommandV1Controller {
     }
 
     @DeleteMapping("/cities/district/{id}")
-    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) String id) {
-        Long districtId = runner.run(new DeleteDistrict(Long.parseLong(id)));
+    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) Long id) {
+        Long districtId = runner.run(new DeleteDistrict(id));
         return Response.success(districtId, "District created successfully");
     }
 
     @DeleteMapping("/cities/{id}")
-    public Response<Long> deleteCity(@PathVariable(Parameter.ID) String id) {
-        Long cityId = runner.run(new DeleteCity(Long.parseLong(id)));
+    public Response<Long> deleteCity(@PathVariable(Parameter.ID) Long id) {
+        Long cityId = runner.run(new DeleteCity(id));
         return Response.success(cityId, "City deleted created successfully");
     }
 
     @DeleteMapping("/facilities/{id}")
-    public Response<String> deleteFacility(@PathVariable(Parameter.ID) String id) {
+    public Response<UUID> deleteFacility(@PathVariable(Parameter.ID) UUID id) {
         AggregateId facilityId = runner.run(new DeleteFacility(id));
         return Response.success(facilityId.value(), "Facility deleted successfully");
     }
 
     @PatchMapping("/facilities/{id}")
-    public Response<String> updateFacility(@PathVariable(Parameter.ID) UUID id,
+    public Response<UUID> updateFacility(@PathVariable(Parameter.ID) UUID id,
             @RequestPart("images") List<MultipartFile> images,
             @RequestPart("data") UpdateFacilityRequestDTO request) {
         AggregateId facilityId = runner.run(new UpdateFacility(
@@ -131,7 +131,7 @@ class FacilityCommandV1Controller {
     }
 
     @PostMapping("/amenities/{id}")
-    public Response<String> createAmenity(@PathVariable(Parameter.ID) String id) {
+    public Response<UUID> createAmenity(@PathVariable(Parameter.ID) UUID id) {
         AggregateId amenityId = runner.run(new DeleteAmenity(id));
         return Response.success(amenityId.value(), "Amenity deleted successfully");
     }

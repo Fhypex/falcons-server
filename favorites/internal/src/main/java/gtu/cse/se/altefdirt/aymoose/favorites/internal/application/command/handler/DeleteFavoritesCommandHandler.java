@@ -21,7 +21,7 @@ public class DeleteFavoritesCommandHandler implements CommandHandler<DeleteFavor
 
     @Override
     public FavoritesView handle(DeleteFavorites command) {
-        Optional<Favorites> fetch = favoritesRepository.findById(AggregateId.from(command.favoritesId()));
+        Optional<Favorites> fetch = favoritesRepository.findById(AggregateId.fromUUID(command.favoritesId()));
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Favorite does not exist");
         }

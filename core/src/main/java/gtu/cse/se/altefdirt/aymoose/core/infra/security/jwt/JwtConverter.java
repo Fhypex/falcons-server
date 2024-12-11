@@ -29,22 +29,17 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 
     @Override
     public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
-
         Collection<GrantedAuthority> grantedAuthorities = jwtGrantedAuthoritiesConverter.convert(jwt);
-
         if (grantedAuthorities == null) {
             grantedAuthorities = Set.of();
         }
-
         Collection<GrantedAuthority> authorities = Stream.concat(
                 grantedAuthorities.stream(),
                 extractRoleAuthorities(jwt).stream()).collect(Collectors.toSet());
-
         return new JwtUserToken(
-                    new JwtUser(jwt, AggregateId.from(getPrincipleClaimName(jwt)), extractResourceRolesAsString(jwt)),
+                    new JwtUser(jwt, AggregateId.fromString(getPrincipleClaimName(jwt)), extractResourceRolesAsString(jwt)),
                     authorities,
                     getPrincipleClaimName(jwt));
-        
     }
 
     private String getPrincipleClaimName(Jwt jwt) {
@@ -64,19 +59,14 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
     private Collection<String> extractResourceRolesAsString(Jwt jwt) {
         Map<String, Object> realmAccess;
         Collection<String> realmRoles;
-
         realmAccess = jwt.getClaim(JWT_REALM_ACCESS);
-
         if (realmAccess == null || !(realmAccess instanceof Map)) {
             return Set.of(); // Return an empty set if the value is null or not a Map
         }
-
         realmRoles = (Collection<String>) realmAccess.get(JWT_ROLES);
-
         if (realmRoles == null || !(realmRoles instanceof Collection)) {
             return Set.of(); // Return an empty set if the value is null or not a Map
         }
-
         return realmRoles;
     }
 }

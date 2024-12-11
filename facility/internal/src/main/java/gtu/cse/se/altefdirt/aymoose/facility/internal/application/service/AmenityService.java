@@ -7,7 +7,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface AmenityService {
-    
+
     AmenityView denormalize(Amenity amenity);
 
     boolean validateAmenities(List<AggregateId> amenities);

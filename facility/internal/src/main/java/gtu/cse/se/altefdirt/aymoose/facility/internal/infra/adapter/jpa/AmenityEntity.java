@@ -1,6 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Amenity;
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,15 +17,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class AmenityEntity {
-    
-    @Id
-    private String id;
-    private String name;
 
-    public static AmenityEntity from(Amenity amenity) {
-        return AmenityEntity.builder()
-            .id(amenity.id().value())
-            .name(amenity.name())
-            .build();
-    }
+    @Id
+    private UUID id;
+    private String name;
 }

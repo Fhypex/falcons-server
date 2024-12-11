@@ -22,7 +22,7 @@ public class UpdateFavoritesCommandHandler implements CommandHandler<UpdateFavor
     @Override
     public FavoritesView handle(UpdateFavorites command) {
 
-        Optional<Favorites> fetch = repository.findById(AggregateId.from(command.id()));
+        Optional<Favorites> fetch = repository.findById(AggregateId.fromUUID(command.id()));
 
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Favorite does not exist");

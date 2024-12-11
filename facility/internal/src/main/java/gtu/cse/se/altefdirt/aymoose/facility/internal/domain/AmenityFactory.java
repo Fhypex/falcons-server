@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
-
 @Component
 public class AmenityFactory {
 

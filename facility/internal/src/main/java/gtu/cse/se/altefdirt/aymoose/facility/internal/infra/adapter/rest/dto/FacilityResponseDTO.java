@@ -2,6 +2,7 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CourtRichData;
@@ -9,7 +10,7 @@ import lombok.Builder;
 
 @Builder
 public record FacilityResponseDTO(
-        String id,
+        UUID id,
         String phoneNumber,
         String name,
         String description,

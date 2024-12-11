@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 @ValueObject
 public record Rating(
-    @NotNull @Max(5) @Min(1) Short rating) implements SingleValueObject<Short> {    
+        @NotNull @Max(5) @Min(1) Short rating) implements SingleValueObject<Short> {
 
     private static final String REGEX = "^[1-5](.[0-9])?$";
 
@@ -22,10 +22,10 @@ public record Rating(
     }
 
     public static Rating fromRound(String rating, boolean roundUp) {
-        if(rating.matches(REGEX)) {
+        if (rating.matches(REGEX)) {
             short rounded = Short.parseShort(rating.split("\\.")[0]);
-            if(roundUp) {
-                if(rating.contains(".")) {
+            if (roundUp) {
+                if (rating.contains(".")) {
                     rounded++;
                 }
             }

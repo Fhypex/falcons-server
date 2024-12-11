@@ -1,10 +1,9 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.handler;
 
 import java.util.Optional;
+import java.util.UUID;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CourtView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.UpdateCourt;
-import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.image.api.provider.ImageProvider;
@@ -15,16 +14,15 @@ import lombok.RequiredArgsConstructor;
 
 @RegisterHandler
 @RequiredArgsConstructor
-public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, CourtView> {
+public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Court> {
 
-    private final CourtService service;
     private final CourtRepository repository;
     private final ImageProvider imageProvider;
 
     @Override
-    public CourtView handle(UpdateCourt command) {
+    public Court handle(UpdateCourt command) {
 
-        Optional<Court> fetch = repository.findById(AggregateId.from(command.id()));
+        Optional<Court> fetch = repository.findById(AggregateId.fromUUID(command.id()));
 
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Court does not exist");
@@ -52,8 +50,8 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
         }
 
         if (command.deletedImages() != null) {
-            for (String image : command.deletedImages()) {
-                imageProvider.deleteById(AggregateId.from(image));
+            for (UUID image : command.deletedImages()) {
+                imageProvider.deleteById(AggregateId.fromUUID(image));
             }
         }
 
@@ -63,8 +61,6 @@ public class UpdateCourtCommandHandler implements CommandHandler<UpdateCourt, Co
             }
         }
 
-        Court savedCourt = repository.save(court);
-
-        return service.denormalize(savedCourt);
+        return repository.save(court);
     }
 }

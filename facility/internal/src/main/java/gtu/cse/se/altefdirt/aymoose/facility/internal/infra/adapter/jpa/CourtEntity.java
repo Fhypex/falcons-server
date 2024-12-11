@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
-import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
+import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,27 +18,13 @@ import lombok.Setter;
 public class CourtEntity {
 
     @Id
-    private String id;
-    private String userId;
-    private String facilityId;
+    private UUID id;
+    private UUID userId;
+    private UUID facilityId;
     private String name;
     private String description;
     private int height;
     private int width;
     private int capacity;
     private int price;
-
-    public static CourtEntity from(Court court) {
-        return CourtEntity.builder()
-                .id(court.id().value())
-                .userId(court.userId().value())
-                .facilityId(court.getFacilityId().value())
-                .name(court.details().name())
-                .description(court.details().description())
-                .height(court.getMeasurements().height())
-                .width(court.getMeasurements().width())
-                .capacity(court.getCapacity().value())
-                .price(court.getPrice().value())
-                .build();
-    }
 }

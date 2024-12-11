@@ -1,9 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.domain;
 
 import lombok.Getter;
-
 import java.util.List;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Address;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;

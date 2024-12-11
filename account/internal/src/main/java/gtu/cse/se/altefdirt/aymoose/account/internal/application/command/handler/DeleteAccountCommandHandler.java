@@ -1,13 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.account.internal.application.command.handler;
 
-import java.util.Optional;
-
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.DeleteAccount;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AccountView;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.KeycloakOperationPort;
-import gtu.cse.se.altefdirt.aymoose.account.internal.application.service.AccountService;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
-import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
@@ -25,17 +19,12 @@ public class DeleteAccountCommandHandler implements CommandHandler<DeleteAccount
 
     @Override
     public AggregateId handle(DeleteAccount command) {
-
-        AggregateId accountId = AggregateId.from(command.id());
-
-        int delete = keycloakOperationPort.delete(accountId);
-
+        int delete = keycloakOperationPort.delete(command.id());
         if (delete == 0) {
             throw new RuntimeException("User deletion failed");
         }
-        accountRepository.deleteById(accountId);
+        accountRepository.deleteById(command.id());
         log.debug("Account deleted: {}", command.id());
-
-        return accountId;
+        return command.id();
     }
 }
