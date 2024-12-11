@@ -65,7 +65,7 @@ public class SecurityConfiguration {
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.POST.name(),
-                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name(), HttpMethod.PATCH.name()));
         configuration.setExposedHeaders(
                 Arrays.asList(SecurityConstants.AUTHORIZATION, SecurityConstants.CONTENT_TYPE, "token"));
         configuration.setAllowedHeaders(
