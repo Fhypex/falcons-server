@@ -15,7 +15,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.AccountResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessAdmin;
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
 import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +31,13 @@ class AccountQueryV1Controller {
     private static final class Parameter {
         private static final String ID = "id";
     }
-    
+
     @GetMapping(value = "/accounts")
     @AccessAdmin
     List<AccountResponseDTO> getAllAccounts() {
-        return accountRepository.findAll().stream().map(account -> AccountResponseDTO.fromView(accountService.denormalize(account))).collect(Collectors.toUnmodifiableList());
+        return accountRepository.findAll().stream()
+                .map(account -> AccountResponseDTO.fromView(accountService.denormalize(account)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @GetMapping(value = "/account/{id}")
@@ -47,10 +49,9 @@ class AccountQueryV1Controller {
         return AccountResponseDTO.fromView(accountService.denormalize(fetch.get()));
     }
 
-
     @GetMapping(value = "/account/my")
-    AccountResponseDTO getAccountById(@AuthenticationPrincipal JwtUser user) {
-        Optional<Account> fetch = accountRepository.findById(user.id());
+    AccountResponseDTO getAccountById(@AuthenticationPrincipal JwtUserToken user) {
+        Optional<Account> fetch = accountRepository.findById(user.getToken().id());
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Account does not exist");
         }

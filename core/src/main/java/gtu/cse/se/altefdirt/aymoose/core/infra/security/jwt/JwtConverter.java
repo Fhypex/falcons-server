@@ -37,9 +37,10 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
                 grantedAuthorities.stream(),
                 extractRoleAuthorities(jwt).stream()).collect(Collectors.toSet());
         return new JwtUserToken(
-                    new JwtUser(jwt, AggregateId.fromString(getPrincipleClaimName(jwt)), extractResourceRolesAsString(jwt)),
-                    authorities,
-                    getPrincipleClaimName(jwt));
+                new JwtUser(jwt, AggregateId.fromString(getPrincipleClaimName(jwt)),
+                        extractResourceRolesAsString(jwt)),
+                authorities,
+                getPrincipleClaimName(jwt));
     }
 
     private String getPrincipleClaimName(Jwt jwt) {

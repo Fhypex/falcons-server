@@ -6,14 +6,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.Transient;
 import org.springframework.security.oauth2.server.resource.authentication.AbstractOAuth2TokenAuthenticationToken;
 
-
 /**
- * Implementation of an {@link AbstractOAuth2TokenAuthenticationToken} representing a
+ * Implementation of an {@link AbstractOAuth2TokenAuthenticationToken}
+ * representing a
  * {@link Jwt} {@code Authentication} token.
- * Stores a {@link JwtUser} as the principal which stores both the {@link Jwt} and the
+ * Stores a {@link JwtUserToken} as the principal which stores both the
+ * {@link Jwt} and the
  * UUID of the user.
  * 
- * @see JwtUser
+ * @see JwtUserToken
  * @see AbstractOAuth2TokenAuthenticationToken
  * @see Jwt
  */
@@ -42,7 +43,7 @@ public class JwtUserToken extends AbstractOAuth2TokenAuthenticationToken<JwtUser
 
    @Override
    public Map<String, Object> getTokenAttributes() {
-      return ((JwtUser)this.getToken()).getClaims();
+      return ((JwtUser) this.getToken()).getClaims();
    }
 
    @Override

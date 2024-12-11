@@ -4,8 +4,8 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 public interface ReviewOperationPort {
 
-    int reviewCount(AggregateId id);
+    int getReviewCountByFacilityId(AggregateId id);
 
-    String rating(AggregateId id);
+    String getRatingByFacilityId(AggregateId id);
 
 }

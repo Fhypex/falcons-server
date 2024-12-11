@@ -5,6 +5,7 @@ dependencies {
     implementation project(':core')
     implementation project(':image:api')
     implementation project(':facility:api')
+    implementation project(':review:api')
 }
 
 test {

@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
