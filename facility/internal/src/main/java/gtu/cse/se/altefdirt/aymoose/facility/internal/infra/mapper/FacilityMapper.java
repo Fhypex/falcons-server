@@ -1,5 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.mapper;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
@@ -32,7 +34,7 @@ public class FacilityMapper {
                 .contactDetails(facility.getContactDetails())
                 .openTime(facility.workHours().openTime())
                 .closeTime(facility.workHours().closeTime())
-                .amenities(facility.amenities().stream().map(AggregateId::value).toList())
+                .amenities(facility.amenities().stream().map(AggregateId::value).collect(Collectors.toSet()))
                 .isActive(facility.isActive())
                 .build();
     }

@@ -5,6 +5,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationFactory;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.jpa.ReservationEntity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -18,7 +19,7 @@ public class ReservationMapper {
                 .id(reservation.id().value())
                 .userId(reservation.userId().value())
                 .courtId(reservation.courtId().value())
-                .date(reservation.date())
+                .date(reservation.date().localValue())
                 .hour(reservation.hour())
                 .status(reservation.status())
                 .requestedAt(reservation.requestedAt())
@@ -31,7 +32,7 @@ public class ReservationMapper {
                 AggregateId.fromUUID(entity.getId()),
                 AggregateId.fromUUID(entity.getUserId()),
                 AggregateId.fromUUID(entity.getCourtId()),
-                entity.getDate(),
+                Date.fromLocalDate(entity.getDate()),
                 entity.getHour(),
                 entity.getStatus(),
                 entity.getRequestedAt(),

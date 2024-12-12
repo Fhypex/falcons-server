@@ -5,6 +5,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservatio
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservationFactory;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.jpa.ClosedReservationEntity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -17,7 +18,7 @@ public class ClosedReservationMapper {
         return ClosedReservationEntity.builder()
                 .id(closedReservation.id().value())
                 .courtId(closedReservation.courtId().value())
-                .date(closedReservation.date())
+                .date(closedReservation.date().localValue())
                 .hour(closedReservation.hour())
                 .build();
     }
@@ -26,7 +27,7 @@ public class ClosedReservationMapper {
         return factory.load(
                 AggregateId.fromUUID(entity.getId()),
                 AggregateId.fromUUID(entity.getCourtId()),
-                entity.getDate(),
+                Date.fromLocalDate(entity.getDate()),
                 entity.getHour());
     }
 }

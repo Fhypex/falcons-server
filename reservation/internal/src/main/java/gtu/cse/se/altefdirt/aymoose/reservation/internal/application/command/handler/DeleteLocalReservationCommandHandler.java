@@ -1,8 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.DeleteLocalReservation;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -12,20 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class DeleteLocalReservationCommandHandler implements CommandHandler<CancelReservation, AggregateId> {
+public class DeleteLocalReservationCommandHandler implements CommandHandler<DeleteLocalReservation, Integer> {
 
-    private final ReservationRepository repository;
+    private final LocalReservationRepository repository;
 
     @Override
-    public AggregateId handle(CancelReservation command) {
+    public Integer handle(DeleteLocalReservation command) {
         log.debug("Deleting local reservation {}", command);
         AggregateId reservationId = AggregateId.fromUUID(command.id());
-        Reservation reservation = repository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-        reservation.cancel();
-        log.debug("Reservation cancelled {}", reservation);
-        log.debug("Saving reservation", reservation);
-        Reservation savedReservation = repository.save(reservation);
-        return savedReservation.id();
+        return repository.deleteById(reservationId);
     }
 }

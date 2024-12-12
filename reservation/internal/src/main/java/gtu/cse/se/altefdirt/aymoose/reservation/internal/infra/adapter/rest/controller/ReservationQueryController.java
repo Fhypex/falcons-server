@@ -1,18 +1,23 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
-import java.time.LocalDate;
 import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.UUID;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -25,18 +30,19 @@ public class ReservationQueryController {
     private final ReservationRepository reservationRepository;
     private final LocalReservationRepository localReservationRepository;
     private final ClosedReservationRepository closedReservationRepository;
+    private final ReservationService reservationService;
 
     private static final class Parameter {
         private static final String ID = "id";
         private static final String TYPE = "type";
     }
 
-    @GetMapping("/reservations/slots/{date}")
-    public String getMethodName(@PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
-        return "Hello";
+    @GetMapping("/reservations/slots/{court}/{date}")
+    public DateSlot getMethodName(@PathVariable UUID court, @PathVariable Date date) {
+        return reservationService.getDateSlot(AggregateId.fromUUID(court), date);
     }
 
-    @GetMapping(value = "/reservations", params = Parameter.TYPE + "=default")
+    @GetMapping(value = "/reservations")
     public List<Reservation> getDefaultReservation() {
         return reservationRepository.findAll();
     }
@@ -50,5 +56,14 @@ public class ReservationQueryController {
     public List<ClosedReservation> getClosedReservation() {
         return closedReservationRepository.findAll();
     }
+}
 
+@Component
+class DateConverter
+        implements Converter<String, Date> {
+
+    @Override
+    public Date convert(String source) {
+        return Date.fromString(source);
+    }
 }

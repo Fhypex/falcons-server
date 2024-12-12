@@ -1,7 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
 import java.time.Instant;
-
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
@@ -18,25 +17,28 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class CreateReservationCommandHandler implements CommandHandler<CreateReservation, AggregateId> {
+public class CreateReservationCommandHandler implements CommandHandler<CreateReservation, Reservation> {
 
     private final ReservationFactory factory;
     private final ReservationRepository repository;
     private final FacilityOperationPort facilityOperationPort;
 
     @Override
-    public AggregateId handle(CreateReservation command) {
-        log.debug("Creating reservation {}", command);
+    public Reservation handle(CreateReservation command) {
+        log.debug("Handling create reservation command for {}", command);
         AggregateId courtId = AggregateId.fromUUID(command.courtId());
+        log.debug("Checking if user has more than 3 pending reservations");
         if (repository.countByPendingReservationsByUserId(command.userId()) > 3) {
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
+        log.debug("Checking if time slot is in use");
         if (repository.isTimeSlotInUse(courtId, command.date(), command.hour())) {
             throw new RuntimeException("Time slot is in use");
         }
-        WorkHours workHours = facilityOperationPort.getWorkHours(courtId);
+        log.debug("Checking if time slot is within work hours");
+        WorkHours workHours = facilityOperationPort.getWorkHoursByCourtId(courtId);
         if (!workHours.isWithin(command.hour())) {
-            throw new RuntimeException("Invalid hour");
+            throw new RuntimeException("Requested hour is not within work hours");
         }
         Reservation reservation = factory.create(
                 command.userId(),
@@ -46,8 +48,9 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
                 ReservationStatus.PENDING,
                 Instant.now(),
                 Instant.now());
+        log.debug("Creating reservation command passed the checks with id {}", reservation.id());
         Reservation savedReservation = repository.save(reservation);
         log.debug("Reservation saved {}", savedReservation);
-        return savedReservation.id();
+        return savedReservation;
     }
 }

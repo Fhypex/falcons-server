@@ -1,6 +1,5 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
@@ -9,6 +8,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservatio
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.jpa.JpaClosedReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.mapper.ClosedReservationMapper;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -56,12 +56,13 @@ class ClosedReservationRepositoryImpl implements ClosedReservationRepository {
     }
 
     @Override
-    public boolean isTimeSlotInUse(AggregateId courtId, LocalDate date, int hour) {
-        return jpaRepository.isTimeSlotInUse(courtId.value(), date, hour);
+    public boolean isTimeSlotInUse(AggregateId courtId, Date date, int hour) {
+        return jpaRepository.isTimeSlotInUse(courtId.value(), date.localValue(), hour);
     }
 
     @Override
-    public List<ClosedReservation> findByCourtIdAndDate(AggregateId courtId, LocalDate date) {
-        return jpaRepository.findByCourtIdAndDate(courtId.value(), date).stream().map(mapper::toDomain).toList();
+    public List<ClosedReservation> findByCourtIdAndDate(AggregateId courtId, Date date) {
+        return jpaRepository.findByCourtIdAndDate(courtId.value(), date.localValue()).stream().map(mapper::toDomain)
+                .toList();
     }
 }

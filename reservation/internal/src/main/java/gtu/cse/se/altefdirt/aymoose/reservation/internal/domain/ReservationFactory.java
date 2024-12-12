@@ -1,18 +1,16 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.domain;
 
 import java.time.Instant;
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 @Component
 public class ReservationFactory {
 
     public Reservation create(AggregateId userId,
             AggregateId courtId,
-            LocalDate date,
+            Date date,
             int hour,
             ReservationStatus status,
             Instant requestedAt,
@@ -24,7 +22,7 @@ public class ReservationFactory {
             AggregateId id,
             AggregateId userId,
             AggregateId courtId,
-            LocalDate date,
+            Date date,
             int hour,
             ReservationStatus status,
             Instant requestedAt,

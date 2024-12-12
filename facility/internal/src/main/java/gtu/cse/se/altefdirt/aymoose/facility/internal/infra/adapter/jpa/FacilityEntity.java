@@ -1,8 +1,10 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.jpa;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,6 +36,7 @@ public class FacilityEntity {
     private int openTime;
     private int closeTime;
     @ElementCollection(targetClass = UUID.class, fetch = jakarta.persistence.FetchType.EAGER)
-    private List<UUID> amenities;
+    @CollectionTable(name = "facility_amenities")
+    private Set<UUID> amenities;
     private boolean isActive;
 }

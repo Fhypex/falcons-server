@@ -1,20 +1,20 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto;
 
-import java.time.LocalDate;
 import java.util.UUID;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 public record CreateLocalReservationRequestDTO(
         UUID courtId,
         String fullName,
         String phoneNumber,
-        LocalDate date,
-        int hour) {
+        Date date,
+        Integer hour) {
     public CreateLocalReservationRequestDTO(
             UUID courtId,
             String fullName,
             String phoneNumber,
-            LocalDate date,
-            int hour) {
+            Date date,
+            Integer hour) {
         this.courtId = courtId;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;

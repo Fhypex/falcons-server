@@ -1,30 +1,26 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.domain;
 
 import lombok.Getter;
-
 import java.time.Instant;
-import java.time.LocalDate;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
-
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 @Getter
 public class Reservation extends BaseAggregateRoot implements Reservable {
 
     private AggregateId userId;
     private AggregateId courtId;
-    private LocalDate date;
+    private Date date;
     private int hour;
     private ReservationStatus status;
     private Instant requestedAt;
     private Instant updatedAt;
 
-
     public Reservation(AggregateId id,
             AggregateId userId,
             AggregateId courtId,
-            LocalDate date,
+            Date date,
             int hour,
             ReservationStatus status,
             Instant requestedAt,
@@ -35,7 +31,9 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
         this.date = date;
         this.hour = hour;
         this.status = status;
-        
+        this.requestedAt = requestedAt;
+        this.updatedAt = updatedAt;
+
     }
 
     public void approve() {
@@ -66,7 +64,7 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
         return this.courtId;
     }
 
-    public LocalDate date() {
+    public Date date() {
         return this.date;
     }
 

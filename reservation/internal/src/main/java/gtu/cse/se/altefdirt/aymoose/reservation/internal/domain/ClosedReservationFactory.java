@@ -1,15 +1,15 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.domain;
 
-import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 @Component
 public class ClosedReservationFactory {
 
     public ClosedReservation create(
             AggregateId courtId,
-            LocalDate date,
+            Date date,
             int hour) {
         return new ClosedReservation(AggregateId.generate(), courtId, date, hour);
     }
@@ -17,7 +17,7 @@ public class ClosedReservationFactory {
     public ClosedReservation load(
             AggregateId id,
             AggregateId courtId,
-            LocalDate date,
+            Date date,
             int hour) {
         return new ClosedReservation(id, courtId, date, hour);
     }

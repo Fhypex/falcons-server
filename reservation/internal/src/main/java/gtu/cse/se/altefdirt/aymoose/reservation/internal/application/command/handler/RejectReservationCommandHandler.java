@@ -12,18 +12,18 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class RejectReservationCommandHandler implements CommandHandler<RejectReservation, AggregateId> {
+public class RejectReservationCommandHandler implements CommandHandler<RejectReservation, Reservation> {
 
     private final ReservationRepository repository;
 
     @Override
-    public AggregateId handle(RejectReservation command) {
+    public Reservation handle(RejectReservation command) {
         log.debug("Rejecting reservation {}", command);
         AggregateId reservationId = AggregateId.fromUUID(command.id());
         Reservation reservation = repository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
         reservation.reject();
         log.debug("Reservation rejected {}", reservation);
-        return repository.save(reservation).id();
+        return repository.save(reservation);
     }
 }

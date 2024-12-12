@@ -16,10 +16,12 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 class FacilityRepositoryImpl implements FacilityRepository {
 
     private final JpaFacilityRepository jpaRepository;
@@ -92,14 +94,19 @@ class FacilityRepositoryImpl implements FacilityRepository {
 
     @Override
     public WorkHours getWorkHours(AggregateId facilityId) {
-        FacilityEntity facilityEntity = jpaRepository.findById(facilityId.value()).get();
+        FacilityEntity facilityEntity = jpaRepository.findById(facilityId.value()).orElseThrow(
+                () -> new RuntimeException("Facility not found"));
         return new WorkHours(facilityEntity.getOpenTime(), facilityEntity.getCloseTime());
     }
 
     @Override
     public WorkHours getWorkHoursByCourtId(AggregateId courtId) {
-        UUID facilityId = jpaCourtRepository.findById(courtId.value()).get().getFacilityId();
-        FacilityEntity facilityEntity = jpaRepository.findById(facilityId).get();
+        log.debug("Getting work hours by court id {}", courtId);
+        UUID facilityId = jpaCourtRepository.findById(courtId.value()).orElseThrow(
+                () -> new RuntimeException("Court not found")).getFacilityId();
+        log.debug("Facility id found {}", facilityId);
+        FacilityEntity facilityEntity = jpaRepository.findById(facilityId).orElseThrow(
+                () -> new RuntimeException("Facility not found"));
         return new WorkHours(facilityEntity.getOpenTime(), facilityEntity.getCloseTime());
     }
 }

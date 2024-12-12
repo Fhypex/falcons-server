@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.jpa.LocalReservationEntity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 @Component
 public class LocalReservationMapper {
@@ -14,7 +15,7 @@ public class LocalReservationMapper {
                 .courtId(localReservation.courtId().value())
                 .name(localReservation.name())
                 .phoneNumber(localReservation.phoneNumber())
-                .date(localReservation.date())
+                .date(localReservation.date().localValue())
                 .hour(localReservation.hour())
                 .build();
     }
@@ -25,7 +26,7 @@ public class LocalReservationMapper {
                 AggregateId.fromUUID(entity.getCourtId()),
                 entity.getName(),
                 entity.getPhoneNumber(),
-                entity.getDate(),
+                Date.fromLocalDate(entity.getDate()),
                 entity.getHour());
     }
 }

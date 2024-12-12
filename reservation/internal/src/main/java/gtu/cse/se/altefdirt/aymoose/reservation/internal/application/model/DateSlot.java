@@ -1,41 +1,31 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model;
 
-import java.time.LocalDate;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.TimeSlotStatus;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class DateSlot {
 
-    private final LocalDate date;
-    private final TimeSlotsOfDay timeSlotsOfDay;
+    private final Date date;
 
-    public DateSlot(LocalDate date, TimeSlotsOfDay timeSlotsOfDay) {
-        this.date = date;
-        this.timeSlotsOfDay = timeSlotsOfDay;
-    }
-
-    public DateSlot(LocalDate date, List<Reservable> reservations, WorkHours workHours) {
-        this.date = date;
-        this.timeSlotsOfDay = new TimeSlotsOfDay(reservations, workHours);
-    }
-
-    public LocalDate date() {
-        return date;
-    }
-
-    public TimeSlotsOfDay timeSlotsOfDay() {
-        return timeSlotsOfDay;
-    }
-}
-
-class TimeSlotsOfDay {
-
+    @JsonProperty("time_slots")
     private final TimeSlotStatus[] timeSlotStatuses = new TimeSlotStatus[24];
 
-    public TimeSlotsOfDay(List<Reservable> reservations, WorkHours workHours) {
+    public DateSlot(Date date, List<Reservable> reservations, WorkHours workHours) {
+        this.date = date;
+        init(reservations, workHours);
+    }
+
+    private void init(List<Reservable> reservations, WorkHours workHours) {
         for (int i = 0; i < workHours.openTime(); i++) {
             timeSlotStatuses[i] = TimeSlotStatus.CLOSED;
         }
@@ -50,4 +40,7 @@ class TimeSlotsOfDay {
         }
     }
 
+    public Date date() {
+        return date;
+    }
 }

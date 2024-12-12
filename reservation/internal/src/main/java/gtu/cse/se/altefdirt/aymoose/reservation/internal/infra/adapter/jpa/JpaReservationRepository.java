@@ -16,8 +16,8 @@ public interface JpaReservationRepository extends JpaRepository<ReservationEntit
     @Query("SELECT COUNT(a) = :size FROM ReservationEntity a WHERE a.id IN :ids")
     boolean existsByIds(List<UUID> ids, int size);
 
-    @Query("SELECT COUNT(a) > 0 FROM ReservationEntity a WHERE a.userId = :userId AND a.status = :status")
-    List<ReservationEntity> findByPendingReservationsByUserId(UUID userId, ReservationStatus status);
+    @Query("SELECT COUNT(a) FROM ReservationEntity a WHERE a.userId = :userId AND a.status = :status")
+    int findByPendingReservationsByUserId(UUID userId, ReservationStatus status);
 
     @Query("SELECT COUNT(a) > 0 FROM ReservationEntity a WHERE a.courtId = :courtId AND a.date = :date AND a.hour = :hour")
     boolean isTimeSlotInUse(UUID courtId, LocalDate date, int hour);

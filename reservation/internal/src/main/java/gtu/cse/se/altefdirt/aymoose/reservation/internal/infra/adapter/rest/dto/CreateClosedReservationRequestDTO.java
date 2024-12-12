@@ -1,16 +1,17 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto;
 
-import java.time.LocalDate;
 import java.util.UUID;
+
+import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 
 public record CreateClosedReservationRequestDTO(
         UUID courtId,
-        LocalDate date,
-        int hour) {
+        Date date,
+        Integer hour) {
     public CreateClosedReservationRequestDTO(
             UUID courtId,
-            LocalDate date,
-            int hour) {
+            Date date,
+            Integer hour) {
         this.courtId = courtId;
         this.date = date;
         this.hour = hour;
