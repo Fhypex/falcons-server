@@ -6,7 +6,9 @@ import java.util.ArrayList;
 public record WorkHours(
         int openTime,
         int closeTime) {
-    public WorkHours {
+
+    public WorkHours(int openTime,
+            int closeTime) {
         if (openTime < 0 || openTime > 24) {
             throw new IllegalArgumentException("Invalid open time");
         }
@@ -16,6 +18,8 @@ public record WorkHours(
         if (openTime >= closeTime) {
             throw new IllegalArgumentException("Invalid work hours:" + openTime + " - " + closeTime);
         }
+        this.openTime = openTime;
+        this.closeTime = closeTime;
     }
 
     public String toString() {
