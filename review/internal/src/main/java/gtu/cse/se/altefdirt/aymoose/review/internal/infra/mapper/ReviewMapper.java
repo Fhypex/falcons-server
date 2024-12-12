@@ -24,7 +24,7 @@ public class ReviewMapper {
                 .reservationId(review.getReservationId().value())
                 .userId(review.getUserId().value())
                 .facilityId(review.getFacilityId().value())
-                .rating(review.getRating().value())
+                .rating(review.getRating().leading())
                 .title(review.comment().title())
                 .content(review.comment().content())
                 .createdAt(review.createdAt().value())
@@ -41,7 +41,7 @@ public class ReviewMapper {
                 AggregateId.fromUUID(entity.getUserId()),
                 AggregateId.fromUUID(entity.getFacilityId()),
                 new Comment(entity.getTitle(), entity.getContent()),
-                new Rating(entity.getRating()),
+                Rating.fromShort(entity.getRating()),
                 new CreatedAt(entity.getCreatedAt()),
                 new UpdatedAt(entity.getUpdatedAt()),
                 entity.isNeedsModeration(),

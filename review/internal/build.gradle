@@ -4,6 +4,7 @@ dependencies {
     implementation project(':shared')
     implementation project(':core')
     implementation project(':account:api')
+    implementation project(':review:api')
 }
 
 test {

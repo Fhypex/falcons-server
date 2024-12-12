@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.service.AccountService;
@@ -15,13 +16,12 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.AccountResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessAdmin;
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class AccountQueryV1Controller {
 
@@ -50,8 +50,8 @@ class AccountQueryV1Controller {
     }
 
     @GetMapping(value = "/account/my")
-    AccountResponseDTO getAccountById(@AuthenticationPrincipal JwtUserToken user) {
-        Optional<Account> fetch = accountRepository.findById(user.getToken().id());
+    AccountResponseDTO getAccountById(@AuthenticationPrincipal JwtUser user) {
+        Optional<Account> fetch = accountRepository.findById(user.id());
         if (fetch.isEmpty()) {
             throw new IllegalArgumentException("Account does not exist");
         }

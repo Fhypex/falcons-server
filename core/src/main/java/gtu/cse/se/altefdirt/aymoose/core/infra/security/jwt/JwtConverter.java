@@ -9,13 +9,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
-
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_REALM_ACCESS;
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_ROLES;
 import static gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.JWT_ROLE_PREFIX;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -52,7 +49,7 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
         Collection<String> realmRoles = extractResourceRolesAsString(jwt);
         return realmRoles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(JWT_ROLE_PREFIX + role))
+                .map(role -> new SimpleGrantedAuthority(role.contains(JWT_ROLE_PREFIX) ? role : JWT_ROLE_PREFIX + role))
                 .collect(Collectors.toSet());
     }
 

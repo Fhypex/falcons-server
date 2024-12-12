@@ -1,15 +1,12 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Slf4j
 public class ReservationQueryController {

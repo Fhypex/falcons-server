@@ -13,12 +13,12 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Cou
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtRepository;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class CourtQueryV1Controller {
 

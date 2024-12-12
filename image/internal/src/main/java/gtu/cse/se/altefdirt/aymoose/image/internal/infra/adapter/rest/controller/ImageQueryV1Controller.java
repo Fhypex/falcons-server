@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import gtu.cse.se.altefdirt.aymoose.image.internal.domain.Image;
 import gtu.cse.se.altefdirt.aymoose.image.internal.domain.ImageRepository;
 import gtu.cse.se.altefdirt.aymoose.image.internal.infra.adapter.rest.dto.ImageResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class ImageQueryV1Controller {
 

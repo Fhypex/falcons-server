@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.ApproveReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CancelReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateClosedReservation;
@@ -22,14 +22,14 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto.CreateClosedReservationRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto.CreateLocalReservationRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.dto.CreateReservationRequestDTO;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class ReservationCommandV1Controller {
 
@@ -41,10 +41,10 @@ class ReservationCommandV1Controller {
     private final CommandRunner runner;
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=default")
-    public Response<UUID> createReservation(@AuthenticationPrincipal JwtUserToken user,
+    public Response<UUID> createReservation(@AuthenticationPrincipal JwtUser user,
             @RequestBody @Valid CreateReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateReservation(
-                user.getToken().id(),
+                user.id(),
                 request.courtId(),
                 request.date(),
                 request.hour()));
@@ -52,7 +52,7 @@ class ReservationCommandV1Controller {
     }
 
     @PostMapping(value = "/reservations", params = Parameter.TYPE + "=local")
-    public Response<UUID> createLocalReservation(@AuthenticationPrincipal JwtUserToken user,
+    public Response<UUID> createLocalReservation(@AuthenticationPrincipal JwtUser user,
             @RequestBody CreateLocalReservationRequestDTO request) {
         Reservation reservation = runner.run(new CreateLocalReservation(
                 request.courtId(),

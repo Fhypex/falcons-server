@@ -79,7 +79,8 @@ class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public List<Review> findByUserIdFacilityIdAndRatingEqual(AggregateId userId, AggregateId facilityId,
             Rating rating) {
-        return jpaRepository.findByUserIdAndFacilityIdAndRatingEqual(userId.value(), facilityId.value(), rating.value())
+        return jpaRepository
+                .findByUserIdAndFacilityIdAndRatingEqual(userId.value(), facilityId.value(), rating.leading())
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
@@ -90,7 +91,7 @@ class ReviewRepositoryImpl implements ReviewRepository {
     public List<Review> findByUserIdFacilityIdAndRatingLesserThan(AggregateId userId, AggregateId facilityId,
             Rating rating) {
         return jpaRepository
-                .findByUserIdAndFacilityIdAndRatingLessThan(userId.value(), facilityId.value(), rating.value())
+                .findByUserIdAndFacilityIdAndRatingLessThan(userId.value(), facilityId.value(), rating.leading())
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
@@ -101,7 +102,7 @@ class ReviewRepositoryImpl implements ReviewRepository {
     public List<Review> findByUserIdFacilityIdAndRatingGreaterThan(AggregateId userId, AggregateId facilityId,
             Rating rating) {
         return jpaRepository
-                .findByUserIdAndFacilityIdAndRatingGreaterThan(userId.value(), facilityId.value(), rating.value())
+                .findByUserIdAndFacilityIdAndRatingGreaterThan(userId.value(), facilityId.value(), rating.leading())
                 .stream()
                 .map(mapper::toDomain)
                 .toList();

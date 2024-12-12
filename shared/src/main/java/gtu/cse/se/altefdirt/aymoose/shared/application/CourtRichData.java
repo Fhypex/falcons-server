@@ -7,12 +7,12 @@ import lombok.Builder;
 
 @Builder
 public record CourtRichData(AggregateId id,
-                AggregateId facilityId,
-                String name,
-                String description,
-                Integer height,
-                Integer width,
-                Integer capacity,
-                Integer price,
-                List<String> imageUrls) {
+        AggregateId facilityId,
+        String name,
+        String description,
+        Integer height,
+        Integer width,
+        Integer capacity,
+        Integer price,
+        List<String> imageUrls) {
 }

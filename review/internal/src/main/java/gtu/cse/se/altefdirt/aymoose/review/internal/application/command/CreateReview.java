@@ -17,6 +17,6 @@ public record CreateReview(
 
         @NotBlank(message = "Review cannot be null or empty") String content,
 
-        @Min(value = 1, message = "Rating must be between 1 and 5") @Max(value = 5, message = "Rating must be between 1 and 5") short rating)
+        @Min(value = 1, message = "Rating must be between 1 and 5") @Max(value = 5, message = "Rating must be between 1 and 5") Short rating)
         implements Command {
 }
