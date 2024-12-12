@@ -14,6 +14,7 @@ public interface JpaReviewRepository extends JpaRepository<ReviewEntity, UUID> {
 
     List<ReviewEntity> findByUserId(UUID userId);
 
+    @Query("SELECT r FROM ReviewEntity r WHERE r.facilityId = ?1")
     List<ReviewEntity> findByFacilityId(UUID facilityId);
 
     List<ReviewEntity> findByUserIdAndFacilityId(UUID userId, UUID facilityId);

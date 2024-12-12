@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountRepository;
+import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.AccountEntity;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.JpaAccountRepository;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.mapper.AccountMapper;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -27,7 +28,11 @@ class AccountRepositryImpl implements AccountRepository {
 
     @Override
     public Optional<Account> findById(AggregateId id) {
-        return Optional.of(mapper.toDomain(accountRepository.findById(id.value()).get()));
+        Optional<AccountEntity> opt = accountRepository.findById(id.value());
+        if (opt.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(mapper.toDomain(opt.get()));
     }
 
     @Override
@@ -43,7 +48,8 @@ class AccountRepositryImpl implements AccountRepository {
 
     @Override
     public List<Account> findByIds(List<AggregateId> ids) {
-        return accountRepository.findAllById(ids.stream().map(AggregateId::value).toList()).stream().map(mapper::toDomain).toList();
+        return accountRepository.findAllById(ids.stream().map(AggregateId::value).toList()).stream()
+                .map(mapper::toDomain).toList();
     }
 
     @Override
