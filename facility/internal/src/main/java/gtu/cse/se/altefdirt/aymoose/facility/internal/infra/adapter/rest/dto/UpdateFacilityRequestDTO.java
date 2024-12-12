@@ -15,10 +15,10 @@ public record UpdateFacilityRequestDTO(
         String fullAddress,
         String location,
         String contactDetails,
-        int openTime,
-        int closeTime,
+        Integer openTime,
+        Integer closeTime,
         List<UUID> amenityIds,
-        boolean isActive,
+        Boolean isActive,
         List<UUID> deletedImages,
         List<MultipartFile> newImages) {
     public UpdateFacilityRequestDTO(
@@ -30,10 +30,10 @@ public record UpdateFacilityRequestDTO(
             String fullAddress,
             String location,
             String contactDetails,
-            int openTime,
-            int closeTime,
+            Integer openTime,
+            Integer closeTime,
             List<UUID> amenityIds,
-            boolean isActive,
+            Boolean isActive,
             List<UUID> deletedImages,
             List<MultipartFile> newImages) {
 
