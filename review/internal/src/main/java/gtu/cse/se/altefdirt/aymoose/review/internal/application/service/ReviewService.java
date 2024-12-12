@@ -9,4 +9,5 @@ public interface ReviewService {
     boolean isReviewExist(AggregateId reservationId, AggregateId userId);
 
     ReviewView denormalize(Review review);
+
 }

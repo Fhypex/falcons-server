@@ -12,7 +12,7 @@ public record ReviewView(
         @NotNull UUID userId,
         @NotNull UUID facilityId,
         @NotNull String author,
-        @NotNull short rating,
+        @NotNull Short rating,
         @NotNull String title,
         @NotNull String content,
         @NotNull Instant createdAt,
@@ -20,7 +20,7 @@ public record ReviewView(
 
     public ReviewView(Review review, String author) {
         this(review.id().value(), review.getUserId().value(), review.getFacilityId().value(), author,
-                review.getRating().value(), review.comment().title(), review.comment().content(),
+                review.getRating().leading(), review.comment().title(), review.comment().content(),
                 review.createdAt().value(), review.updatedAt().value());
     }
 }

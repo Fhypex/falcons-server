@@ -17,7 +17,7 @@ public record ReviewResponseDTO(
     public static ReviewResponseDTO fromView(ReviewView reviewView) {
         return new ReviewResponseDTO(reviewView.id(),
                 reviewView.author(),
-                reviewView.rating(),
+                reviewView.rating().shortValue(),
                 reviewView.title(),
                 reviewView.content(),
                 reviewView.createdAt().toString(),

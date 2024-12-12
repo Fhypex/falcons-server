@@ -20,18 +20,19 @@ public class DeleteCityCommandHandler implements CommandHandler<DeleteCity, Inte
     private final DistrictRepository districtRepository;
     private final CityRepository cityRepository;
     private final FacilityRepository facilityRepository;
+
     @Override
     public Integer handle(DeleteCity command) {
 
         List<District> districts = districtRepository.findByCityId(command.id());
 
-        for(District district : districts) {
-            if(facilityRepository.hasFacilityByDistrictId(district.id())) {
+        for (District district : districts) {
+            if (facilityRepository.hasFacilityByDistrictId(district.id())) {
                 throw new IllegalStateException("City has districts with facilities. Cannot delete.");
             }
         }
 
-        for(District district : districts) {
+        for (District district : districts) {
             districtRepository.deleteById(district.id());
         }
 

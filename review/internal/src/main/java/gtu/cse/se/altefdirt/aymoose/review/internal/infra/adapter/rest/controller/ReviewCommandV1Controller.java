@@ -7,12 +7,12 @@ import gtu.cse.se.altefdirt.aymoose.review.internal.application.command.CreateRe
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.model.ReviewView;
 import gtu.cse.se.altefdirt.aymoose.review.internal.infra.adapter.rest.dto.CreateReviewRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class ReviewCommandV1Controller {
 

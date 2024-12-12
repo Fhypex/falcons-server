@@ -21,7 +21,7 @@ public class CreateReviewCommandHandler implements CommandHandler<CreateReview, 
     @Override
     public Review handle(CreateReview command) {
 
-        AggregateId reservationId = AggregateId.fromString("11111111-1111-1111-1111-11111111");
+        AggregateId reservationId = AggregateId.fromString("11111111-1111-1111-1111-111111111111");
 
         /*
          * ReservationData reservationData =
@@ -36,7 +36,7 @@ public class CreateReviewCommandHandler implements CommandHandler<CreateReview, 
                 AggregateId.fromUUID(command.userId()),
                 AggregateId.fromUUID(command.facilityId()),
                 new Comment(command.title(), command.content()),
-                new Rating(command.rating()));
+                Rating.fromShort(command.rating()));
 
         return repository.save(review);
     }

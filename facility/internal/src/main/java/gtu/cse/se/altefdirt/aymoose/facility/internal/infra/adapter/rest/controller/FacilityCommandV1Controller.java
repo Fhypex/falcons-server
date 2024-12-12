@@ -31,13 +31,13 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Cre
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.UpdateFacilityRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class FacilityCommandV1Controller {
 
@@ -91,26 +91,26 @@ class FacilityCommandV1Controller {
     }
 
     @DeleteMapping("/cities/district/{id}")
-    public Response<Long> deleteDistrict(@PathVariable(Parameter.ID) Long id) {
-        Long districtId = runner.run(new DeleteDistrict(id));
-        return Response.success(districtId, "District created successfully");
+    public Response<Integer> deleteDistrict(@PathVariable(Parameter.ID) Long id) {
+        Integer deleted = runner.run(new DeleteDistrict(id));
+        return Response.success(deleted, "District created successfully");
     }
 
     @DeleteMapping("/cities/{id}")
-    public Response<Long> deleteCity(@PathVariable(Parameter.ID) Long id) {
-        Long cityId = runner.run(new DeleteCity(id));
-        return Response.success(cityId, "City deleted created successfully");
+    public Response<Integer> deleteCity(@PathVariable(Parameter.ID) Long id) {
+        Integer deleted = runner.run(new DeleteCity(id));
+        return Response.success(deleted, "City deleted created successfully");
     }
 
     @DeleteMapping("/facilities/{id}")
-    public Response<UUID> deleteFacility(@PathVariable(Parameter.ID) UUID id) {
-        AggregateId facilityId = runner.run(new DeleteFacility(id));
-        return Response.success(facilityId.value(), "Facility deleted successfully");
+    public Response<Integer> deleteFacility(@PathVariable(Parameter.ID) UUID id) {
+        Integer deleted = runner.run(new DeleteFacility(id));
+        return Response.success(deleted, "Facility deleted successfully");
     }
 
     @PatchMapping("/facilities/{id}")
     public Response<UUID> updateFacility(@PathVariable(Parameter.ID) UUID id,
-            @RequestPart("images") List<MultipartFile> images,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
             @RequestPart("data") UpdateFacilityRequestDTO request) {
         AggregateId facilityId = runner.run(new UpdateFacility(
                 id,

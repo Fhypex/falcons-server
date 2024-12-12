@@ -1,6 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.controller;
 
-import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUserToken;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.AmenityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.CityView;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.model.FacilityView;
@@ -15,7 +15,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.Ame
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CityResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityCompressedResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.FacilityResponseDTO;
-import gtu.cse.se.altefdirt.aymoose.shared.api.rest.version.ApiVersionV1;
+import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
-@ApiVersionV1
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Slf4j
 public class FacilityQueryController {
@@ -49,7 +49,7 @@ public class FacilityQueryController {
     }
 
     @GetMapping(value = "/facilities")
-    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUserToken user) {
+    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUser user) {
 
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .toList();

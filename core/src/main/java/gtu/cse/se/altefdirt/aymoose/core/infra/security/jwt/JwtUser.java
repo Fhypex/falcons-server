@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 
 /**
- * JwtUserToken is a class that extends Jwt and adds {@code UUID} field as the
+ * JwtUser is a class that extends Jwt and adds {@code UUID} field as the
  * {@code User's ID} with respoected user's roles.
  * 
  * It essentialy a wrapper class for Jwt.

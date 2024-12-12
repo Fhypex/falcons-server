@@ -10,11 +10,11 @@ import org.springframework.security.oauth2.server.resource.authentication.Abstra
  * Implementation of an {@link AbstractOAuth2TokenAuthenticationToken}
  * representing a
  * {@link Jwt} {@code Authentication} token.
- * Stores a {@link JwtUserToken} as the principal which stores both the
+ * Stores a {@link JwtUser} as the principal which stores both the
  * {@link Jwt} and the
  * UUID of the user.
  * 
- * @see JwtUserToken
+ * @see JwtUser
  * @see AbstractOAuth2TokenAuthenticationToken
  * @see Jwt
  */

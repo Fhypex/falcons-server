@@ -33,7 +33,7 @@ public class FacilityEntity {
     private String contactDetails;
     private int openTime;
     private int closeTime;
-    @ElementCollection(targetClass = String.class, fetch = jakarta.persistence.FetchType.EAGER)
+    @ElementCollection(targetClass = UUID.class, fetch = jakarta.persistence.FetchType.EAGER)
     private List<UUID> amenities;
     private boolean isActive;
 }

@@ -3,6 +3,10 @@ package gtu.cse.se.altefdirt.aymoose.shared.domain;
 import java.io.Serializable;
 import java.util.UUID;
 
+import org.modelmapper.internal.util.Assert;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jakarta.validation.constraints.NotNull;
 
 public record AggregateId(
@@ -17,6 +21,7 @@ public record AggregateId(
     }
 
     public static AggregateId fromUUID(UUID value) {
+        Assert.notNull(value, "UUID must not be null");
         return new AggregateId(value);
     }
 
@@ -24,12 +29,18 @@ public record AggregateId(
         return new AggregateId(UUID.fromString(value));
     }
 
+    @JsonValue
     @Override
     public UUID value() {
         return id;
     }
 
     public final String asString() {
+        return id.toString();
+    }
+
+    @Override
+    public String toString() {
         return id.toString();
     }
 }
