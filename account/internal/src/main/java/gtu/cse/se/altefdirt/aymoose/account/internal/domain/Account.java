@@ -2,6 +2,8 @@ package gtu.cse.se.altefdirt.aymoose.account.internal.domain;
 
 import lombok.Getter;
 
+import java.time.Instant;
+
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
@@ -9,20 +11,20 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 
 @Getter
 public class Account extends BaseAggregateRoot {
-   
-    public Account(AggregateId id, 
-                 FullName fullName,
-                 CreatedAt createdAt,  
-                 Boolean isActive)  {
+
+    public Account(AggregateId id,
+            FullName fullName,
+            Instant createdAt,
+            Boolean isActive) {
         super(id);
         this.fullName = fullName;
         this.createdAt = createdAt;
         this.isActive = isActive;
-    } 
+    }
 
     private AggregateId id;
     private FullName fullName;
-    private CreatedAt createdAt;
+    private Instant createdAt;
     private Boolean isActive;
 
     public Boolean isActive() {
@@ -49,7 +51,7 @@ public class Account extends BaseAggregateRoot {
         return fullName;
     }
 
-    public CreatedAt createdAt() {
+    public Instant createdAt() {
         return createdAt;
     }
 }

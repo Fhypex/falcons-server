@@ -5,7 +5,6 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account;
 import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.AccountEntity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.CreatedAt;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +27,7 @@ public class AccountMapper {
                 new FullName(
                         entity.getFirstName(),
                         entity.getLastName()),
-                new CreatedAt(entity.getCreatedAt()),
+                entity.getCreatedAt(),
                 entity.isActive());
     }
 }

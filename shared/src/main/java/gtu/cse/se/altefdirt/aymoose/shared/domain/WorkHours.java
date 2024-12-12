@@ -3,11 +3,9 @@ package gtu.cse.se.altefdirt.aymoose.shared.domain;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public record WorkHours(
-    int openTime,
-    int closeTime)
-{
+        int openTime,
+        int closeTime) {
     public WorkHours {
         if (openTime < 0 || openTime > 24) {
             throw new IllegalArgumentException("Invalid open time");
@@ -16,7 +14,7 @@ public record WorkHours(
             throw new IllegalArgumentException("Invalid close time");
         }
         if (openTime >= closeTime) {
-            throw new IllegalArgumentException("Invalid work hours");
+            throw new IllegalArgumentException("Invalid work hours:" + openTime + " - " + closeTime);
         }
     }
 
@@ -41,4 +39,3 @@ public record WorkHours(
     }
 
 }
-
