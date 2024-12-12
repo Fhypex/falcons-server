@@ -112,7 +112,7 @@ class FacilityCommandV1Controller {
     public Response<UUID> updateFacility(@PathVariable(Parameter.ID) UUID id,
             @RequestPart(value = "images", required = false) List<MultipartFile> images,
             @RequestPart("data") UpdateFacilityRequestDTO request) {
-        AggregateId facilityId = runner.run(new UpdateFacility(
+        Facility facility = runner.run(new UpdateFacility(
                 id,
                 request.phoneNumber(),
                 request.name(),
@@ -127,7 +127,7 @@ class FacilityCommandV1Controller {
                 request.isActive(),
                 request.deletedImages(),
                 images));
-        return Response.success(facilityId.value(), "Facility updated successfully");
+        return Response.success(facility.id().value(), "Facility updated successfully");
     }
 
     @PostMapping("/amenities/{id}")

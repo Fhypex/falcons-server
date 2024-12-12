@@ -3,12 +3,10 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.contro
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CourtResponseDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.service.CourtService;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;

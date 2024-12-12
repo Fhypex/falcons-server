@@ -2,7 +2,6 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.contro
 
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Create
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.UpdateCourt;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
 
 @RestController
