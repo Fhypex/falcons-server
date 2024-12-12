@@ -37,4 +37,9 @@ class FacilityProviderImpl implements FacilityProvider {
     public WorkHours getWorkHoursByCourtId(AggregateId courtId) {
         return facilityRepository.getWorkHoursByCourtId(courtId);
     }
+
+    @Override
+    public boolean existsById(AggregateId id) {
+        return facilityRepository.existsById(id);
+    }
 }

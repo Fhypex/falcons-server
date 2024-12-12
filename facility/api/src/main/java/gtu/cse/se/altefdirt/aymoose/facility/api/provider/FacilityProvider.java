@@ -14,4 +14,6 @@ public interface FacilityProvider {
     int deleteById(AggregateId id);
 
     int deleteByOwnerId(AggregateId userId);
+
+    boolean existsById(AggregateId id);
 }
