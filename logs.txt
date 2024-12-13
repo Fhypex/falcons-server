@@ -265,3 +265,124 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 2024-12-13T11:07:05.956+03:00  INFO 6604 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2024-12-13T11:07:06.014+03:00 DEBUG 6604 --- [http-nio-5858-exec-1] s.a.a.f.i.i.a.j.r.FacilityRepositoryImpl : Getting work hours by court id 0ad878f5-4b8d-4bd9-ad50-da48af70032c
 2024-12-13T11:07:06.065+03:00 DEBUG 6604 --- [http-nio-5858-exec-1] s.a.a.f.i.i.a.j.r.FacilityRepositoryImpl : Facility id found dd7c5371-4187-4131-80ec-32abeb26f82f
+2024-12-13T12:24:54.865+03:00  INFO 9668 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Starting AymooseApplication using Java 21.0.3 with PID 9668 (C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server\core\build\libs\core-plain.jar started by hayru in C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server)
+2024-12-13T12:24:54.867+03:00 DEBUG 9668 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Running with Spring Boot v3.3.2, Spring v6.1.11
+2024-12-13T12:24:54.868+03:00  INFO 9668 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : No active profile set, falling back to 1 default profile: "default"
+2024-12-13T12:24:55.566+03:00  INFO 9668 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13T12:24:55.657+03:00  INFO 9668 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 83 ms. Found 11 JPA repository interfaces.
+2024-12-13T12:24:56.782+03:00  INFO 9668 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 5858 (http)
+2024-12-13T12:24:56.796+03:00  INFO 9668 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-13T12:24:56.797+03:00  INFO 9668 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-12-13T12:24:56.887+03:00  INFO 9668 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-13T12:24:56.887+03:00  INFO 9668 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1970 ms
+2024-12-13T12:24:57.208+03:00  INFO 9668 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13T12:24:57.279+03:00  INFO 9668 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-12-13T12:24:57.315+03:00  INFO 9668 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-13T12:24:57.630+03:00  INFO 9668 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13T12:24:57.661+03:00  INFO 9668 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-13T12:24:57.798+03:00  INFO 9668 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@56a72887
+2024-12-13T12:24:57.800+03:00  INFO 9668 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-13T12:24:57.836+03:00  WARN 9668 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13T12:24:58.927+03:00  INFO 9668 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13T12:24:59.022+03:00  INFO 9668 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13T12:24:59.618+03:00  INFO 9668 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13T12:25:00.951+03:00  WARN 9668 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13T12:25:01.432+03:00  INFO 9668 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-12-13T12:25:02.098+03:00  INFO 9668 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 5858 (http) with context path '/'
+2024-12-13T12:25:02.109+03:00  INFO 9668 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Started AymooseApplication in 7.65 seconds (process running for 8.182)
+2024-12-13T12:25:03.590+03:00  INFO 9668 --- [http-nio-5858-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13T12:25:03.591+03:00  INFO 9668 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-13T12:25:03.592+03:00  INFO 9668 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-13T12:25:04.036+03:00  INFO 9668 --- [http-nio-5858-exec-1] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T12:25:37.541+03:00  INFO 9668 --- [http-nio-5858-exec-2] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T12:29:12.749+03:00  INFO 9668 --- [http-nio-5858-exec-4] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T12:34:54.321+03:00  INFO 2756 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Starting AymooseApplication using Java 21.0.3 with PID 2756 (C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server\core\build\libs\core-plain.jar started by hayru in C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server)
+2024-12-13T12:34:54.323+03:00 DEBUG 2756 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Running with Spring Boot v3.3.2, Spring v6.1.11
+2024-12-13T12:34:54.323+03:00  INFO 2756 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : No active profile set, falling back to 1 default profile: "default"
+2024-12-13T12:34:55.053+03:00  INFO 2756 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13T12:34:55.138+03:00  INFO 2756 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 79 ms. Found 11 JPA repository interfaces.
+2024-12-13T12:34:56.348+03:00  INFO 2756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 5858 (http)
+2024-12-13T12:34:56.360+03:00  INFO 2756 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-13T12:34:56.361+03:00  INFO 2756 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-12-13T12:34:56.448+03:00  INFO 2756 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-13T12:34:56.448+03:00  INFO 2756 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2076 ms
+2024-12-13T12:34:56.757+03:00  INFO 2756 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13T12:34:56.824+03:00  INFO 2756 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-12-13T12:34:56.861+03:00  INFO 2756 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-13T12:34:57.172+03:00  INFO 2756 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13T12:34:57.199+03:00  INFO 2756 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-13T12:34:57.354+03:00  INFO 2756 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@23d12a3a
+2024-12-13T12:34:57.356+03:00  INFO 2756 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-13T12:34:57.397+03:00  WARN 2756 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13T12:34:58.575+03:00  INFO 2756 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13T12:34:58.655+03:00  INFO 2756 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13T12:34:59.263+03:00  INFO 2756 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13T12:35:00.551+03:00  WARN 2756 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13T12:35:01.061+03:00  INFO 2756 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-12-13T12:35:01.708+03:00  INFO 2756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 5858 (http) with context path '/'
+2024-12-13T12:35:01.719+03:00  INFO 2756 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Started AymooseApplication in 7.819 seconds (process running for 8.289)
+2024-12-13T12:35:12.936+03:00  INFO 2756 --- [http-nio-5858-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13T12:35:12.936+03:00  INFO 2756 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-13T12:35:12.938+03:00  INFO 2756 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-13T12:35:13.186+03:00  INFO 2756 --- [http-nio-5858-exec-1] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T12:35:13.423+03:00 DEBUG 2756 --- [http-nio-5858-exec-1] c.s.a.a.a.i.i.a.KeycloakOperationAdapter : Extracted user roles: [default-roles-aymoose]
+2024-12-13T12:45:20.541+03:00  INFO 28484 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Starting AymooseApplication using Java 21.0.3 with PID 28484 (C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server\core\build\libs\core-plain.jar started by hayru in C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server)
+2024-12-13T12:45:20.543+03:00 DEBUG 28484 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Running with Spring Boot v3.3.2, Spring v6.1.11
+2024-12-13T12:45:20.543+03:00  INFO 28484 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : No active profile set, falling back to 1 default profile: "default"
+2024-12-13T12:45:21.174+03:00  INFO 28484 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13T12:45:21.263+03:00  INFO 28484 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 82 ms. Found 11 JPA repository interfaces.
+2024-12-13T12:45:22.275+03:00  INFO 28484 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 5858 (http)
+2024-12-13T12:45:22.286+03:00  INFO 28484 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-13T12:45:22.286+03:00  INFO 28484 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-12-13T12:45:22.370+03:00  INFO 28484 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-13T12:45:22.371+03:00  INFO 28484 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1784 ms
+2024-12-13T12:45:22.659+03:00  INFO 28484 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13T12:45:22.713+03:00  INFO 28484 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-12-13T12:45:22.742+03:00  INFO 28484 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-13T12:45:23.017+03:00  INFO 28484 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13T12:45:23.040+03:00  INFO 28484 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-13T12:45:23.162+03:00  INFO 28484 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@23d12a3a
+2024-12-13T12:45:23.164+03:00  INFO 28484 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-13T12:45:23.194+03:00  WARN 28484 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13T12:45:24.305+03:00  INFO 28484 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13T12:45:24.379+03:00  INFO 28484 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13T12:45:24.938+03:00  INFO 28484 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13T12:45:26.205+03:00  WARN 28484 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13T12:45:26.724+03:00  INFO 28484 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-12-13T12:45:27.393+03:00  INFO 28484 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 5858 (http) with context path '/'
+2024-12-13T12:45:27.405+03:00  INFO 28484 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Started AymooseApplication in 7.226 seconds (process running for 7.655)
+2024-12-13T12:45:33.106+03:00  INFO 28484 --- [http-nio-5858-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13T12:45:33.106+03:00  INFO 28484 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-13T12:45:33.107+03:00  INFO 28484 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-13T12:45:33.326+03:00  INFO 28484 --- [http-nio-5858-exec-1] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T12:45:33.555+03:00 DEBUG 28484 --- [http-nio-5858-exec-1] c.s.a.a.a.i.i.a.KeycloakOperationAdapter : Extracted user roles: [uma_authorization, default-roles-aymoose, ROLE_USER, ROLE_ADMIN, ROLE_FACILITY_OWNER, offline_access]
+2024-12-13T13:01:39.732+03:00  INFO 22748 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Starting AymooseApplication using Java 21.0.3 with PID 22748 (C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server\core\build\libs\core-plain.jar started by hayru in C:\Users\hayru\Desktop\Codes\wO\kouD\FalconStack\aymoose-server)
+2024-12-13T13:01:39.734+03:00 DEBUG 22748 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Running with Spring Boot v3.3.2, Spring v6.1.11
+2024-12-13T13:01:39.734+03:00  INFO 22748 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : No active profile set, falling back to 1 default profile: "default"
+2024-12-13T13:01:40.373+03:00  INFO 22748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13T13:01:40.468+03:00  INFO 22748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 87 ms. Found 11 JPA repository interfaces.
+2024-12-13T13:01:41.565+03:00  INFO 22748 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 5858 (http)
+2024-12-13T13:01:41.578+03:00  INFO 22748 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-13T13:01:41.578+03:00  INFO 22748 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-12-13T13:01:41.677+03:00  INFO 22748 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-13T13:01:41.677+03:00  INFO 22748 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1898 ms
+2024-12-13T13:01:42.000+03:00  INFO 22748 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13T13:01:42.095+03:00  INFO 22748 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-12-13T13:01:42.143+03:00  INFO 22748 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-13T13:01:42.485+03:00  INFO 22748 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13T13:01:42.516+03:00  INFO 22748 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-13T13:01:42.650+03:00  INFO 22748 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@46590dd0
+2024-12-13T13:01:42.652+03:00  INFO 22748 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-13T13:01:42.685+03:00  WARN 22748 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13T13:01:43.750+03:00  INFO 22748 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13T13:01:43.827+03:00  INFO 22748 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13T13:01:44.422+03:00  INFO 22748 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13T13:01:46.012+03:00  WARN 22748 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13T13:01:46.699+03:00  INFO 22748 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-12-13T13:01:47.347+03:00  INFO 22748 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 5858 (http) with context path '/'
+2024-12-13T13:01:47.358+03:00  INFO 22748 --- [main] g.c.s.a.aymoose.core.AymooseApplication  : Started AymooseApplication in 8.002 seconds (process running for 8.448)
+2024-12-13T13:01:51.040+03:00  INFO 22748 --- [http-nio-5858-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13T13:01:51.041+03:00  INFO 22748 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-13T13:01:51.042+03:00  INFO 22748 --- [http-nio-5858-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-13T13:01:51.261+03:00  INFO 22748 --- [http-nio-5858-exec-1] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325
+2024-12-13T13:01:55.537+03:00  INFO 22748 --- [http-nio-5858-exec-2] g.c.s.a.a.a.i.a.s.i.AccountServiceImpl   : Denormalizing account: gtu.cse.se.altefdirt.aymoose.account.internal.domain.Account@de9d0325

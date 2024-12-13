@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.model.AuthDetails;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.port.KeycloakOperationPort;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.SecurityConstants.AccessRole;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
@@ -95,7 +98,8 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
             // Get the user resource from the realm
             UserResource user = realmResource.users().get(userId.toString());
             RoleMappingResource roleMappingResource = user.roles();
-            roleMappingResource.realmLevel().add(Collections.singletonList(realmResource.roles().get(role).toRepresentation()));
+            roleMappingResource.realmLevel()
+                    .add(Collections.singletonList(realmResource.roles().get(role).toRepresentation()));
             return Optional.of(true);
         } catch (Exception e) {
             // Log the exception (optional)
@@ -121,14 +125,15 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
             Response response = realmResource.users().create(user);
             // Check if the user was created successfully
             if (response.getStatus() != 201) {
-                if(response.getStatus() == 409) {
+                if (response.getStatus() == 409) {
                     throw new RuntimeException("User already exists");
                 }
                 throw new RuntimeException("User registration failed");
-            }   
+            }
             String userId = getCreatedId(response);
             UserResource createdUser = realmResource.users().get(userId);
-            createdUser.roles().realmLevel().add(Collections.singletonList(realmResource.roles().get(SecurityConstants.ROLE_USER).toRepresentation()));
+            createdUser.roles().realmLevel().add(Collections
+                    .singletonList(realmResource.roles().get(SecurityConstants.ROLE_USER).toRepresentation()));
             return AggregateId.fromString(userId);
         } catch (Exception e) {
             log.error("Error registering user", e.getMessage());
@@ -136,20 +141,20 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
         }
     }
 
-
     private String getCreatedId(Response response) {
-    URI location = response.getLocation();
-    if (!response.getStatusInfo().equals(Response.Status.CREATED)) {
-        Response.StatusType statusInfo = response.getStatusInfo();
-        throw new WebApplicationException("Create method returned status " +
-                statusInfo.getReasonPhrase() + " (Code: " + statusInfo.getStatusCode() + "); expected status: Created (201)", response);
+        URI location = response.getLocation();
+        if (!response.getStatusInfo().equals(Response.Status.CREATED)) {
+            Response.StatusType statusInfo = response.getStatusInfo();
+            throw new WebApplicationException("Create method returned status " +
+                    statusInfo.getReasonPhrase() + " (Code: " + statusInfo.getStatusCode()
+                    + "); expected status: Created (201)", response);
+        }
+        if (location == null) {
+            return null;
+        }
+        String path = location.getPath();
+        return path.substring(path.lastIndexOf('/') + 1);
     }
-    if (location == null) {
-        return null;
-    }
-    String path = location.getPath();
-    return path.substring(path.lastIndexOf('/') + 1);
-}
 
     @Override
     public int delete(AggregateId userId) {
@@ -178,9 +183,13 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
             }
             UserRepresentation userRepresentation = user.toRepresentation();
             List<String> realmRoles = extractUserRoles(user);
+            List<AccessRole> roles = realmRoles.stream()
+                    .map(role -> AccessRole.safeCast(role)) // Attempt to cast
+                    .filter(Objects::nonNull) // Remove null values
+                    .toList();
             return Optional.of(new AuthDetails(
                     userRepresentation.getEmail(),
-                    (realmRoles != null) ? realmRoles
+                    (roles != null) ? roles
                             : Collections.emptyList()));
 
         } catch (Exception e) {
@@ -199,10 +208,9 @@ class KeycloakOperationAdapter implements KeycloakOperationPort {
         return passwordCredential;
     }
 
-
     private List<String> extractUserRoles(UserResource user) {
         RoleMappingResource roleMappingResource = user.roles();
-        List<RoleRepresentation> roles = roleMappingResource.realmLevel().listAll();
+        List<RoleRepresentation> roles = roleMappingResource.realmLevel().listEffective();
         List<String> rolesStrings = new LinkedList<>();
         for (RoleRepresentation role : roles) {
             rolesStrings.add(role.getName());

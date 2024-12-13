@@ -25,6 +25,6 @@ public record AccountView(
                 profilePicture,
                 account.createdAt(),
                 account.isActive(),
-                authDetails.roles());
+                authDetails.roles().stream().map(Enum::name).toList());
     }
 }
