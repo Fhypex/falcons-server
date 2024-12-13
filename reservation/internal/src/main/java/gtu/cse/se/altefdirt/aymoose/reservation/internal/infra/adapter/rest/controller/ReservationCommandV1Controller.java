@@ -72,7 +72,7 @@ class ReservationCommandV1Controller {
                 request.courtId(),
                 request.date(),
                 request.hour()));
-        return Response.success(reservation.id().value(), "Local reservation created successfully");
+        return Response.success(reservation.id().value(), "Closed reservation created successfully");
     }
 
     @PostMapping("/reservations/{id}/reject")

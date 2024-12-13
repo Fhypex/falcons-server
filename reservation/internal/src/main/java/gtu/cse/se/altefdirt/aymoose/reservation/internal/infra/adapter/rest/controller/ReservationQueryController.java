@@ -1,11 +1,13 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlotRich;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -35,6 +40,7 @@ public class ReservationQueryController {
     private static final class Parameter {
         private static final String ID = "id";
         private static final String TYPE = "type";
+        private static final String RICH = "rich";
     }
 
     @GetMapping("/reservations/slots/{court}/{date}")
@@ -42,9 +48,30 @@ public class ReservationQueryController {
         return reservationService.getDateSlot(AggregateId.fromUUID(court), date);
     }
 
+    @GetMapping(value = "/reservation/{type}/{id}", params = { Parameter.TYPE, Parameter.ID })
+    public Optional<? extends Reservable> getReservation(@PathVariable String type, @PathVariable UUID id) {
+        switch (type) {
+            case "local":
+                return localReservationRepository.findById(AggregateId.fromUUID(id));
+            case "closed":
+                return closedReservationRepository.findById(AggregateId.fromUUID(id));
+            default:
+                return reservationRepository.findById(AggregateId.fromUUID(id));
+        }
+    }
+
     @GetMapping(value = "/reservations")
-    public List<Reservation> getDefaultReservation() {
-        return reservationRepository.findAll();
+    public List<? extends Reservable> getDefaultReservation() {
+        List<Reservable> reservations = new ArrayList<>();
+        reservations.addAll(reservationRepository.findAll());
+        reservations.addAll(localReservationRepository.findAll());
+        reservations.addAll(closedReservationRepository.findAll());
+        return reservations;
+    }
+
+    @GetMapping("/reservations/slots-rich/{court}/{date}")
+    public DateSlotRich getDateSlotRich(@PathVariable UUID court, @PathVariable Date date) {
+        return reservationService.getDateSlotRich(AggregateId.fromUUID(court), date);
     }
 
     @GetMapping(value = "/reservations", params = Parameter.TYPE + "=local")

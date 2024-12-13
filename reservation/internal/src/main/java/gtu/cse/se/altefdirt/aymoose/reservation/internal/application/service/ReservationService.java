@@ -2,6 +2,7 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service;
 
 import java.util.List;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlotRich;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.ReservationView;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
@@ -17,6 +18,8 @@ public interface ReservationService {
     DateSlot getDateSlot(AggregateId courtId, WorkHours workHours, Date date);
 
     DateSlot getDateSlot(AggregateId courtId, Date date);
+
+    DateSlotRich getDateSlotRich(AggregateId courtId, Date date);
 
     List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, Date startDate, Date endDate);
 }

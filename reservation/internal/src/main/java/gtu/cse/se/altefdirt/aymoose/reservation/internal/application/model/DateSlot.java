@@ -15,7 +15,7 @@ public class DateSlot {
 
     private final Date date;
 
-    @JsonProperty("time_slots")
+    @JsonProperty("timeSlots")
     private final TimeSlotStatus[] timeSlotStatuses = new TimeSlotStatus[24];
 
     public DateSlot(Date date, List<Reservable> reservations, WorkHours workHours) {

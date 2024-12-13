@@ -8,6 +8,8 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 @Getter
 public class ClosedReservation extends BaseAggregateRoot implements Reservable {
 
+    private static final ReservationType type = ReservationType.CLOSED;
+
     private AggregateId courtId;
     private Date date;
     private int hour;
@@ -32,5 +34,10 @@ public class ClosedReservation extends BaseAggregateRoot implements Reservable {
 
     public int hour() {
         return this.hour;
+    }
+
+    @Override
+    public ReservationType getType() {
+        return type;
     }
 }

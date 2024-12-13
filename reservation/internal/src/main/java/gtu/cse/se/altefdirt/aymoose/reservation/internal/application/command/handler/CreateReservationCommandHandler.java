@@ -3,6 +3,7 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.ha
 import java.time.Instant;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationFactory;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
@@ -21,6 +22,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
 
     private final ReservationFactory factory;
     private final ReservationRepository repository;
+    private final ReservationService service;
     private final FacilityOperationPort facilityOperationPort;
 
     @Override
@@ -32,7 +34,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
         log.debug("Checking if time slot is in use");
-        if (repository.isTimeSlotInUse(courtId, command.date(), command.hour())) {
+        if (service.isTimeSlotInUse(courtId, command.date(), command.hour())) {
             throw new RuntimeException("Time slot is in use");
         }
         log.debug("Checking if time slot is within work hours");

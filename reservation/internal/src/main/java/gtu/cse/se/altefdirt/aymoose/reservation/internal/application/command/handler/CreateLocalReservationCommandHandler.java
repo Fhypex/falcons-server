@@ -2,6 +2,7 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.ha
 
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateLocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationFactory;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
@@ -19,13 +20,14 @@ public class CreateLocalReservationCommandHandler implements CommandHandler<Crea
 
     private final LocalReservationFactory factory;
     private final LocalReservationRepository repository;
+    private final ReservationService service;
     private final FacilityOperationPort facilityOperationPort;
 
     @Override
     public LocalReservation handle(CreateLocalReservation command) {
         log.debug("Creating local reservation {}", command);
         AggregateId courtId = AggregateId.fromUUID(command.courtId());
-        if (repository.isTimeSlotInUse(courtId, command.date(), command.hour())) {
+        if (service.isTimeSlotInUse(courtId, command.date(), command.hour())) {
             throw new RuntimeException("Time slot is in use");
         }
         WorkHours workHours = facilityOperationPort.getWorkHoursByCourtId(courtId);

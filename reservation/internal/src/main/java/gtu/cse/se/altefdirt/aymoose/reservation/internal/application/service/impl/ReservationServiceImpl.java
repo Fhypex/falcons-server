@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlotRich;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.ReservationView;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
@@ -16,9 +17,11 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
@@ -65,6 +68,12 @@ class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public DateSlotRich getDateSlotRich(AggregateId courtId, Date date) {
+        log.debug("Getting date slot rich for court {} and date {}", courtId, date);
+        return new DateSlotRich(date, getReservables(courtId, date));
+    }
+
+    @Override
     public List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, Date startDate,
             Date endDate) {
 
@@ -86,6 +95,9 @@ class ReservationServiceImpl implements ReservationService {
 
     private List<Reservable> getReservables(AggregateId courtId, Date date) {
         List<Reservable> reservables = new ArrayList<>();
+        log.debug("Getting reservables for court {} and date {} with res {}", courtId, date,
+                repository.findByCourtIdAndDate(courtId, date));
+        log.debug("All reservables {}", repository.findAll());
         reservables.addAll(repository.findByCourtIdAndDate(courtId, date));
         reservables.addAll(localRepository.findByCourtIdAndDate(courtId, date));
         reservables.addAll(closedRepository.findByCourtIdAndDate(courtId, date));

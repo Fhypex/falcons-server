@@ -33,5 +33,4 @@ public class ReservationEntity {
     private ReservationStatus status;
     private Instant requestedAt;
     private Instant updatedAt;
-
 }

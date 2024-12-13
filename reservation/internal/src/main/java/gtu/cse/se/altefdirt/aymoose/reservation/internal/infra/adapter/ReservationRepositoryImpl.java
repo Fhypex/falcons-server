@@ -11,9 +11,11 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.mapper.Reservatio
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 class ReservationRepositoryImpl implements ReservationRepository {
 
     private final JpaReservationRepository jpaRepository;
@@ -68,6 +70,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public List<Reservation> findByCourtIdAndDate(AggregateId courtId, Date date) {
+        log.debug("Finding reservations for court {} on date {}", courtId, date.localValue());
         return jpaRepository.findByCourtIdAndDate(courtId.value(), date.localValue()).stream().map(mapper::toDomain)
                 .toList();
     }

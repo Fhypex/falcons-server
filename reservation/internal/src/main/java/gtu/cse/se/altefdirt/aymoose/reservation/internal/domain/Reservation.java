@@ -9,6 +9,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 @Getter
 public class Reservation extends BaseAggregateRoot implements Reservable {
 
+    private static final ReservationType type = ReservationType.DEFAULT;
     private AggregateId userId;
     private AggregateId courtId;
     private Date date;
@@ -33,7 +34,6 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
         this.status = status;
         this.requestedAt = requestedAt;
         this.updatedAt = updatedAt;
-
     }
 
     public void approve() {
@@ -82,5 +82,24 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
 
     public Instant updatedAt() {
         return this.updatedAt;
+    }
+
+    @Override
+    public ReservationType getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id() +
+                "userId=" + userId +
+                ", courtId=" + courtId +
+                ", date=" + date +
+                ", hour=" + hour +
+                ", status=" + status +
+                ", requestedAt=" + requestedAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

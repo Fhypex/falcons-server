@@ -8,6 +8,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 @Getter
 public class LocalReservation extends BaseAggregateRoot implements Reservable {
 
+    private static final ReservationType type = ReservationType.LOCAL;
     private AggregateId courtId;
     private String name;
     private String phoneNumber;
@@ -46,5 +47,10 @@ public class LocalReservation extends BaseAggregateRoot implements Reservable {
 
     public int hour() {
         return this.hour;
+    }
+
+    @Override
+    public ReservationType getType() {
+        return type;
     }
 }
