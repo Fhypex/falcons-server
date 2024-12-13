@@ -7,9 +7,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateS
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.ReservationView;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservationRepository;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
@@ -42,37 +40,55 @@ class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public DateSlot getDateSlot(AggregateId courtId, WorkHours workHours, Date date) {
-        List<Reservation> reservations = repository.findByCourtIdAndDate(courtId, date);
-        List<LocalReservation> localReservations = localRepository.findByCourtIdAndDate(courtId, date);
-        List<ClosedReservation> closedReservations = closedRepository.findByCourtIdAndDate(courtId, date);
-        List<Reservable> reservables = new ArrayList<>();
-        reservables.addAll(reservations);
-        reservables.addAll(localReservations);
-        reservables.addAll(closedReservations);
-        return new DateSlot(date, reservables, workHours);
-    }
-
-    @Override
     public DateSlot getDateSlot(AggregateId courtId, Date date) {
+        if (date.isBeforeToday()) {
+            return DateSlot.pastTimeOf(date);
+        }
         WorkHours workHours = facilityOperationPort.getWorkHoursByCourtId(courtId);
-        List<Reservation> reservations = repository.findByCourtIdAndDate(courtId, date);
-        List<LocalReservation> localReservations = localRepository.findByCourtIdAndDate(courtId, date);
-        List<ClosedReservation> closedReservations = closedRepository.findByCourtIdAndDate(courtId, date);
-        List<Reservable> reservables = new ArrayList<>();
-        reservables.addAll(reservations);
-        reservables.addAll(localReservations);
-        reservables.addAll(closedReservations);
-        return new DateSlot(date, reservables, workHours);
+        if (date.isToday()) {
+            return checkSlotForToday(courtId, workHours, date);
+        } else {
+            return checkSlotForUpcomingDay(courtId, workHours, date);
+        }
     }
 
     @Override
-    public List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, WorkHours workHours, Date startDate,
+    public DateSlot getDateSlot(AggregateId courtId, WorkHours workHours, Date date) {
+        if (date.isBeforeToday()) {
+            return DateSlot.pastTimeOf(date);
+        }
+        if (date.isToday()) {
+            return checkSlotForToday(courtId, workHours, date);
+        } else {
+            return checkSlotForUpcomingDay(courtId, workHours, date);
+        }
+    }
+
+    @Override
+    public List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, Date startDate,
             Date endDate) {
+
         List<DateSlot> dateSlots = new ArrayList<>();
+        WorkHours workHours = facilityOperationPort.getWorkHoursByCourtId(courtId);
         for (Date date = startDate; date.localValue().isBefore(endDate.localValue()); date = date.plusDays(1)) {
             dateSlots.add(getDateSlot(courtId, workHours, date));
         }
         return dateSlots;
+    }
+
+    private DateSlot checkSlotForUpcomingDay(AggregateId courtId, WorkHours workHours, Date date) {
+        return new DateSlot(date, getReservables(courtId, date), workHours);
+    }
+
+    private DateSlot checkSlotForToday(AggregateId courtId, WorkHours workHours, Date date) {
+        return new DateSlot(date, getReservables(courtId, date), workHours, Date.currentHour());
+    }
+
+    private List<Reservable> getReservables(AggregateId courtId, Date date) {
+        List<Reservable> reservables = new ArrayList<>();
+        reservables.addAll(repository.findByCourtIdAndDate(courtId, date));
+        reservables.addAll(localRepository.findByCourtIdAndDate(courtId, date));
+        reservables.addAll(closedRepository.findByCourtIdAndDate(courtId, date));
+        return reservables;
     }
 }

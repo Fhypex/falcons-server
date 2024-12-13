@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Date implements Serializable {
@@ -16,6 +17,18 @@ public class Date implements Serializable {
 
     public Date(LocalDate date) {
         this.date = date;
+    }
+
+    public boolean isToday() {
+        return date.isEqual(LocalDate.now());
+    }
+
+    public boolean isBeforeToday() {
+        return date.isBefore(LocalDate.now());
+    }
+
+    public static Integer currentHour() {
+        return LocalTime.now().getHour();
     }
 
     @JsonCreator

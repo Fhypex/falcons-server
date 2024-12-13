@@ -22,6 +22,10 @@ public record WorkHours(
         this.closeTime = closeTime;
     }
 
+    public static WorkHours of(int openTime, int closeTime) {
+        return new WorkHours(openTime, closeTime);
+    }
+
     public String toString() {
         return String.format("%02d:00 - %02d:00", openTime, closeTime);
     }

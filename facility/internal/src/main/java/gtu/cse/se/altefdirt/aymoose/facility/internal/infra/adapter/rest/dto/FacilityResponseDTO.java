@@ -27,7 +27,8 @@ public record FacilityResponseDTO(
         int lowerPriceLimit,
         int upperPriceLimit,
         List<Map<String, Object>> amenities,
-        List<CourtRichData> courts) {
+        List<CourtRichData> courts,
+        Boolean isActive) {
 
     public static FacilityResponseDTO richened(FacilityView view) {
 
@@ -50,6 +51,7 @@ public record FacilityResponseDTO(
                 .imageUrls(view.imageUrls())
                 .amenities(view.amenities())
                 .courts(view.courts())
+                .isActive(view.isActive())
                 .build();
     }
 }

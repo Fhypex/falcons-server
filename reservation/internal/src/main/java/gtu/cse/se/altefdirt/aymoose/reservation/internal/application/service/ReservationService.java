@@ -18,6 +18,5 @@ public interface ReservationService {
 
     DateSlot getDateSlot(AggregateId courtId, Date date);
 
-    List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, WorkHours workHours, Date startDate,
-            Date endDate);
+    List<DateSlot> getTimeSlotsOfBetweenDates(AggregateId courtId, Date startDate, Date endDate);
 }
