@@ -27,7 +27,9 @@ class CourtRepositryImpl implements CourtRepository {
 
     @Override
     public Optional<Court> findById(AggregateId id) {
-        return Optional.of(mapper.toDomain(courtRepository.findById(id.value()).get()));
+        return courtRepository.findById(id.value()).isPresent()
+                ? Optional.of(mapper.toDomain(courtRepository.findById(id.value()).get()))
+                : Optional.empty();
     }
 
     @Override

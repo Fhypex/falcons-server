@@ -10,9 +10,11 @@ import gtu.cse.se.altefdirt.aymoose.review.internal.domain.Review;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class ReviewServiceImpl implements ReviewService {
 
     private final UserOperationPort userOperationsPort;
@@ -25,8 +27,11 @@ class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewView denormalize(Review review) {
+        log.debug("Denormalizing review: {}", review);
         FullName author = userOperationsPort.getAuthor(review.userId());
+        log.debug("Review author: {}", author);
         String facilityName = facilityOperationPort.getFacilityName(review.getFacilityId());
+        log.debug("Review author: {}, facility: {}", author, facilityName);
         return new ReviewView(review, author.value(), facilityName);
     }
 

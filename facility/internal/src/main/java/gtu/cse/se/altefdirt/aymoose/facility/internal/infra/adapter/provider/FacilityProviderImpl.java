@@ -1,14 +1,19 @@
 package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.provider;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.FacilityProvider;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 class FacilityProviderImpl implements FacilityProvider {
 
     private final FacilityRepository facilityRepository;
@@ -45,7 +50,12 @@ class FacilityProviderImpl implements FacilityProvider {
 
     @Override
     public String getFacilityName(AggregateId facilityId) {
-        return facilityRepository.findById(facilityId).orElseThrow(() -> new RuntimeException("Facility not found"))
-                .getName();
+        log.debug("Getting facility name for facilityId: {}", facilityId);
+        Optional<Facility> opt = facilityRepository.findById(facilityId);
+        if (opt.isPresent()) {
+            log.debug("Facility found: {}", opt.get());
+            return opt.get().name();
+        }
+        return "Sahte Tesis";
     }
 }

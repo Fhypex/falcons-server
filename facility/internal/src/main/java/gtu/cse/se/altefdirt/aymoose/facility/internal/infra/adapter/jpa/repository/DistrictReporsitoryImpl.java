@@ -25,7 +25,10 @@ class DistrictRepositoryImpl implements DistrictRepository {
 
     @Override
     public Optional<District> findById(Long id) {
-        return Optional.of(mapper.toDomain(jpaRepository.findById(id).get()));
+        return jpaRepository.findById(id).isPresent()
+                ? Optional.of(mapper.toDomain(jpaRepository.findById(id).get()))
+                : Optional.empty();
+
     }
 
     @Override

@@ -151,4 +151,20 @@ public class Facility extends BaseAggregateRoot {
     public void updateDistrictId(Long districtId) {
         this.address = new Address(this.address.cityId(), districtId, this.address.fullAddress());
     }
+
+    @Override
+    public String toString() {
+        return "Facility{" +
+                "userId=" + userId +
+                ", phoneNumber=" + phoneNumber +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", address=" + address +
+                ", location=" + location +
+                ", contactDetails='" + contactDetails + '\'' +
+                ", workHours=" + workHours +
+                ", amenities=" + amenities +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

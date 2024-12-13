@@ -38,7 +38,9 @@ class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public Optional<Review> findById(AggregateId id) {
-        return Optional.of(mapper.toDomain(jpaRepository.findById(id.value()).get()));
+        return jpaRepository.findById(id.value()).isPresent()
+                ? Optional.of(mapper.toDomain(jpaRepository.findById(id.value()).get()))
+                : Optional.empty();
     }
 
     @Override

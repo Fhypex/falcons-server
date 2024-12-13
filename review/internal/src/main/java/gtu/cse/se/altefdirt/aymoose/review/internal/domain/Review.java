@@ -91,4 +91,19 @@ public final class Review extends BaseAggregateRoot {
     public UpdatedAt updatedAt() {
         return this.updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "userId=" + userId +
+                ", reservationId=" + reservationId +
+                ", facilityId=" + facilityId +
+                ", rating=" + rating +
+                ", comment=" + comment +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", isNeedsModeration=" + isNeedsModeration +
+                ", isDisabled=" + isDisabled +
+                '}';
+    }
 }
