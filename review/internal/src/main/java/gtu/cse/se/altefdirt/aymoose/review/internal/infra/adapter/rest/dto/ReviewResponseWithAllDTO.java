@@ -14,6 +14,7 @@ public record ReviewResponseWithAllDTO(
         String createdAt,
         String updatedAt,
         String author,
+        String profilePicture,
         String facilityName) {
 
     public static ReviewResponseWithAllDTO fromView(ReviewView reviewView) {
@@ -24,6 +25,7 @@ public record ReviewResponseWithAllDTO(
                 reviewView.createdAt().toString(),
                 reviewView.updatedAt().toString(),
                 reviewView.author(),
+                reviewView.profilePicture(),
                 reviewView.facilityName());
     }
 }

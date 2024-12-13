@@ -9,6 +9,7 @@ import lombok.Builder;
 public record ReviewResponseWithAuthorDTO(
         UUID id,
         String author,
+        String profilePicture,
         short rating,
         String title,
         String content,
@@ -17,6 +18,7 @@ public record ReviewResponseWithAuthorDTO(
     public static ReviewResponseWithAuthorDTO fromView(ReviewView reviewView) {
         return new ReviewResponseWithAuthorDTO(reviewView.id(),
                 reviewView.author(),
+                reviewView.profilePicture(),
                 reviewView.rating().shortValue(),
                 reviewView.title(),
                 reviewView.content(),

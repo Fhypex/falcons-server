@@ -1,12 +1,12 @@
 package gtu.cse.se.altefdirt.aymoose.account.api.provider;
 
 import java.util.List;
+import gtu.cse.se.altefdirt.aymoose.shared.application.UserData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
-import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 
 public interface AccountProvider {
 
-    FullName getFullNameById(AggregateId id);
+    UserData getAccountById(AggregateId id);
 
-    List<FullName> getFullNamesByIds(List<AggregateId> ids);
+    List<UserData> getAccountsByIds(List<AggregateId> ids);
 }
