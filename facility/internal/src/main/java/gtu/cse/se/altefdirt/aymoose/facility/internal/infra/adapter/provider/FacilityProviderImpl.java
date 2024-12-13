@@ -42,4 +42,10 @@ class FacilityProviderImpl implements FacilityProvider {
     public boolean existsById(AggregateId id) {
         return facilityRepository.existsById(id);
     }
+
+    @Override
+    public String getFacilityName(AggregateId facilityId) {
+        return facilityRepository.findById(facilityId).orElseThrow(() -> new RuntimeException("Facility not found"))
+                .getName();
+    }
 }

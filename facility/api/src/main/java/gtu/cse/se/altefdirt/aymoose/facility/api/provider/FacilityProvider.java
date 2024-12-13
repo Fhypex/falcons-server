@@ -16,4 +16,6 @@ public interface FacilityProvider {
     int deleteByOwnerId(AggregateId userId);
 
     boolean existsById(AggregateId id);
+
+    String getFacilityName(AggregateId facilityId);
 }

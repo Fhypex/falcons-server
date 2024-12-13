@@ -16,4 +16,10 @@ public class FacilityOperationAdapter implements FacilityOperationPort {
     public boolean isFacilityExist(AggregateId facilityId) {
         return facilityProvider.existsById(facilityId);
     }
+
+    @Override
+    public String getFacilityName(AggregateId facilityId) {
+        return facilityProvider.getFacilityName(facilityId);
+    }
+
 }

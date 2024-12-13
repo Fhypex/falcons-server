@@ -46,7 +46,7 @@ class AccountCommandV1Controller {
                 request.firstName(),
                 request.lastName()));
 
-        return Response.success(id, "Account created successfully");
+        return Response.success(id, "Account updated successfully");
     }
 
     @PatchMapping("/account/my/profile-picture")

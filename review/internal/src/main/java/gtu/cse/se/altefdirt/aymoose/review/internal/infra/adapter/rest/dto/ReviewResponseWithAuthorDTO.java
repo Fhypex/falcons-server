@@ -6,7 +6,7 @@ import gtu.cse.se.altefdirt.aymoose.review.internal.application.model.ReviewView
 import lombok.Builder;
 
 @Builder
-public record ReviewResponseDTO(
+public record ReviewResponseWithAuthorDTO(
         UUID id,
         String author,
         short rating,
@@ -14,8 +14,8 @@ public record ReviewResponseDTO(
         String content,
         String createdAt,
         String updatedAt) {
-    public static ReviewResponseDTO fromView(ReviewView reviewView) {
-        return new ReviewResponseDTO(reviewView.id(),
+    public static ReviewResponseWithAuthorDTO fromView(ReviewView reviewView) {
+        return new ReviewResponseWithAuthorDTO(reviewView.id(),
                 reviewView.author(),
                 reviewView.rating().shortValue(),
                 reviewView.title(),

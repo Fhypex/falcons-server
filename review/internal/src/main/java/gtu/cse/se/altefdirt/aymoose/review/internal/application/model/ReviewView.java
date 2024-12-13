@@ -16,11 +16,12 @@ public record ReviewView(
         @NotNull String title,
         @NotNull String content,
         @NotNull Instant createdAt,
-        @NotNull Instant updatedAt) {
+        @NotNull Instant updatedAt,
+        String facilityName) {
 
-    public ReviewView(Review review, String author) {
+    public ReviewView(Review review, String author, String facilityName) {
         this(review.id().value(), review.getUserId().value(), review.getFacilityId().value(), author,
                 review.getRating().leading(), review.comment().title(), review.comment().content(),
-                review.createdAt().value(), review.updatedAt().value());
+                review.createdAt().value(), review.updatedAt().value(), facilityName);
     }
 }

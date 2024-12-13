@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.service.ReviewService;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.Rating;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.ReviewRepository;
-import gtu.cse.se.altefdirt.aymoose.review.internal.infra.adapter.rest.dto.ReviewResponseDTO;
+import gtu.cse.se.altefdirt.aymoose.review.internal.infra.adapter.rest.dto.ReviewResponseWithAllDTO;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import lombok.RequiredArgsConstructor;
@@ -32,76 +33,80 @@ class ReviewQueryV1Controller {
         }
 
         @GetMapping(value = "/reviews")
-        List<ReviewResponseDTO> getAllReviews() {
+        List<ReviewResponseWithAllDTO> getAllReviews() {
                 return repository.findAll().stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+                                .map(review -> ReviewResponseWithAllDTO.fromView(service.denormalize(review)))
                                 .toList();
         }
 
         @GetMapping(value = "/review/{id}")
-        ReviewResponseDTO getReviewById(@PathVariable(Parameter.ID) UUID id) {
-                return ReviewResponseDTO
+        ReviewResponseWithAllDTO getReviewById(@PathVariable(Parameter.ID) UUID id) {
+                return ReviewResponseWithAllDTO
                                 .fromView(service.denormalize(repository.findById(AggregateId.fromUUID(id)).get()));
         }
 
         @GetMapping(value = "/reviews", params = Parameter.USER)
-        List<ReviewResponseDTO> getReviewsByUser(@RequestParam(Parameter.USER) UUID userId) {
-                return repository.findByUserId(AggregateId.fromUUID(userId)).stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review))).toList();
+        List<ReviewResponseWithAllDTO> getReviewsByUser(@RequestParam(Parameter.USER) UUID userId) {
+                return service.denormalizeForSameUser(repository.findByUserId(AggregateId.fromUUID(userId)))
+                                .stream()
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
+                                .toList();
         }
 
         @GetMapping(value = "/reviews", params = Parameter.FACILITY)
-        List<ReviewResponseDTO> getReviewsByFacility(@RequestParam(Parameter.FACILITY) UUID facilityId) {
-                return repository.findByFacilityId(AggregateId.fromUUID(facilityId)).stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+        List<ReviewResponseWithAllDTO> getReviewsByFacility(@RequestParam(Parameter.FACILITY) UUID facilityId) {
+                return service.denormalizeForSameFacility(repository.findByFacilityId(AggregateId.fromUUID(facilityId)))
+                                .stream()
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
                                 .toList();
         }
 
         @GetMapping(value = "/reviews", params = { Parameter.USER, Parameter.FACILITY })
-        List<ReviewResponseDTO> getReviewsByUserAndFacility(@RequestParam(Parameter.USER) UUID userId,
+        List<ReviewResponseWithAllDTO> getReviewsByUserAndFacility(@RequestParam(Parameter.USER) UUID userId,
                         @RequestParam(Parameter.FACILITY) UUID facilityId) {
-                return repository
-                                .findByUserIdAndFacilityId(AggregateId.fromUUID(userId),
-                                                AggregateId.fromUUID(facilityId))
+                return service.denormalizeForSameFacilityAndUser(
+                                repository.findByUserIdAndFacilityId(AggregateId.fromUUID(userId),
+                                                AggregateId.fromUUID(facilityId)))
                                 .stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
                                 .toList();
         }
 
         @GetMapping(value = "/reviews", params = { Parameter.USER, Parameter.FACILITY, Parameter.RATING_LT })
-        List<ReviewResponseDTO> getReviewsByUserAndFacilityAndRatingLesser(@RequestParam(Parameter.USER) UUID userId,
+        List<ReviewResponseWithAllDTO> getReviewsByUserAndFacilityAndRatingLesser(
+                        @RequestParam(Parameter.USER) UUID userId,
                         @RequestParam(Parameter.FACILITY) UUID facilityId,
                         @RequestParam(Parameter.RATING_LT) String rating) {
-                return repository
-                                .findByUserIdFacilityIdAndRatingLesserThan(AggregateId.fromUUID(userId),
-                                                AggregateId.fromUUID(facilityId), Rating.fromRound(rating, false))
+                return service.denormalizeForSameFacilityAndUser(
+                                repository.findByUserIdFacilityIdAndRatingLesserThan(AggregateId.fromUUID(userId),
+                                                AggregateId.fromUUID(facilityId), Rating.fromRound(rating, false)))
                                 .stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
                                 .toList();
         }
 
         @GetMapping(value = "/reviews", params = { Parameter.USER, Parameter.FACILITY, Parameter.RATING_GT })
-        List<ReviewResponseDTO> getReviewsByUserAndFacilityAndRatingGreater(@RequestParam(Parameter.USER) UUID userId,
+        List<ReviewResponseWithAllDTO> getReviewsByUserAndFacilityAndRatingGreater(
+                        @RequestParam(Parameter.USER) UUID userId,
                         @RequestParam(Parameter.FACILITY) UUID facilityId,
                         @RequestParam(Parameter.RATING_GT) String rating) {
-                return repository
-                                .findByUserIdFacilityIdAndRatingGreaterThan(AggregateId.fromUUID(userId),
-                                                AggregateId.fromUUID(facilityId), Rating.fromRound(rating, false))
+                return service.denormalizeForSameFacilityAndUser(
+                                repository.findByUserIdFacilityIdAndRatingGreaterThan(AggregateId.fromUUID(userId),
+                                                AggregateId.fromUUID(facilityId), Rating.fromRound(rating, false)))
                                 .stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
                                 .toList();
         }
 
         @GetMapping(value = "/reviews", params = { Parameter.USER, Parameter.FACILITY, Parameter.RATING_EQ })
-        List<ReviewResponseDTO> getReviewsByFacilityAndRatingEqual(@RequestParam(Parameter.USER) UUID userId,
+        List<ReviewResponseWithAllDTO> getReviewsByFacilityAndRatingEqual(@RequestParam(Parameter.USER) UUID userId,
                         @RequestParam(Parameter.FACILITY) UUID facilityId,
                         @RequestParam(Parameter.RATING_EQ) String rating) {
-                return repository
-                                .findByUserIdFacilityIdAndRatingEqual(AggregateId.fromUUID(userId),
-                                                AggregateId.fromUUID(facilityId),
-                                                Rating.fromRound(rating, false))
+                return service.denormalizeForSameFacilityAndUser(
+                                repository.findByUserIdFacilityIdAndRatingEqual(AggregateId.fromUUID(userId),
+                                                AggregateId.fromUUID(facilityId), Rating.fromRound(rating, false)))
                                 .stream()
-                                .map(review -> ReviewResponseDTO.fromView(service.denormalize(review)))
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
                                 .toList();
         }
 }
