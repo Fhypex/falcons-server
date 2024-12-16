@@ -42,8 +42,9 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.GET, "/**").permitAll() // Allow all GET requests
-                        .requestMatchers(HttpMethod.POST, "/api/v1/accounts").authenticated()
-                        .anyRequest().hasRole("USER"))
+                        /* .requestMatchers(HttpMethod.POST, "/api/v1/accounts").authenticated() */
+                        /* .anyRequest().hasRole("USER")) */
+                        .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2 -> {
                     oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
                 })
