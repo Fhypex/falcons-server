@@ -49,7 +49,7 @@ public class FacilityQueryController {
     }
 
     @GetMapping(value = "/facilities")
-    public List<FacilityResponseDTO> getFacilities(@AuthenticationPrincipal JwtUser user) {
+    public List<FacilityResponseDTO> getFacilities() {
 
         List<FacilityView> facilityViews = facilityRepository.findAll().stream().map(facilityService::denormalize)
                 .toList();
