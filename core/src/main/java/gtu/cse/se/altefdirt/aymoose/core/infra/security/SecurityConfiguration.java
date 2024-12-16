@@ -45,9 +45,11 @@ public class SecurityConfiguration {
                         /* .requestMatchers(HttpMethod.POST, "/api/v1/accounts").authenticated() */
                         /* .anyRequest().hasRole("USER")) */
                         .anyRequest().permitAll())
-                .oauth2ResourceServer(oauth2 -> {
-                    oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
-                })
+                /*
+                 * .oauth2ResourceServer(oauth2 -> {
+                 * oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
+                 * })
+                 */
 
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
         /*
