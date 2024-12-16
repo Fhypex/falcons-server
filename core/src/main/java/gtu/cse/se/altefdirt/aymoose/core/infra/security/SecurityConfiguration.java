@@ -44,7 +44,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/**").permitAll() // Allow all GET requests
                         .requestMatchers(HttpMethod.POST, "/api/v1/accounts").authenticated()
                         .anyRequest().hasRole("USER"))
-                /* .anyRequest().permitAll()) */
 
                 .oauth2ResourceServer(oauth2 -> {
                     oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
