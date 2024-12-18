@@ -32,7 +32,8 @@ public class BaseImage extends BaseAggregateRoot {
             throw new IllegalArgumentException("File size is too large");
         }
 
-        if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")) {
+        if (!extension.equals("jpg") && !extension.equals("jpeg") && !extension.equals("png")
+                && !extension.equals("svg")) {
             throw new IllegalArgumentException("File extension is not supported");
         }
 
