@@ -55,6 +55,21 @@ public final class Review extends BaseAggregateRoot {
         this.updatedAt = UpdatedAt.now();
     }
 
+    public void updateTitle(String title) {
+        this.comment = new Comment(title, this.comment.content());
+        this.updatedAt = UpdatedAt.now();
+    }
+
+    public void updateContent(String content) {
+        this.comment = new Comment(this.comment.title(), content);
+        this.updatedAt = UpdatedAt.now();
+    }
+
+    public void updateRating(Short rating) {
+        this.rating = Rating.fromShort(rating);
+        this.updatedAt = UpdatedAt.now();
+    }
+
     public void update(Rating rating) {
         this.rating = rating;
         this.updatedAt = UpdatedAt.now();

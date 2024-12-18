@@ -7,12 +7,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateReview(
-        @NotBlank(message = "User ID cannot be null or empty") UUID reviewId,
+                @NotBlank(message = "User ID cannot be null or empty") UUID reviewId,
 
-        @NotBlank(message = "Review cannot be null or empty") String title,
+                @NotBlank(message = "Review cannot be null or empty") String title,
 
-        @NotBlank(message = "Review cannot be null or empty") String content,
+                @NotBlank(message = "Review cannot be null or empty") String content,
 
-        @Min(value = 1, message = "Rating must be between 1 and 5") @Max(value = 5, message = "Rating must be between 1 and 5") short rating)
-        implements Command {
+                @Min(value = 1, message = "Rating must be between 1 and 5") @Max(value = 5, message = "Rating must be between 1 and 5") Short rating)
+                implements Command {
 }
