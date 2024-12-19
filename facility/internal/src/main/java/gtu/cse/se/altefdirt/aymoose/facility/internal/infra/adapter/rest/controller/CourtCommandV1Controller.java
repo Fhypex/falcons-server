@@ -2,6 +2,8 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.contro
 
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.CreateCourtRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.dto.UpdateCourtRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCourt;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteCourt;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.UpdateCourt;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
@@ -60,5 +63,11 @@ class CourtCommandV1Controller {
                 request.deletedImages(),
                 images));
         return Response.success(court.id().value(), "Court updated successfully");
+    }
+
+    @DeleteMapping("/court/{id}")
+    public Response<Integer> deleteCourt(@PathVariable(Parameter.ID) UUID id) {
+        Integer deleted = runner.run(new DeleteCourt(id));
+        return Response.success(deleted, "Court deleted successfully");
     }
 }
