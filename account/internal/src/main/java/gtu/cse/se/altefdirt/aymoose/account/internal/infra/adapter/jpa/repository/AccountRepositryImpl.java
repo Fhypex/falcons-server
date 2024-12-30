@@ -12,16 +12,18 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.infra.mapper.AccountMapper;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
+@Slf4j
 class AccountRepositryImpl implements AccountRepository {
 
     private final JpaAccountRepository accountRepository;
     private final AccountMapper mapper;
 
     @Override
+    @Transactional
     public Account save(Account account) {
         return mapper.toDomain(accountRepository.save(mapper.toEntity(account)));
     }
@@ -37,10 +39,14 @@ class AccountRepositryImpl implements AccountRepository {
 
     @Override
     public List<Account> findAll() {
-        return accountRepository.findAll().stream().map(mapper::toDomain).toList();
+        return accountRepository.findAll().stream().map(account -> {
+            log.debug("Account entity found: {}", account);
+            return mapper.toDomain(account);
+        }).toList();
     }
 
     @Override
+    @Transactional
     public int deleteById(AggregateId id) {
         accountRepository.deleteById(id.value());
         return 1;
