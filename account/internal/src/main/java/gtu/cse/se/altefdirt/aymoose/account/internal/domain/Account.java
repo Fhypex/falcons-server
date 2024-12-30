@@ -64,4 +64,15 @@ public class Account extends BaseAggregateRoot {
     public PhoneNumber phoneNumber() {
         return phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", fullName=" + fullName +
+                ", phoneNumber=" + phoneNumber +
+                ", createdAt=" + createdAt +
+                ", isActive=" + isActive +
+                '}';
+    }
 }
