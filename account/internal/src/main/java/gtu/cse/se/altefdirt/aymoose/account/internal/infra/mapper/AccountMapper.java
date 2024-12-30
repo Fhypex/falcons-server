@@ -6,6 +6,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.domain.AccountFactory;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.jpa.AccountEntity;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -17,8 +18,11 @@ public class AccountMapper {
     public AccountEntity toEntity(Account account) {
         return AccountEntity.builder()
                 .id(account.id().value())
+                .phoneNumber(account.phoneNumber().value())
                 .firstName(account.fullName().firstName())
                 .lastName(account.fullName().lastName())
+                .createdAt(account.createdAt())
+                .isActive(account.isActive())
                 .build();
     }
 
@@ -27,6 +31,7 @@ public class AccountMapper {
                 new FullName(
                         entity.getFirstName(),
                         entity.getLastName()),
+                PhoneNumber.of(entity.getPhoneNumber()),
                 entity.getCreatedAt(),
                 entity.isActive());
     }

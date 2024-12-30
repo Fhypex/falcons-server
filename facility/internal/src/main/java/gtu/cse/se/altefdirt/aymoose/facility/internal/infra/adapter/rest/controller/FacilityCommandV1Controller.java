@@ -129,8 +129,8 @@ class FacilityCommandV1Controller {
         return Response.success(facility.id().value(), "Facility updated successfully");
     }
 
-    @PostMapping("/amenities/{id}")
-    public Response<UUID> createAmenity(@PathVariable(Parameter.ID) UUID id) {
+    @DeleteMapping("/amenity/{id}")
+    public Response<UUID> deleteAmenity(@PathVariable(Parameter.ID) UUID id) {
         AggregateId amenityId = runner.run(new DeleteAmenity(id));
         return Response.success(amenityId.value(), "Amenity deleted successfully");
     }

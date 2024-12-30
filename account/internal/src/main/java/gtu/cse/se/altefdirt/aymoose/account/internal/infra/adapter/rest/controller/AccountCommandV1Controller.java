@@ -12,6 +12,7 @@ import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.CreateA
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.UpdateAccount;
 import gtu.cse.se.altefdirt.aymoose.account.internal.application.command.UpdateProfilePicture;
 import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.CreateAccountRequestDTO;
+import gtu.cse.se.altefdirt.aymoose.account.internal.infra.adapter.rest.dto.UpdateAccountRequestDTO;
 import gtu.cse.se.altefdirt.aymoose.core.application.CommandRunner;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.shared.application.Response;
@@ -40,9 +41,10 @@ class AccountCommandV1Controller {
 
     @PatchMapping("/accounts/my")
     public Response<AggregateId> update(@AuthenticationPrincipal JwtUser user,
-            @RequestBody CreateAccountRequestDTO request) {
+            @RequestBody UpdateAccountRequestDTO request) {
         AggregateId id = runner.run(new UpdateAccount(
                 user.id(),
+                request.phoneNumber(),
                 request.firstName(),
                 request.lastName()));
 

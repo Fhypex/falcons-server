@@ -22,14 +22,18 @@ public class UpdateAccountCommandHandler implements CommandHandler<UpdateAccount
     @Override
     public AggregateId handle(UpdateAccount command) {
         Optional<Account> fetch = accountRepository.findById(command.id());
-        if(fetch.isEmpty()) {
+        if (fetch.isEmpty()) {
             throw new RuntimeException("Could not find account.");
         }
         Account account = fetch.get();
-        if(command.firstName() != null && !command.firstName().isBlank()) {
+
+        if (command.phoneNumber() != null && !command.phoneNumber().isBlank()) {
+            account.updatePhoneNumber(command.phoneNumber());
+        }
+        if (command.firstName() != null && !command.firstName().isBlank()) {
             account.updateFirstName(command.firstName());
         }
-        if(command.lastName() != null && !command.lastName().isBlank()) {
+        if (command.lastName() != null && !command.lastName().isBlank()) {
             account.updateLastName(command.lastName());
         }
         accountRepository.save(account);

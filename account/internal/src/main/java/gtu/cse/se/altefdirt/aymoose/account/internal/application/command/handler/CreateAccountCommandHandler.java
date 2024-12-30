@@ -9,6 +9,7 @@ import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
+import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class CreateAccountCommandHandler implements CommandHandler<CreateAccount
     public AggregateId handle(CreateAccount command) {
 
         Account account = factory.load(command.id(), FullName.of(command.firstName(), command.lastName()),
+                PhoneNumber.empty(),
                 Instant.now(), true);
 
         log.debug("Account created: {}", account);

@@ -20,6 +20,7 @@ public class AccountEntity {
 
     @Id
     private UUID id;
+    private String phoneNumber;
     private String firstName;
     private String lastName;
     private Instant createdAt;

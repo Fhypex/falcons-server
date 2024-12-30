@@ -5,5 +5,6 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateAccount(@NotBlank AggregateId id,
-                String firstName, String lastName) implements Command {
+        String phoneNumber,
+        String firstName, String lastName) implements Command {
 }
