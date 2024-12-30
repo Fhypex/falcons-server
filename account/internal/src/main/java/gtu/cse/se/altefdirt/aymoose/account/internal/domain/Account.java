@@ -18,6 +18,7 @@ public class Account extends BaseAggregateRoot {
             Instant createdAt,
             Boolean isActive) {
         super(id);
+        this.phoneNumber = phoneNumber;
         this.fullName = fullName;
         this.createdAt = createdAt;
         this.isActive = isActive;

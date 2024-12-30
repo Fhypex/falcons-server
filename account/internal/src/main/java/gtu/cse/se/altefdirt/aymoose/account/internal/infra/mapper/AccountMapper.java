@@ -30,6 +30,8 @@ public class AccountMapper {
 
     public Account toDomain(AccountEntity entity) {
         log.debug("Mapping entity to domain: {}", entity);
+        log.debug("Entity id: {}", entity.getId());
+        log.debug("Entity id2: {}", AggregateId.fromUUID(entity.getId()));
         Account account = factory.load(AggregateId.fromUUID(entity.getId()),
                 new FullName(
                         entity.getFirstName(),
