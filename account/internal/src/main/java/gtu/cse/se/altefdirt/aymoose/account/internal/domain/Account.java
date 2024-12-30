@@ -24,7 +24,6 @@ public class Account extends BaseAggregateRoot {
         this.isActive = isActive;
     }
 
-    private AggregateId id;
     private FullName fullName;
     private PhoneNumber phoneNumber;
     private Instant createdAt;
@@ -69,7 +68,7 @@ public class Account extends BaseAggregateRoot {
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
+                "id=" + id() +
                 ", fullName=" + fullName +
                 ", phoneNumber=" + phoneNumber +
                 ", createdAt=" + createdAt +
