@@ -58,4 +58,9 @@ class ImageProviderImpl implements ImageProvider {
     public int deleteByRelationId(AggregateId relationId) {
         return imageRepository.deleteByRelationId(relationId);
     }
+
+    @Override
+    public int deleteByRelationIds(List<AggregateId> relationIds) {
+        return imageRepository.deleteByRelationIds(relationIds);
+    }
 }

@@ -100,4 +100,17 @@ class ImageRepositryImpl implements ImageRepository {
         return 1;
     }
 
+    @Override
+    public Integer deleteByRelationIds(List<AggregateId> relationIds) {
+        List<ImageEntity> imageEntities = jpaRepository.findAllByRelationIds(
+                relationIds.stream().map(AggregateId::value).toList());
+        try {
+            minioFileRepository
+                    .deleteFiles(imageEntities.stream().map(ImageEntity::getId).map(UUID::toString).toList());
+        } catch (Exception e) {
+            throw new RuntimeException("An error occured during deleting from cloud", e);
+        }
+        return 1;
+    }
+
 }

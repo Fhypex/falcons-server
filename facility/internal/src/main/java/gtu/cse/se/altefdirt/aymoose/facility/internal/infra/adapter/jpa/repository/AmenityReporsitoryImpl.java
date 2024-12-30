@@ -37,20 +37,26 @@ class AmenityRepositoryImpl implements AmenityRepository {
     }
 
     @Override
-    public boolean existsByIdIn(List<AggregateId> ids) {
+    public boolean existsByIds(List<AggregateId> ids) {
         return jpaRepository.existsByIdIn(
                 ids.stream().map(AggregateId::value).toList(), ids.size());
     }
 
     @Override
-    public boolean exists(AggregateId id) {
+    public boolean existsById(AggregateId id) {
         return jpaRepository.existsById(id.value());
     }
 
     @Override
-    public List<Amenity> findAll(List<AggregateId> ids) {
+    public List<Amenity> findByIds(List<AggregateId> ids) {
         return jpaRepository
                 .findAllById(ids.stream().map(AggregateId::value).toList()).stream()
                 .map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public int deleteById(AggregateId id) {
+        jpaRepository.deleteById(id.value());
+        return 1;
     }
 }

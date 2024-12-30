@@ -20,4 +20,6 @@ public interface FacilityRepository extends Repository<Facility, AggregateId> {
     WorkHours getWorkHours(AggregateId facilityId);
 
     WorkHours getWorkHoursByCourtId(AggregateId courtId);
+
+    int deleteAmenityFromAllFacilities(AggregateId amenityId);
 }

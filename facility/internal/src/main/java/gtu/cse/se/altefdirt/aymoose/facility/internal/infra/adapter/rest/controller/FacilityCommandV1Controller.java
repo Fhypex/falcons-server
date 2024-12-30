@@ -14,6 +14,7 @@ import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.Create
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateDistrict;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateFacility;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteAllFacilityAndCourts;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteAmenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.DeleteDistrict;
@@ -132,6 +133,12 @@ class FacilityCommandV1Controller {
     public Response<UUID> createAmenity(@PathVariable(Parameter.ID) UUID id) {
         AggregateId amenityId = runner.run(new DeleteAmenity(id));
         return Response.success(amenityId.value(), "Amenity deleted successfully");
+    }
+
+    @DeleteMapping("/facilities/all")
+    public Response<Integer> deleteAll() {
+        Integer deleted = runner.run(new DeleteAllFacilityAndCourts());
+        return Response.success(deleted, "Removed all facilities and courts successfully");
     }
 
 }

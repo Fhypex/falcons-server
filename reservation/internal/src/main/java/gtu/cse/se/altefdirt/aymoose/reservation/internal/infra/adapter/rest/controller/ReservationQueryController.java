@@ -8,7 +8,6 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservatio
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
-import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;

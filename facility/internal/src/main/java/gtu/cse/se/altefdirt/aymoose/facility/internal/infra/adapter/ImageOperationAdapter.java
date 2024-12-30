@@ -47,4 +47,9 @@ class ImageOperationAdapter implements ImageOperationPort {
     public int deleteByRelationId(AggregateId relationId) {
         return imageProvider.deleteByRelationId(relationId);
     }
+
+    @Override
+    public int deleteByRelationIds(List<AggregateId> relationIds) {
+        return imageProvider.deleteByRelationIds(relationIds);
+    }
 }

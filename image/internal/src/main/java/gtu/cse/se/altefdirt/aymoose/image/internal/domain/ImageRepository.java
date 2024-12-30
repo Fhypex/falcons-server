@@ -20,4 +20,6 @@ public interface ImageRepository {
     Integer deleteById(AggregateId id);
 
     Integer deleteByRelationId(AggregateId relationId);
+
+    Integer deleteByRelationIds(List<AggregateId> relationIds);
 }

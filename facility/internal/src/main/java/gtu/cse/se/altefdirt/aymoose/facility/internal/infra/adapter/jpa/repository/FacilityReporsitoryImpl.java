@@ -111,4 +111,16 @@ class FacilityRepositoryImpl implements FacilityRepository {
                 () -> new RuntimeException("Facility not found"));
         return new WorkHours(facilityEntity.getOpenTime(), facilityEntity.getCloseTime());
     }
+
+    @Override
+    @Transactional
+    public int deleteAmenityFromAllFacilities(AggregateId amenityId) {
+        // Find all facilities that have the given amenity ID
+        List<FacilityEntity> facilities = jpaRepository.findFacilitiesByAmenityId(amenityId.value());
+        // Loop through each facility and remove the amenity from the set
+        for (FacilityEntity facility : facilities) {
+            facility.getAmenities().remove(amenityId.value());
+        }
+        return facilities.size();
+    }
 }

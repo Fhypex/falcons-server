@@ -30,6 +30,6 @@ class AmenityServiceImpl implements AmenityService {
 
     @Override
     public boolean validateAmenities(List<AggregateId> amenities) {
-        return amenityRepository.existsByIdIn(amenities);
+        return amenityRepository.existsByIds(amenities);
     }
 }

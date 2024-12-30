@@ -17,4 +17,6 @@ public interface ImageProvider {
     List<ImageData> getImagesByRelationId(AggregateId relationId);
 
     int deleteByRelationId(AggregateId relationId);
+
+    int deleteByRelationIds(List<AggregateId> relationIds);
 }

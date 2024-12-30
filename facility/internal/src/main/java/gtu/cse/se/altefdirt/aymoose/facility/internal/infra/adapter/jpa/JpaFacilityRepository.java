@@ -28,4 +28,7 @@ public interface JpaFacilityRepository extends JpaRepository<FacilityEntity, UUI
 
     @Query("DELETE FROM FacilityEntity a WHERE a.userId = :userId")
     int deleteByOwnerId(UUID userId);
+
+    @Query("SELECT f FROM FacilityEntity f WHERE :amenityId MEMBER OF f.amenities")
+    List<FacilityEntity> findFacilitiesByAmenityId(UUID amenityId);
 }

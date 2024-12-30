@@ -34,7 +34,7 @@ class FacilityServiceImpl implements FacilityService {
         @Override
         public FacilityView denormalize(Facility facility) {
 
-                List<Amenity> amenities = amenityRepository.findAll(facility.amenities());
+                List<Amenity> amenities = amenityRepository.findByIds(facility.amenities());
                 List<AmenityView> amenityViews = amenities.stream().map(amenityService::denormalize).toList();
                 List<ImageData> image = imageOperationPort.findByRelationId(facility.id());
                 List<String> imageUrls = image.stream().map(ImageData::url).toList();
@@ -51,8 +51,10 @@ class FacilityServiceImpl implements FacilityService {
                 int lowerPriceLimit = richCourts.stream().map(CourtRichData::price).min(Integer::compareTo).orElse(0);
                 int upperPriceLimit = richCourts.stream().map(CourtRichData::price).max(Integer::compareTo).orElse(0);
 
+                List<Integer> capacities = courts.stream().map(court -> court.getCapacity().value()).toList();
+
                 return new FacilityView(facility, imageUrls, commentCount, rating, city, district, amenityViews,
-                                richCourts,
+                                richCourts, capacities,
                                 lowerPriceLimit, upperPriceLimit);
         }
 
