@@ -26,6 +26,7 @@ public class ReservationEntity {
     @Id
     private UUID id;
     private UUID userId;
+    private UUID ownerId;
     private UUID courtId;
     private LocalDate date;
     private int hour;

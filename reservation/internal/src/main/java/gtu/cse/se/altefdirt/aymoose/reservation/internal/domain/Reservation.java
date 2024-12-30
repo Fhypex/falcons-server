@@ -11,6 +11,7 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
 
     private static final ReservationType type = ReservationType.DEFAULT;
     private AggregateId userId;
+    private AggregateId ownerId;
     private AggregateId courtId;
     private Date date;
     private int hour;
@@ -20,6 +21,7 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
 
     public Reservation(AggregateId id,
             AggregateId userId,
+            AggregateId ownerId,
             AggregateId courtId,
             Date date,
             int hour,
@@ -28,6 +30,7 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
             Instant updatedAt) {
         super(id);
         this.userId = userId;
+        this.ownerId = ownerId;
         this.courtId = courtId;
         this.date = date;
         this.hour = hour;
@@ -58,6 +61,10 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
 
     public AggregateId userId() {
         return this.userId;
+    }
+
+    public AggregateId ownerId() {
+        return this.ownerId;
     }
 
     public AggregateId courtId() {

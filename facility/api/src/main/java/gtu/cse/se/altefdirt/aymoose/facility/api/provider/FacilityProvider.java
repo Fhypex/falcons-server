@@ -1,5 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.facility.api.provider;
 
+import java.util.Optional;
+
+import gtu.cse.se.altefdirt.aymoose.shared.application.FacilityData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
 
@@ -18,4 +21,6 @@ public interface FacilityProvider {
     boolean existsById(AggregateId id);
 
     String getFacilityName(AggregateId facilityId);
+
+    Optional<FacilityData> getFacilityByCourtId(AggregateId facilityId);
 }

@@ -18,6 +18,7 @@ public class ReservationMapper {
         return ReservationEntity.builder()
                 .id(reservation.id().value())
                 .userId(reservation.userId().value())
+                .ownerId(reservation.ownerId().value())
                 .courtId(reservation.courtId().value())
                 .date(reservation.date().localValue())
                 .hour(reservation.hour())
@@ -31,6 +32,7 @@ public class ReservationMapper {
         return factory.load(
                 AggregateId.fromUUID(entity.getId()),
                 AggregateId.fromUUID(entity.getUserId()),
+                AggregateId.fromUUID(entity.getOwnerId()),
                 AggregateId.fromUUID(entity.getCourtId()),
                 Date.fromLocalDate(entity.getDate()),
                 entity.getHour(),

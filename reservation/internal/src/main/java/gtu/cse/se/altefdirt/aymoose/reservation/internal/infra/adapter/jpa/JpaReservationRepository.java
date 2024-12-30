@@ -23,4 +23,8 @@ public interface JpaReservationRepository extends JpaRepository<ReservationEntit
     boolean isTimeSlotInUse(UUID courtId, LocalDate date, int hour);
 
     List<ReservationEntity> findByCourtIdAndDate(UUID courtId, LocalDate date);
+
+    List<ReservationEntity> findByUserId(UUID userId);
+
+    List<ReservationEntity> findByOwnerId(UUID ownerId);
 }

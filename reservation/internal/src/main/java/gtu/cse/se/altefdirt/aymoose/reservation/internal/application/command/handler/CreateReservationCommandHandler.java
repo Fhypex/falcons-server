@@ -1,6 +1,8 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.handler;
 
 import java.time.Instant;
+import java.util.Optional;
+
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
@@ -9,6 +11,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationFacto
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationStatus;
 import gtu.cse.se.altefdirt.aymoose.shared.application.CommandHandler;
+import gtu.cse.se.altefdirt.aymoose.shared.application.FacilityData;
 import gtu.cse.se.altefdirt.aymoose.shared.application.annotation.RegisterHandler;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
@@ -38,12 +41,17 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
             throw new RuntimeException("Time slot is in use");
         }
         log.debug("Checking if time slot is within work hours");
-        WorkHours workHours = facilityOperationPort.getWorkHoursByCourtId(courtId);
-        if (!workHours.isWithin(command.hour())) {
+
+        Optional<FacilityData> facility = facilityOperationPort.getByCourtId(courtId);
+        if (facility.isEmpty()) {
+            throw new RuntimeException("Facility not found");
+        }
+        if (!facility.get().workHours().isWithin(command.hour())) {
             throw new RuntimeException("Requested hour is not within work hours");
         }
         Reservation reservation = factory.create(
                 command.userId(),
+                facility.get().ownerId(),
                 AggregateId.fromUUID(command.courtId()),
                 command.date(),
                 command.hour(),

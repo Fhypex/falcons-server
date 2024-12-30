@@ -1,8 +1,11 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.FacilityProvider;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.port.FacilityOperationPort;
+import gtu.cse.se.altefdirt.aymoose.shared.application.FacilityData;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
@@ -20,5 +23,9 @@ class FacilityOperationAdapter implements FacilityOperationPort {
 
     public WorkHours getWorkHoursByCourtId(AggregateId courtId) {
         return facilityProvider.getWorkHoursByCourtId(courtId);
+    }
+
+    public Optional<FacilityData> getByCourtId(AggregateId courtId) {
+        return facilityProvider.getFacilityByCourtId(courtId);
     }
 }

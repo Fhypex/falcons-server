@@ -13,4 +13,7 @@ public interface ReservationRepository extends Repository<Reservation, Aggregate
 
     boolean isTimeSlotInUse(AggregateId courtId, Date date, int hour);
 
+    List<Reservation> findByUserId(AggregateId userId);
+
+    List<Reservation> findByOwnerId(AggregateId userId);
 }

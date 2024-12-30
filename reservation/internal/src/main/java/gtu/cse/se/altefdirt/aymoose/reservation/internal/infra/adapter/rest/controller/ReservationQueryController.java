@@ -1,5 +1,6 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlotRich;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.service.ReservationService;
@@ -8,10 +9,13 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservatio
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,8 +64,8 @@ public class ReservationQueryController {
         }
     }
 
-    @GetMapping(value = "/reservations")
-    public List<? extends Reservable> getDefaultReservation() {
+    @GetMapping(value = "/reservations/all")
+    public List<? extends Reservable> getAllReservation() {
         List<Reservable> reservations = new ArrayList<>();
         reservations.addAll(reservationRepository.findAll());
         reservations.addAll(localReservationRepository.findAll());
@@ -81,6 +86,16 @@ public class ReservationQueryController {
     @GetMapping(value = "/reservations", params = Parameter.TYPE + "=closed")
     public List<ClosedReservation> getClosedReservation() {
         return closedReservationRepository.findAll();
+    }
+
+    @GetMapping(value = "/reservations", params = Parameter.TYPE + "=owner")
+    public List<Reservation> getPendingOwnerReservations(@AuthenticationPrincipal JwtUser user) {
+        return reservationRepository.findByOwnerId(user.id());
+    }
+
+    @GetMapping(value = "/reservations")
+    public List<Reservation> getUsersReservations(@AuthenticationPrincipal JwtUser user) {
+        return reservationRepository.findByUserId(user.id());
     }
 }
 

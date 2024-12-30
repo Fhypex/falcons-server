@@ -74,4 +74,14 @@ class ReservationRepositoryImpl implements ReservationRepository {
         return jpaRepository.findByCourtIdAndDate(courtId.value(), date.localValue()).stream().map(mapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Reservation> findByOwnerId(AggregateId ownerId) {
+        return jpaRepository.findByOwnerId(ownerId.value()).stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public List<Reservation> findByUserId(AggregateId userId) {
+        return jpaRepository.findByUserId(userId.value()).stream().map(mapper::toDomain).toList();
+    }
 }
