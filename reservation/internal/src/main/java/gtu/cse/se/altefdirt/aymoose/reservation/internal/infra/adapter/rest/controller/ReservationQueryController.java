@@ -13,6 +13,7 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationRepository;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationStatus;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,7 +102,7 @@ public class ReservationQueryController {
     @GetMapping(value = "/reservations", params = { Parameter.TYPE + "=owner", Parameter.STATUS })
     public List<Reservation> getPendingOwnerReservations(@AuthenticationPrincipal JwtUser user,
             @RequestParam String status) {
-        return reservationRepository.findByOwnerId(user.id());
+        return reservationRepository.findByOwnerIdAndStatus(user.id(), ReservationStatus.fromString(status));
     }
 
     @AccessUser
