@@ -97,6 +97,10 @@ public class UpdateFacilityCommandHandler implements CommandHandler<UpdateFacili
             }
         }
 
+        if (command.isActive() != null) {
+            savedFacility.updateIsActive(command.isActive());
+        }
+
         return savedFacility;
     }
 }

@@ -2,7 +2,6 @@ package gtu.cse.se.altefdirt.aymoose.facility.internal.infra.adapter.rest.contro
 
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateAmenity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateCity;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.application.command.CreateDistrict;

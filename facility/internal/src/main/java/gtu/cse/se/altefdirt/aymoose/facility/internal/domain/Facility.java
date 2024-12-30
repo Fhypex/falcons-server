@@ -144,7 +144,7 @@ public class Facility extends BaseAggregateRoot {
         this.amenities = amenities;
     }
 
-    public void setActive(boolean isActive) {
+    public void updateIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
