@@ -8,9 +8,11 @@ import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.FullName;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.PhoneNumber;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AccountMapper {
 
     private final AccountFactory factory;
@@ -27,12 +29,15 @@ public class AccountMapper {
     }
 
     public Account toDomain(AccountEntity entity) {
-        return factory.load(AggregateId.fromUUID(entity.getId()),
+        log.debug("Mapping entity to domain: {}", entity);
+        Account account = factory.load(AggregateId.fromUUID(entity.getId()),
                 new FullName(
                         entity.getFirstName(),
                         entity.getLastName()),
                 PhoneNumber.of(entity.getPhoneNumber()),
                 entity.getCreatedAt(),
                 entity.isActive());
+        log.debug("Mapped entity to domain: {}", account);
+        return account;
     }
 }
