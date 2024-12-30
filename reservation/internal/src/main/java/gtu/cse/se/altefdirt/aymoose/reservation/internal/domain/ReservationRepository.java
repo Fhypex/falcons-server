@@ -16,4 +16,6 @@ public interface ReservationRepository extends Repository<Reservation, Aggregate
     List<Reservation> findByUserId(AggregateId userId);
 
     List<Reservation> findByOwnerId(AggregateId userId);
+
+    List<Reservation> findByOwnerIdAndStatus(AggregateId courtId, ReservationStatus status);
 }

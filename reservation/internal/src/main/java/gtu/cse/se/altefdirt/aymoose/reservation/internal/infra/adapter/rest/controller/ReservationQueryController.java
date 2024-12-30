@@ -1,5 +1,7 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.infra.adapter.rest.controller;
 
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessFacilityOwner;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessUser;
 import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlot;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model.DateSlotRich;
@@ -44,6 +46,7 @@ public class ReservationQueryController {
     private static final class Parameter {
         private static final String ID = "id";
         private static final String TYPE = "type";
+        private static final String STATUS = "status";
         private static final String RICH = "rich";
     }
 
@@ -88,11 +91,20 @@ public class ReservationQueryController {
         return closedReservationRepository.findAll();
     }
 
+    @AccessUser
     @GetMapping(value = "/reservations", params = Parameter.TYPE + "=owner")
     public List<Reservation> getPendingOwnerReservations(@AuthenticationPrincipal JwtUser user) {
         return reservationRepository.findByOwnerId(user.id());
     }
 
+    @AccessUser
+    @GetMapping(value = "/reservations", params = { Parameter.TYPE + "=owner", Parameter.STATUS })
+    public List<Reservation> getPendingOwnerReservations(@AuthenticationPrincipal JwtUser user,
+            @RequestParam String status) {
+        return reservationRepository.findByOwnerId(user.id());
+    }
+
+    @AccessUser
     @GetMapping(value = "/reservations")
     public List<Reservation> getUsersReservations(@AuthenticationPrincipal JwtUser user) {
         return reservationRepository.findByUserId(user.id());

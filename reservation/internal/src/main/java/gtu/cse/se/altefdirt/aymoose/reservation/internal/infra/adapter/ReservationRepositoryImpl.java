@@ -81,6 +81,11 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
+    public List<Reservation> findByOwnerIdAndStatus(AggregateId ownerId, ReservationStatus status) {
+        return jpaRepository.findByOwnerIdAndStatus(ownerId.value(), status).stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
     public List<Reservation> findByUserId(AggregateId userId) {
         return jpaRepository.findByUserId(userId.value()).stream().map(mapper::toDomain).toList();
     }
