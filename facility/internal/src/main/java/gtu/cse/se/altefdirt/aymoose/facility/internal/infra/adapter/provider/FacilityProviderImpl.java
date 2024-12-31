@@ -76,11 +76,14 @@ class FacilityProviderImpl implements FacilityProvider {
 
     @Override
     public Optional<FacilityData> getFacilityByCourtId(AggregateId courtId) {
+        log.debug("Getting facility by courtId: {}", courtId);
         Optional<Court> court = courtRepository.findById(courtId);
         if (court.isEmpty()) {
             return Optional.empty();
         }
+        log.debug("Court found: {}", court.get());
         Optional<Facility> facility = facilityRepository.findById(court.get().facilityId());
+        log.debug("Facility found: {}", facility);
         return facility.isPresent()
                 ? Optional.of(build(facility.get()))
                 : Optional.empty();
