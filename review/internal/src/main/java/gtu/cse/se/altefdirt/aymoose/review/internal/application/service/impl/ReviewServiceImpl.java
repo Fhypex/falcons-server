@@ -42,18 +42,27 @@ class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewView> denormalizeForSameUser(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            return List.of();
+        }
         UserData author = accountOperationPort.getAccount(reviews.get(0).userId());
         return reviews.stream().map(review -> denormalizeWithAuthor(review, author)).toList();
     }
 
     @Override
     public List<ReviewView> denormalizeForSameFacility(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            return List.of();
+        }
         String facilityName = facilityOperationPort.getFacilityName(reviews.get(0).getFacilityId());
         return reviews.stream().map(review -> denormalizeWithFacilityName(review, facilityName)).toList();
     }
 
     @Override
     public List<ReviewView> denormalizeForSameFacilityAndUser(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            return List.of();
+        }
         UserData author = accountOperationPort.getAccount(reviews.get(0).userId());
         String facilityName = facilityOperationPort.getFacilityName(reviews.get(0).getFacilityId());
         return reviews.stream().map(review -> new ReviewView(review, author, facilityName)).toList();
