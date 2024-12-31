@@ -3,6 +3,8 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.application.model;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservable;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.Reservation;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ReservationStatus;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.TimeSlotStatus;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.WorkHours;
@@ -47,6 +49,13 @@ public class DateSlot {
             timeSlotStatuses[i] = TimeSlotStatus.CLOSED;
         }
         for (Reservable reservation : reservations) {
+            if (reservation instanceof Reservation) {
+                Reservation r = (Reservation) reservation;
+                if (r.getStatus().equals(ReservationStatus.CANCELLED)
+                        || r.getStatus().equals(ReservationStatus.REJECTED)) {
+                    continue;
+                }
+            }
             timeSlotStatuses[reservation.getHour()] = TimeSlotStatus.RESERVED;
         }
     }
@@ -66,6 +75,13 @@ public class DateSlot {
             timeSlotStatuses[i] = TimeSlotStatus.CLOSED;
         }
         for (Reservable reservation : reservations) {
+            if (reservation instanceof Reservation) {
+                Reservation r = (Reservation) reservation;
+                if (r.getStatus().equals(ReservationStatus.CANCELLED)
+                        || r.getStatus().equals(ReservationStatus.REJECTED)) {
+                    continue;
+                }
+            }
             timeSlotStatuses[reservation.getHour()] = TimeSlotStatus.RESERVED;
         }
     }

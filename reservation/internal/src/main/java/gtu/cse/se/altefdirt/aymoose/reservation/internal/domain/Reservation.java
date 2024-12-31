@@ -2,6 +2,9 @@ package gtu.cse.se.altefdirt.aymoose.reservation.internal.domain;
 
 import lombok.Getter;
 import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
@@ -94,6 +97,11 @@ public class Reservation extends BaseAggregateRoot implements Reservable {
     @Override
     public ReservationType getType() {
         return type;
+    }
+
+    @JsonProperty("id")
+    public AggregateId id() {
+        return super.id();
     }
 
     @Override

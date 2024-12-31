@@ -1,6 +1,9 @@
 package gtu.cse.se.altefdirt.aymoose.reservation.internal.domain;
 
 import lombok.Getter;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import gtu.cse.se.altefdirt.aymoose.shared.domain.AggregateId;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.BaseAggregateRoot;
 import gtu.cse.se.altefdirt.aymoose.shared.domain.Date;
@@ -53,4 +56,10 @@ public class LocalReservation extends BaseAggregateRoot implements Reservable {
     public ReservationType getType() {
         return type;
     }
+
+    @JsonProperty("id")
+    public AggregateId id() {
+        return super.id();
+    }
+
 }
