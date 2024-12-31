@@ -22,5 +22,5 @@ public interface FacilityProvider {
 
     String getFacilityName(AggregateId facilityId);
 
-    Optional<FacilityData> getFacilityByCourtId(AggregateId facilityId);
+    Optional<FacilityData> getFacilityByCourtId(AggregateId courtId);
 }

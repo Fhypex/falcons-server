@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 import gtu.cse.se.altefdirt.aymoose.facility.api.provider.FacilityProvider;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Court;
+import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.CourtRepository;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.Facility;
 import gtu.cse.se.altefdirt.aymoose.facility.internal.domain.FacilityRepository;
 import gtu.cse.se.altefdirt.aymoose.shared.application.FacilityData;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 class FacilityProviderImpl implements FacilityProvider {
 
     private final FacilityRepository facilityRepository;
+    private final CourtRepository courtRepository;
 
     private FacilityData build(Facility facility) {
         return FacilityData.builder()
@@ -72,9 +75,14 @@ class FacilityProviderImpl implements FacilityProvider {
     }
 
     @Override
-    public Optional<FacilityData> getFacilityByCourtId(AggregateId facilityId) {
-        return facilityRepository.findById(facilityId).isPresent()
-                ? Optional.of(build(facilityRepository.findById(facilityId).get()))
+    public Optional<FacilityData> getFacilityByCourtId(AggregateId courtId) {
+        Optional<Court> court = courtRepository.findById(courtId);
+        if (court.isEmpty()) {
+            return Optional.empty();
+        }
+        Optional<Facility> facility = facilityRepository.findById(court.get().facilityId());
+        return facility.isPresent()
+                ? Optional.of(build(facility.get()))
                 : Optional.empty();
     }
 }
