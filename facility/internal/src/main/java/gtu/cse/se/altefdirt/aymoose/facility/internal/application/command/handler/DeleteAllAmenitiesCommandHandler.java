@@ -25,7 +25,6 @@ public class DeleteAllAmenitiesCommandHandler implements CommandHandler<DeleteAl
     private final FacilityRepository facilityRepository;
     private final ImageOperationPort imageOperationPort;
     private final AmenityRepository amenityRepository;
-    private final CourtRepository courtRepository;
 
     @Override
     @Transactional
