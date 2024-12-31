@@ -24,6 +24,7 @@ public record FacilityResponseDTO(
         List<String> imageUrls,
         String rating,
         int reviewCount,
+        List<Integer> capacities,
         int lowerPriceLimit,
         int upperPriceLimit,
         List<Map<String, Object>> amenities,
@@ -46,6 +47,7 @@ public record FacilityResponseDTO(
                 .closeTime(view.closeTime())
                 .rating(view.rating())
                 .reviewCount(view.reviewCount())
+                .capacities(view.capacities())
                 .lowerPriceLimit(view.lowerPriceLimit())
                 .upperPriceLimit(view.upperPriceLimit())
                 .imageUrls(view.imageUrls())
