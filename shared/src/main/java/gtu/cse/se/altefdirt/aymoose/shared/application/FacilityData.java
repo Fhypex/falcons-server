@@ -9,8 +9,6 @@ public record FacilityData(AggregateId id,
                 AggregateId ownerId,
                 String name,
                 String description,
-                Integer height,
-                Integer width,
                 WorkHours workHours,
                 boolean isActive) {
 }
