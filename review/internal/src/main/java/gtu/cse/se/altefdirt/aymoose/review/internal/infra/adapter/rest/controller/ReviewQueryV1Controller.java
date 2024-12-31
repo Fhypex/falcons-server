@@ -2,10 +2,15 @@ package gtu.cse.se.altefdirt.aymoose.review.internal.infra.adapter.rest.controll
 
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.access.AccessUser;
+import gtu.cse.se.altefdirt.aymoose.core.infra.security.jwt.JwtUser;
 import gtu.cse.se.altefdirt.aymoose.review.internal.application.service.ReviewService;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.Rating;
 import gtu.cse.se.altefdirt.aymoose.review.internal.domain.ReviewRepository;
@@ -32,7 +37,7 @@ class ReviewQueryV1Controller {
                 private static final String RATING_LT = "ratingLt";
         }
 
-        @GetMapping(value = "/reviews")
+        @GetMapping(value = "/reviews/all")
         List<ReviewResponseWithAllDTO> getAllReviews() {
                 return repository.findAll().stream()
                                 .map(review -> ReviewResponseWithAllDTO.fromView(service.denormalize(review)))
@@ -43,6 +48,15 @@ class ReviewQueryV1Controller {
         ReviewResponseWithAllDTO getReviewById(@PathVariable(Parameter.ID) UUID id) {
                 return ReviewResponseWithAllDTO
                                 .fromView(service.denormalize(repository.findById(AggregateId.fromUUID(id)).get()));
+        }
+
+        @AccessUser
+        @GetMapping(value = "/reviews")
+        List<ReviewResponseWithAllDTO> getReviewsOfSelf(@AuthenticationPrincipal JwtUser user) {
+                return service.denormalizeForSameUser(repository.findByUserId(user.id()))
+                                .stream()
+                                .map(review -> ReviewResponseWithAllDTO.fromView(review))
+                                .toList();
         }
 
         @GetMapping(value = "/reviews", params = Parameter.USER)
