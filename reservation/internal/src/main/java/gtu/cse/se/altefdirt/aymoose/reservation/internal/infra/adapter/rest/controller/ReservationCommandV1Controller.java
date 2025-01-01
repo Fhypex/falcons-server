@@ -15,6 +15,8 @@ import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.Can
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateLocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.CreateReservation;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.DeleteClosedReservation;
+import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.DeleteLocalReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.application.command.RejectReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.ClosedReservation;
 import gtu.cse.se.altefdirt.aymoose.reservation.internal.domain.LocalReservation;
@@ -95,13 +97,13 @@ class ReservationCommandV1Controller {
 
     @DeleteMapping("/reservation/{id}/delete-local")
     public Response<Integer> deleteLocalReservation(@PathVariable(Parameter.ID) UUID id) {
-        Integer deleted = runner.run(new CancelReservation(id));
+        Integer deleted = runner.run(new DeleteLocalReservation(id));
         return Response.success(deleted, "Local reservation deleted successfully");
     }
 
     @DeleteMapping("/reservation/{id}/delete-closed")
     public Response<Integer> deleteClosedReservation(@PathVariable(Parameter.ID) UUID id) {
-        Integer deleted = runner.run(new CancelReservation(id));
+        Integer deleted = runner.run(new DeleteClosedReservation(id));
         return Response.success(deleted, "Closed reservation deleted successfully");
     }
 }
