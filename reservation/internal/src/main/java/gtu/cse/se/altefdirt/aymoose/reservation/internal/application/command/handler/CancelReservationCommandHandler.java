@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class CancelReservationCommandHandler implements CommandHandler<CancelReservation, AggregateId> {
+public class CancelReservationCommandHandler implements CommandHandler<CancelReservation, Reservation> {
 
     private final ReservationRepository repository;
 
     @Override
-    public AggregateId handle(CancelReservation command) {
+    public Reservation handle(CancelReservation command) {
         log.debug("Cancelling reservation {}", command);
         AggregateId reservationId = AggregateId.fromUUID(command.id());
         Reservation reservation = repository.findById(reservationId)
@@ -26,6 +26,6 @@ public class CancelReservationCommandHandler implements CommandHandler<CancelRes
         log.debug("Reservation cancelled {}", reservation);
         log.debug("Saving reservation", reservation);
         Reservation savedReservation = repository.save(reservation);
-        return savedReservation.id();
+        return savedReservation;
     }
 }
