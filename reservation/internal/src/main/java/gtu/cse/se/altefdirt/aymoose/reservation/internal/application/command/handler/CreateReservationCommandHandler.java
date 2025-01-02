@@ -33,7 +33,7 @@ public class CreateReservationCommandHandler implements CommandHandler<CreateRes
         log.debug("Handling create reservation command for {}", command);
         AggregateId courtId = AggregateId.fromUUID(command.courtId());
         log.debug("Checking if user has more than 3 pending reservations");
-        if (repository.countByPendingReservationsByUserId(command.userId()) > 3) {
+        if (repository.countByPendingReservationsByUserId(command.userId()) > 200) {
             throw new RuntimeException("Cannot reserve more than at the same time");
         }
         log.debug("Checking if time slot is in use");
