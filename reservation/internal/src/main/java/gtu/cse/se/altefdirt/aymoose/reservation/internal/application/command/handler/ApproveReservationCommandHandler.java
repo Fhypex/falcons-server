@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @RegisterHandler
 @RequiredArgsConstructor
 @Slf4j
-public class ApproveReservationCommandHandler implements CommandHandler<ApproveReservation, AggregateId> {
+public class ApproveReservationCommandHandler implements CommandHandler<ApproveReservation,Reservation> {
 
     private final ReservationRepository repository;
 
     @Override
-    public AggregateId handle(ApproveReservation command) {
+    public Reservation handle(ApproveReservation command) {
 
         log.debug("Approving reservation {}", command);
 
@@ -36,6 +36,6 @@ public class ApproveReservationCommandHandler implements CommandHandler<ApproveR
         Reservation savedReservation = repository.save(reservation);
 
         // Delete images
-        return savedReservation.id();
+        return savedReservation;
     }
 }
