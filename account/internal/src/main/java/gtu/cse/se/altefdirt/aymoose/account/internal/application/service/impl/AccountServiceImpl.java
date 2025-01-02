@@ -34,6 +34,7 @@ class AccountServiceImpl implements AccountService {
         return new AccountView(account, authDetails, imageData.get().url());
     }
 
+
     @Override
     public String randomProfilePicture() {
         return "https://img.icons8.com/keek/100/cat.png";
